@@ -3,6 +3,7 @@ import { IonPage, IonContent, IonCard, IonInput, IonSelect, IonItem, IonSelectOp
 import axios from 'axios'
 import { useHistory } from 'react-router';
 import Header from '../../../components/Navigation/Header';
+import '../../../Constant/HttpConstant'
 
 const AddActualite: React.FC = () => {
     const [lieu, setLieu] = useState('');
@@ -16,7 +17,7 @@ const AddActualite: React.FC = () => {
     });
 
     const submit = async () => {
-        axios.post('http://localhost:8000/api/embouteka/manage', { lieu: lieu, type: cause, message: message }).then(res => {
+        axios.post(HTTP_BASE_URL + '/api/embouteka/manage', { lieu: lieu, type: cause, message: message }).then(res => {
             setAlert({
                 isShow: true,
                 message: 'Misaotra nizara !!!'

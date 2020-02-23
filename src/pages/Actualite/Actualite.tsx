@@ -6,12 +6,13 @@ import { add } from 'ionicons/icons';
 import Emboutaka from '../../images/emboutaka.png';
 import { useHistory } from "react-router-dom";
 import Axios from 'axios';
+import '../../Constant/HttpConstant';
 
 const Actualite: React.FC = () => {
   const [actu, setActu] = useState([]);
 
   useEffect(() => {
-    Axios.post('http://localhost:8000/api/embouteka/list').then(res => {
+    Axios.post(HTTP_BASE_URL + '/api/embouteka/list').then(res => {
       setActu(res.data.data);
     })
   }, []);
