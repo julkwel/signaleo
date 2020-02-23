@@ -6,7 +6,7 @@ import { add } from 'ionicons/icons';
 import Emboutaka from '../../images/emboutaka.png';
 import { useHistory } from "react-router-dom";
 import Axios from 'axios';
-import '../../Constant/HttpConstant';
+import HTTP_BASE_URL from '../../Constant/HttpConstant';
 
 const Actualite: React.FC = () => {
   const [actu, setActu] = useState([]);

@@ -3,7 +3,7 @@ import { IonPage, IonContent, IonCard, IonInput, IonSelect, IonItem, IonSelectOp
 import axios from 'axios'
 import { useHistory } from 'react-router';
 import Header from '../../../components/Navigation/Header';
-import '../../../Constant/HttpConstant'
+import HTTP_BASE_URL from '../../../Constant/HttpConstant'
 
 const AddActualite: React.FC = () => {
     const [lieu, setLieu] = useState('');
