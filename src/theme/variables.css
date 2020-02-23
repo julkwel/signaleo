@@ -227,3 +227,11 @@ http://ionicframework.com/docs/theming/ */
     --color: white;
   }
 }
+
+.text-center{
+  text-align: center!important;
+}
+
+.orange-dark  {
+  background-color: #E64A19 !important;
+}
