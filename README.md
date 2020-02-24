@@ -1,6 +1,6 @@
 # Signaleo
 
-Application embouteillage à Madagascar.
+Application pour signaler l'embouteillage à Madagascar.
 
 # Installation
 
