@@ -41,4 +41,11 @@ For build run :
 
 `ionic build`
 
+## Features
+
+`- Implement notification push (firebase || onesignal ) `
+
+`- Add functional camera and send png file to api`
+
+
 Happy Coding give a star for this repository 🥰
