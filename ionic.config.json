@@ -1,0 +1,7 @@
+{
+  "name": "signaleo",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
