@@ -1,20 +1,8 @@
 import React from 'react';
-import {Redirect, Route} from 'react-router-dom';
 import {
-    IonApp,
-    IonIcon,
-    IonLabel,
-    IonRouterOutlet,
-    IonTabBar,
-    IonTabButton,
-    IonTabs, useIonViewWillEnter, withIonLifeCycle
+    IonApp, IonIcon, IonLabel, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs,
 } from '@ionic/react';
 import {IonReactRouter} from '@ionic/react-router';
-import {carSportOutline, list, peopleOutline} from 'ionicons/icons';
-import Actualite from './pages/Actualite/Actualite';
-import AddActualite from './pages/Actualite/ManageActualite/AddActualite';
-import CameraServices from './Services/CameraServices'
-
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
 
@@ -33,13 +21,9 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
-import AddOffre from './pages/Offre/ManageOffre/AddOffre';
-import ZaMbaEnto from "./pages/Offre/Offre";
-import Login from "./pages/Security/Login";
-import AddUser from "./pages/Security/User/AddUser";
-import AddProposition from "./pages/Demande/ManageProposition/AddProposition";
-import Demande from "./pages/Demande/Demande";
 import {Plugins} from "@capacitor/core";
+import {SignaleoRoute} from "./components/Route/Route";
+import {carSportOutline, list, peopleOutline} from "ionicons/icons";
 
 const {Storage} = Plugins;
 
@@ -79,16 +63,7 @@ class App extends React.Component<any, any> {
                             (
                                 <IonTabs>
                                     <IonRouterOutlet>
-                                        <Route path="/offre" component={ZaMbaEnto} exact={true}/>
-                                        <Route path="/demande" component={AddProposition} exact={true}/>
-                                        <Route path="/listDemande" component={Demande} exact={true}/>
-                                        <Route path="/actualite" component={Actualite}/>
-                                        <Route path="/addActu" component={AddActualite}/>
-                                        <Route path="/offreAdd" component={AddOffre}/>
-                                        <Route path="/takePhoto" component={CameraServices}/>
-                                        <Route path="/login" component={Login}/>
-                                        <Route path="/inscription" component={AddUser}/>
-                                        <Route path="/" render={() => <Redirect to="/actualite"/>} exact={true}/>
+                                        <SignaleoRoute/>
                                     </IonRouterOutlet>
                                     <IonTabBar slot="bottom">
                                         <IonTabButton tab="actualite" href="/actualite">
@@ -107,8 +82,7 @@ class App extends React.Component<any, any> {
                                 </IonTabs>
                             ) :
                             <IonRouterOutlet>
-                                <Route path="/login" component={Login}/>
-                                <Route path="/inscription" component={AddUser}/>
+                                <SignaleoRoute/>
                             </IonRouterOutlet>
                     }
 

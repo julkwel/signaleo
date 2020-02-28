@@ -14,7 +14,7 @@ import Header from '../../../components/Navigation/Header';
 import Axios from 'axios';
 import HTTP_BASE_URL from '../../../Constant/HttpConstant';
 import {useHistory} from 'react-router';
-import {arrowBack, personAddOutline} from "ionicons/icons";
+import {arrowBack} from "ionicons/icons";
 
 /**
  * User inscription

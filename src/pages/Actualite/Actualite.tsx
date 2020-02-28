@@ -58,10 +58,6 @@ class Actualite extends React.Component<any, any> {
         }
     }
 
-    componentDidUpdate(prevProps: Readonly<any>, prevState: Readonly<any>, snapshot?: any): void {
-        this.getData();
-    }
-
     ionViewWillEnter() {
         this.getObject().then(() => {
             this.getData();
