@@ -15,6 +15,11 @@ import Axios from 'axios';
 import HTTP_BASE_URL from '../../../Constant/HttpConstant';
 import {useHistory} from 'react-router';
 
+/**
+ * User inscription
+ *
+ * @constructor
+ */
 const AddUser: React.FC = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');

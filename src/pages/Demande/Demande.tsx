@@ -29,6 +29,9 @@ import {RefresherEventDetail} from "@ionic/core";
 
 const {Storage} = Plugins;
 
+/**
+ * Handle all offre data
+ */
 class Demande extends React.Component<any, any> {
     constructor(props: any) {
         super(props);

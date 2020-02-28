@@ -27,7 +27,7 @@ import {Plugins} from "@capacitor/core";
 const {Storage} = Plugins;
 
 /**
- * Manage tabs zambaento
+ * Manage onUserDemande
  */
 class ZaMbaEnto extends React.Component<any, any> {
     constructor(props: any) {

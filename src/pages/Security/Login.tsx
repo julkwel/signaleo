@@ -17,7 +17,9 @@ import {Plugins} from "@capacitor/core";
 import {pencilOutline} from "ionicons/icons";
 
 const {Storage} = Plugins;
-
+/**
+ * Handle user login
+ */
 export default class Login extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
@@ -94,7 +96,7 @@ export default class Login extends React.Component<any, any> {
                             }}>
                                 <IonItem>
                                     <IonLabel position="stacked">Email</IonLabel>
-                                    <IonInput name="lieu" required value={this.state.email}
+                                    <IonInput type={"email"} name="lieu" required value={this.state.email}
                                               onIonChange={(e) => this.handleEmail(e)}/>
                                 </IonItem>
                                 <IonItem>
