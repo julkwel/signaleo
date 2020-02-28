@@ -15,8 +15,8 @@ import Axios from "axios";
 import HTTP_BASE_URL from "../../Constant/HttpConstant";
 import {Plugins} from "@capacitor/core";
 import {personAddOutline} from "ionicons/icons";
+import './Login.css'
 const {Storage} = Plugins;
-
 /**
  * Handle user login
  */

@@ -18,13 +18,13 @@ import '@ionic/react/css/text-alignment.css';
 import '@ionic/react/css/text-transformation.css';
 import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
+import './assets/App.css';
 
 /* Theme variables */
 import './theme/variables.css';
 import {Plugins} from "@capacitor/core";
 import {SignaleoRoute} from "./components/Route/Route";
 import {carSportOutline, list, peopleOutline} from "ionicons/icons";
-
 const {Storage} = Plugins;
 
 /**
@@ -39,7 +39,7 @@ class App extends React.Component<any, any> {
         };
     }
 
-    componentDidMount(): void {
+    ionViewWillEnter() {
         this.getUser().then();
     }
 
@@ -58,34 +58,25 @@ class App extends React.Component<any, any> {
         return (
             <IonApp>
                 <IonReactRouter>
-                    {
-                        this.state.user && this.state.user.id ?
-                            (
-                                <IonTabs>
-                                    <IonRouterOutlet>
-                                        <SignaleoRoute/>
-                                    </IonRouterOutlet>
-                                    <IonTabBar slot="bottom">
-                                        <IonTabButton tab="actualite" href="/actualite">
-                                            <IonLabel>Actualite</IonLabel>
-                                            <IonIcon icon={list}/>
-                                        </IonTabButton>
-                                        <IonTabButton tab="offre" href="/offre">
-                                            <IonLabel>ZaMbaEnto</IonLabel>
-                                            <IonIcon icon={carSportOutline}/>
-                                        </IonTabButton>
-                                        <IonTabButton tab="listDemande" href="/listDemande">
-                                            <IonLabel>Co-Voiturage</IonLabel>
-                                            <IonIcon icon={peopleOutline}/>
-                                        </IonTabButton>
-                                    </IonTabBar>
-                                </IonTabs>
-                            ) :
-                            <IonRouterOutlet>
-                                <SignaleoRoute/>
-                            </IonRouterOutlet>
-                    }
-
+                    <IonTabs>
+                        <IonRouterOutlet>
+                            <SignaleoRoute/>
+                        </IonRouterOutlet>
+                        <IonTabBar slot="bottom">
+                            <IonTabButton tab="actualite" href="/actualite">
+                                <IonLabel>Signaleo</IonLabel>
+                                <IonIcon icon={list}/>
+                            </IonTabButton>
+                            <IonTabButton tab="offre" href="/offre">
+                                <IonLabel>Mba ho ento</IonLabel>
+                                <IonIcon icon={carSportOutline}/>
+                            </IonTabButton>
+                            <IonTabButton tab="listDemande" href="/listDemande">
+                                <IonLabel>Hitondra olona</IonLabel>
+                                <IonIcon icon={peopleOutline}/>
+                            </IonTabButton>
+                        </IonTabBar>
+                    </IonTabs>
                 </IonReactRouter>
             </IonApp>
         )

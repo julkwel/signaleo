@@ -36,6 +36,7 @@ const {Storage} = Plugins;
 class Actualite extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
+
         this.state = {
             actu: [],
             user: null,

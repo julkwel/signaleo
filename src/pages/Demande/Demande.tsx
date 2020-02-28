@@ -18,7 +18,7 @@ import {
     add,
     alarmOutline,
     ellipsisHorizontalOutline,
-    location, peopleCircleOutline,
+    location, people, peopleCircleOutline,
     phonePortraitOutline, wallet
 } from "ionicons/icons";
 import Axios from "axios";
@@ -92,13 +92,13 @@ class Demande extends React.Component<any, any> {
                                 <IonItem key={item.id}>
                                     <img alt="profile" style={{width: "45px", height: "45px"}} src={img}/>
                                     <IonLabel>
-                                        <h2>Co-Voiturage {item.user ? (item.user.name ? item.user.name : 'Signaleo') : 'Signaleo'}</h2>
+                                        <h2>{item.user ? (item.user.name ? item.user.name : 'Signaleo') : 'Signaleo'}</h2>
                                         <IonChip color="primary">
                                             <IonIcon icon={location} color="primary"/>
-                                            <IonLabel>{item.depart}</IonLabel>&nbsp;
+                                            <IonLabel  className={"ion-text-wrap"}>{item.depart}</IonLabel>&nbsp;
                                             <IonIcon icon={ellipsisHorizontalOutline}/>&nbsp;
                                             <IonIcon icon={location} color="success"/>
-                                            <IonLabel>{item.arrive}</IonLabel>
+                                            <IonLabel  className={"ion-text-wrap"}>{item.arrive}</IonLabel>
                                         </IonChip>
                                         <p>
                                             <IonChip color="warning">
@@ -106,7 +106,7 @@ class Demande extends React.Component<any, any> {
                                                 <IonLabel>{item.dateDepart ? item.dateDepart.split('T')[0] + ' ' + item.dateDepart.split('T')[1].substring(0, 5) : 'Androany'}</IonLabel>
                                             </IonChip>
                                             <IonChip color="warning">
-                                                <IonIcon icon={peopleCircleOutline} color="dark"/>
+                                                <IonIcon icon={people} color="dark"/>
                                                 <IonLabel>{item.nombreDePlace}</IonLabel>
                                             </IonChip>
                                         </p>
