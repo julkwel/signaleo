@@ -14,9 +14,9 @@ import Header from "../../components/Navigation/Header";
 import Axios from "axios";
 import HTTP_BASE_URL from "../../Constant/HttpConstant";
 import {Plugins} from "@capacitor/core";
-import {pencilOutline} from "ionicons/icons";
-
+import {personAddOutline} from "ionicons/icons";
 const {Storage} = Plugins;
+
 /**
  * Handle user login
  */
@@ -114,7 +114,7 @@ export default class Login extends React.Component<any, any> {
                     this.onRedirect()
                 }} horizontal="end" slot="fixed">
                     <IonFabButton>
-                        <IonIcon icon={pencilOutline}/>
+                        <IonIcon icon={personAddOutline}/>
                     </IonFabButton>
                 </IonFab>
             </IonPage>

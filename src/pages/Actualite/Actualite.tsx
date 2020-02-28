@@ -69,7 +69,7 @@ class Actualite extends React.Component<any, any> {
     }
 
     getData = () => {
-        Axios.post(HTTP_BASE_URL + '/api/embouteka/list').then(res => {
+        Axios.post(HTTP_BASE_URL + '/api/actualite/list').then(res => {
             if (this.state.actu.length !== res.data.data.length) {
                 this.setState({
                     actu: res.data.data

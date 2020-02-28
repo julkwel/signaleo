@@ -8,12 +8,13 @@ import {
     IonCard,
     IonButton,
     IonAlert,
-    IonTitle, IonCardTitle, IonCardContent
+    IonTitle, IonCardTitle, IonCardContent, IonFabButton, IonIcon, IonFab
 } from '@ionic/react';
 import Header from '../../../components/Navigation/Header';
 import Axios from 'axios';
 import HTTP_BASE_URL from '../../../Constant/HttpConstant';
 import {useHistory} from 'react-router';
+import {arrowBack, personAddOutline} from "ionicons/icons";
 
 /**
  * User inscription
@@ -74,11 +75,13 @@ const AddUser: React.FC = () => {
                         }}>
                             <IonItem>
                                 <IonLabel position="stacked">Anarana</IonLabel>
-                                <IonInput required name="name" value={name} onIonChange={(e) => setName(handleName(e))}/>
+                                <IonInput required name="name" value={name}
+                                          onIonChange={(e) => setName(handleName(e))}/>
                             </IonItem>
                             <IonItem>
                                 <IonLabel position="stacked">Email</IonLabel>
-                                <IonInput type={"email"} required name="email" value={email} onIonChange={(e) => setEmail(handleEmail(e))}/>
+                                <IonInput type={"email"} required name="email" value={email}
+                                          onIonChange={(e) => setEmail(handleEmail(e))}/>
                             </IonItem>
                             <IonItem>
                                 <IonLabel position="stacked">Teny miafina</IonLabel>
@@ -89,6 +92,17 @@ const AddUser: React.FC = () => {
                         </form>
                     </IonCardContent>
                 </IonCard>
+
+                <IonFab
+                    vertical="bottom"
+                    onClick={() => {
+                        history.push('/login');
+                    }}
+                    horizontal="end" slot="fixed">
+                    <IonFabButton>
+                        <IonIcon icon={arrowBack}/>
+                    </IonFabButton>
+                </IonFab>
             </IonContent>
         </IonPage>
     )

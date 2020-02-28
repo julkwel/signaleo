@@ -7,10 +7,10 @@ import {
     IonRouterOutlet,
     IonTabBar,
     IonTabButton,
-    IonTabs
+    IonTabs, useIonViewWillEnter, withIonLifeCycle
 } from '@ionic/react';
 import {IonReactRouter} from '@ionic/react-router';
-import {list, personAddSharp} from 'ionicons/icons';
+import {carSportOutline, list, peopleOutline} from 'ionicons/icons';
 import Actualite from './pages/Actualite/Actualite';
 import AddActualite from './pages/Actualite/ManageActualite/AddActualite';
 import CameraServices from './Services/CameraServices'
@@ -39,43 +39,83 @@ import Login from "./pages/Security/Login";
 import AddUser from "./pages/Security/User/AddUser";
 import AddProposition from "./pages/Demande/ManageProposition/AddProposition";
 import Demande from "./pages/Demande/Demande";
+import {Plugins} from "@capacitor/core";
 
-export default class App extends React.Component<any, any> {
+const {Storage} = Plugins;
+
+/**
+ * App Entry
+ */
+class App extends React.Component<any, any> {
+    constructor(props: any) {
+        super(props);
+
+        this.state = {
+            user: null,
+        };
+    }
+
+    componentDidMount(): void {
+        this.getUser().then();
+    }
+
+    async getUser() {
+        const ret = await Storage.get({key: 'user'});
+        const user = JSON.parse(ret && ret.value ? ret.value : '{"user":null}');
+
+        if (user.id) {
+            this.setState({
+                user: user
+            });
+        }
+    }
+
     render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | React.ReactNodeArray | React.ReactPortal | boolean | null | undefined {
         return (
             <IonApp>
                 <IonReactRouter>
-                    <IonTabs>
-                        <IonRouterOutlet>
-                            <Route path="/offre" component={ZaMbaEnto} exact={true}/>
-                            <Route path="/demande" component={AddProposition} exact={true}/>
-                            <Route path="/listDemande" component={Demande} exact={true}/>
-                            <Route path="/actualite" component={Actualite}/>
-                            <Route path="/addActu" component={AddActualite}/>
-                            <Route path="/offreAdd" component={AddOffre}/>
-                            <Route path="/takePhoto" component={CameraServices}/>
-                            <Route path="/login" component={Login}/>
-                            <Route path="/inscription" component={AddUser}/>
-                            <Route path="/" render={() => <Redirect to="/actualite"/>} exact={true}/>
-                        </IonRouterOutlet>
+                    {
+                        this.state.user && this.state.user.id ?
+                            (
+                                <IonTabs>
+                                    <IonRouterOutlet>
+                                        <Route path="/offre" component={ZaMbaEnto} exact={true}/>
+                                        <Route path="/demande" component={AddProposition} exact={true}/>
+                                        <Route path="/listDemande" component={Demande} exact={true}/>
+                                        <Route path="/actualite" component={Actualite}/>
+                                        <Route path="/addActu" component={AddActualite}/>
+                                        <Route path="/offreAdd" component={AddOffre}/>
+                                        <Route path="/takePhoto" component={CameraServices}/>
+                                        <Route path="/login" component={Login}/>
+                                        <Route path="/inscription" component={AddUser}/>
+                                        <Route path="/" render={() => <Redirect to="/actualite"/>} exact={true}/>
+                                    </IonRouterOutlet>
+                                    <IonTabBar slot="bottom">
+                                        <IonTabButton tab="actualite" href="/actualite">
+                                            <IonLabel>Actualite</IonLabel>
+                                            <IonIcon icon={list}/>
+                                        </IonTabButton>
+                                        <IonTabButton tab="offre" href="/offre">
+                                            <IonLabel>ZaMbaEnto</IonLabel>
+                                            <IonIcon icon={carSportOutline}/>
+                                        </IonTabButton>
+                                        <IonTabButton tab="listDemande" href="/listDemande">
+                                            <IonLabel>Co-Voiturage</IonLabel>
+                                            <IonIcon icon={peopleOutline}/>
+                                        </IonTabButton>
+                                    </IonTabBar>
+                                </IonTabs>
+                            ) :
+                            <IonRouterOutlet>
+                                <Route path="/login" component={Login}/>
+                                <Route path="/inscription" component={AddUser}/>
+                            </IonRouterOutlet>
+                    }
 
-                        <IonTabBar slot="bottom">
-                            <IonTabButton tab="actualite" href="/actualite">
-                                <IonIcon icon={list}/>
-                                <IonLabel>Actualite</IonLabel>
-                            </IonTabButton>
-                            <IonTabButton tab="offre" href="/offre">
-                                <IonIcon icon={personAddSharp}/>
-                                <IonLabel>ZaMbaEnto</IonLabel>
-                            </IonTabButton>
-                            <IonTabButton tab="listDemande" href="/listDemande">
-                                <IonIcon icon={list}/>
-                                <IonLabel>Co-Voiturage</IonLabel>
-                            </IonTabButton>
-                        </IonTabBar>
-                    </IonTabs>
                 </IonReactRouter>
             </IonApp>
         )
     }
 }
+
+export default App;

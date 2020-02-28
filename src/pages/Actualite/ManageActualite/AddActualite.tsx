@@ -37,7 +37,7 @@ const AddActualite: React.FC = () => {
     });
 
     const submit = async () => {
-        axios.post(HTTP_BASE_URL + '/api/embouteka/manage', {
+        axios.post(HTTP_BASE_URL + '/api/actualite/manage', {
             lieu: lieu,
             type: cause,
             message: message,
