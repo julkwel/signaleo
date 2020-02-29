@@ -10,13 +10,15 @@ import {
     IonButton,
     IonLabel,
     IonAlert,
-    IonTextarea, IonCardContent, useIonViewWillEnter, IonCardTitle
+    IonTextarea, IonCardContent, useIonViewWillEnter, IonCardTitle, IonFabButton, IonIcon, IonFab
 } from '@ionic/react';
 import axios from 'axios'
 import {useHistory} from 'react-router';
 import Header from '../../../components/Navigation/Header';
 import HTTP_BASE_URL from '../../../Constant/HttpConstant'
 import {Plugins} from "@capacitor/core";
+import {camera} from "ionicons/icons";
+import {usePhotoGallery} from '../../../hooks/CameraServices';
 
 /**
  * Add Actualite
@@ -27,22 +29,38 @@ const AddActualite: React.FC = () => {
     const [lieu, setLieu] = useState('');
     const [cause, setCause] = useState('');
     const [message, setMessage] = useState('');
+    const [photo, setPhoto] = useState('');
     const history = useHistory();
     const [user, setUser] = useState('');
     const {Storage} = Plugins;
+    const {photos, takePhoto} = usePhotoGallery();
 
     const [alert, setAlert] = useState({
         isShow: false,
         message: ''
     });
 
+
+    useIonViewWillEnter(() => {
+        Storage.get({key: 'user'}).then((res) => {
+            let user = JSON.parse(res.value ? res.value : '{"user":null}');
+            if (user.id) {
+                setUser(user.id);
+            } else {
+                history.push('/login');
+            }
+        });
+    });
+
     const submit = async () => {
-        axios.post(HTTP_BASE_URL + '/api/actualite/manage', {
-            lieu: lieu,
-            type: cause,
-            message: message,
-            userId: user
-        }).then(res => {
+        var data = new FormData();
+        data.append('image', photo);
+        data.append('lieu', lieu);
+        data.append('cause', cause);
+        data.append('message', message);
+        data.append('userId', user);
+
+        axios.post(HTTP_BASE_URL + '/api/actualite/manage', data).then(res => {
             setAlert({
                 isShow: true,
                 message: 'Misaotra nizara !!!'
@@ -58,17 +76,6 @@ const AddActualite: React.FC = () => {
         });
     };
 
-    useIonViewWillEnter(() => {
-        Storage.get({key: 'user'}).then((res) => {
-            let user = JSON.parse(res.value ? res.value : '{"user":null}');
-            if (user.id) {
-                setUser(user.id);
-            } else {
-                history.push('/login');
-            }
-        });
-    });
-
     const handleLocale = (e: any) => {
         return e.target.value;
     };
@@ -80,6 +87,10 @@ const AddActualite: React.FC = () => {
     const handleMessage = (e: any) => {
         return e.target.value;
     };
+
+    const handlePhoto = (e: any) => {
+        return e.target.files ? e.target.files[0] : '';
+    }
 
     return (
         <IonPage>
@@ -98,7 +109,8 @@ const AddActualite: React.FC = () => {
                             <IonAlert isOpen={false} message=""/>
                             <IonItem>
                                 <IonLabel position="stacked">Olana</IonLabel>
-                                <IonSelect mode={"ios"} name="type" value={cause} onIonChange={(e) => setCause(handleType(e))}>
+                                <IonSelect mode={"ios"} name="type" value={cause}
+                                           onIonChange={(e) => setCause(handleType(e))}>
                                     <IonSelectOption value="Accident">Accident</IonSelectOption>
                                     <IonSelectOption value="FiaraMaty">Fiara Maty</IonSelectOption>
                                     <IonSelectOption value="Embouteillage">Embouteillage be</IonSelectOption>
@@ -115,12 +127,25 @@ const AddActualite: React.FC = () => {
                                 <IonTextarea name="message" required value={message}
                                              onIonChange={(e) => setMessage(handleMessage(e))}/>
                             </IonItem>
+                            <IonItem>
+                                <IonLabel position="stacked">Sary</IonLabel>
+                                <input type={"file"} onChange={e => setPhoto(handlePhoto(e))}/>
+                            </IonItem>
                             <div className="ion-padding">
                                 <IonButton expand="block" type="submit" className="ion-no-margin">Ajouter</IonButton>
                             </div>
                         </form>
                     </IonCardContent>
                 </IonCard>
+                {/*<IonFab vertical="center" onClick={() => {*/}
+                {/*    takePhoto().then(res => {*/}
+                {/*        console.log(photos)*/}
+                {/*    });*/}
+                {/*}} horizontal="end" slot="fixed">*/}
+                {/*    <IonFabButton>*/}
+                {/*        <IonIcon icon={camera}/>*/}
+                {/*    </IonFabButton>*/}
+                {/*</IonFab>*/}
             </IonContent>
         </IonPage>
     )
