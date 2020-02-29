@@ -110,6 +110,7 @@ const AddOffre: React.FC = () => {
                             <IonItem>
                                 <IonLabel position="stacked">Lera Hiaingana</IonLabel>
                                 <IonDatetime displayFormat="YYYY-MM-DDTHH:mm"
+                                             min={new Date().toISOString().slice(0, 10)}
                                              onIonChange={(e) => setDateDepart(handleDateDepart(e))}/>
                             </IonItem>
                             <IonButton color="primary" expand="block" type="submit">Ajouter</IonButton>

@@ -8,20 +8,16 @@ import {
     IonRefresher,
     IonRefresherContent,
     withIonLifeCycle,
-    IonItem,
     IonLabel,
     IonCol,
     IonRow,
     IonGrid,
     IonChip,
-    IonText,
     IonSegment,
     IonSegmentButton,
     IonAlert,
     IonBadge,
     IonCard,
-    IonTitle,
-    IonCardSubtitle,
     IonCardTitle,
     IonCardContent
 } from '@ionic/react';
@@ -157,31 +153,29 @@ class Actualite extends React.Component<any, any> {
                             return (
                                 <IonCard mode={"ios"} key={res.id}>
                                     <img alt="profile" src={img}/>
-
-
+                                    <IonGrid>
+                                        <IonRow>
+                                            <IonCardTitle>{res.user ? (res.user.name ? res.user.name.charAt(0).toUpperCase() + res.user.name.slice(1) : 'Signaleo') : 'Signaleo'}</IonCardTitle>
+                                        </IonRow>
+                                        <IonRow>
+                                            <IonCol size="6">
+                                                <IonChip>
+                                                    <IonIcon icon={location} color="primary" />
+                                                    <IonLabel>{res.lieu.charAt(0).toUpperCase() + res.lieu.slice(1)}</IonLabel>
+                                                </IonChip>
+                                            </IonCol>
+                                            <IonCol size="6">
+                                                <IonChip>
+                                                    <IonIcon icon={car} color="danger" />
+                                                    <IonLabel color={res.type === "Accident" ? "danger" : "primary"}>{res.type}</IonLabel>
+                                                </IonChip>
+                                            </IonCol>
+                                        </IonRow>
+                                    </IonGrid>
                                     <IonCardContent>
-                                        <IonCardTitle>{res.user ? (res.user.name ? res.user.name.charAt(0).toUpperCase() + res.user.name.slice(1) : 'Signaleo') : 'Signaleo'}</IonCardTitle>
-                                        <p className={"dark-orange"}>
-                                            <IonGrid>
-                                                <IonRow>
-                                                    <IonCol size="6">
-                                                        <IonChip>
-                                                            <IonIcon icon={location} color="dark" />
-                                                            <IonLabel>{res.lieu.charAt(0).toUpperCase() + res.lieu.slice(1)}</IonLabel>
-                                                        </IonChip>
-                                                    </IonCol>
-                                                    <IonCol size="6">
-                                                        <IonChip>
-                                                            <IonIcon icon={car} color="dark" />
-                                                            <IonLabel color={res.type === "Accident" ? "danger" : "primary"}>{res.type}</IonLabel>
-                                                        </IonChip>
-                                                    </IonCol>
-                                                </IonRow>
-                                            </IonGrid>
-                                        </p>
                                         {res.message.charAt(0).toUpperCase() + res.message.slice(1)}
                                     </IonCardContent>
-                                    <IonChip color="warning">
+                                    <IonChip color="dark">
                                         <IonIcon icon={alarmOutline} color="dark"/>
                                         <IonLabel>{res.dateAdd ? (res.dateAdd.split('T')[0] + ' - ' + res.dateAdd.split('T')[1].slice(0, 5)) : 'A confirmer'}</IonLabel>
                                     </IonChip>

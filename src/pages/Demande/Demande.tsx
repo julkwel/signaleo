@@ -18,7 +18,7 @@ import {
     add,
     alarmOutline,
     ellipsisHorizontalOutline,
-    location, people, peopleCircleOutline,
+    location, people,
     phonePortraitOutline, wallet
 } from "ionicons/icons";
 import Axios from "axios";
