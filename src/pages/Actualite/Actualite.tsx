@@ -152,7 +152,7 @@ class Actualite extends React.Component<any, any> {
 
                             return (
                                 <IonCard mode={"ios"} key={res.id}>
-                                    <img alt="profile"
+                                    <img alt="profile" style={{width:'100%',height:"150px"}}
                                          src={(res.photo && true && res.photo !== '') ? res.photo : img}/>
                                     <IonGrid>
                                         <IonRow>
@@ -160,14 +160,14 @@ class Actualite extends React.Component<any, any> {
                                         </IonRow>
                                         <IonRow>
                                             <IonCol size="6">
-                                                <IonChip>
+                                                <IonChip color={res.type === "Accident" ? "danger" : "primary"}>
                                                     <IonIcon icon={location} color="primary"/>
-                                                    <IonLabel>{res.lieu.charAt(0).toUpperCase() + res.lieu.slice(1)}</IonLabel>
+                                                    <IonLabel >{res.lieu.charAt(0).toUpperCase() + res.lieu.slice(1)}</IonLabel>
                                                 </IonChip>
                                             </IonCol>
                                             <IonCol size="6">
-                                                <IonChip>
-                                                    <IonIcon icon={car} color="danger"/>
+                                                <IonChip color={res.type === "Accident" ? "danger" : "primary"}>
+                                                    <IonIcon icon={car} color={res.type === "Accident" ? "danger" : "primary"}/>
                                                     <IonLabel
                                                         color={res.type === "Accident" ? "danger" : "primary"}>{res.type}</IonLabel>
                                                 </IonChip>
@@ -177,7 +177,7 @@ class Actualite extends React.Component<any, any> {
                                     <IonCardContent>
                                         {res.message.charAt(0).toUpperCase() + res.message.slice(1)}
                                     </IonCardContent>
-                                    <IonChip color="dark">
+                                    <IonChip color="dark" className={"actualite-date-chip"} mode={"ios"}>
                                         <IonIcon icon={alarmOutline} color="dark"/>
                                         <IonLabel>{res.dateAdd ? (res.dateAdd.split('T')[0] + ' - ' + res.dateAdd.split('T')[1].slice(0, 5)) : 'A confirmer'}</IonLabel>
                                     </IonChip>

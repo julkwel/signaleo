@@ -19,6 +19,7 @@ import HTTP_BASE_URL from '../../../Constant/HttpConstant'
 import {Plugins} from "@capacitor/core";
 import {camera} from "ionicons/icons";
 import {usePhotoGallery} from '../../../hooks/CameraServices';
+import {CustomInput, Form, FormGroup, Label} from 'reactstrap';
 
 /**
  * Add Actualite
@@ -33,7 +34,7 @@ const AddActualite: React.FC = () => {
     const history = useHistory();
     const [user, setUser] = useState('');
     const {Storage} = Plugins;
-    const {photos, takePhoto} = usePhotoGallery();
+    // const {photos, takePhoto} = usePhotoGallery();
 
     const [alert, setAlert] = useState({
         isShow: false,
@@ -89,14 +90,24 @@ const AddActualite: React.FC = () => {
     };
 
     const handlePhoto = (e: any) => {
+        const maxAllowedSize = 2 * 1024 * 1024;
+        if (e.target.files[0].size > maxAllowedSize) {
+            setAlert({
+                isShow: true,
+                message: 'Mavesatra loatra ny sary alefanao!'
+            });
+
+            return e.target.value = ''
+        }
+
         return e.target.files ? e.target.files[0] : '';
-    }
+    };
 
     return (
         <IonPage>
             <IonContent fullscreen>
                 <Header/>
-                <IonAlert isOpen={alert.isShow} message={alert.message}/>
+                <IonAlert mode={"ios"} isOpen={alert.isShow} message={alert.message}/>
                 <IonCard mode={"ios"}>
                     <IonCardTitle>
                         <h2 className={"text-center  title-text"}>Signaleo izay hitanao</h2>
@@ -127,10 +138,18 @@ const AddActualite: React.FC = () => {
                                 <IonTextarea name="message" required value={message}
                                              onIonChange={(e) => setMessage(handleMessage(e))}/>
                             </IonItem>
-                            <IonItem>
-                                <IonLabel position="stacked">Sary</IonLabel>
-                                <input type={"file"} onChange={e => setPhoto(handlePhoto(e))}/>
-                            </IonItem>
+                            <div className={"mt-2 p-3"}>
+                                <FormGroup>
+                                    <Label for="uploadImage"/>
+                                    <CustomInput accept="image/*"
+                                                 capture="camera"
+                                                 onChange={e => setPhoto(handlePhoto(e))} type="file"
+                                                 id="uploadImage"
+                                                 name="customFile"
+                                                 label="Asio sary!"
+                                    />
+                                </FormGroup>
+                            </div>
                             <div className="ion-padding">
                                 <IonButton expand="block" type="submit" className="ion-no-margin">Ajouter</IonButton>
                             </div>
