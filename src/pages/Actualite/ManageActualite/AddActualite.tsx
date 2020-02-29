@@ -10,16 +10,16 @@ import {
     IonButton,
     IonLabel,
     IonAlert,
-    IonTextarea, IonCardContent, useIonViewWillEnter, IonCardTitle, IonFabButton, IonIcon, IonFab
+    IonTextarea, IonCardContent, useIonViewWillEnter, IonCardTitle
 } from '@ionic/react';
 import axios from 'axios'
 import {useHistory} from 'react-router';
 import Header from '../../../components/Navigation/Header';
 import HTTP_BASE_URL from '../../../Constant/HttpConstant'
 import {Plugins} from "@capacitor/core";
-import {camera} from "ionicons/icons";
-import {usePhotoGallery} from '../../../hooks/CameraServices';
-import {CustomInput, Form, FormGroup, Label} from 'reactstrap';
+// import {camera} from "ionicons/icons";
+// import {usePhotoGallery} from '../../../hooks/CameraServices';
+import {CustomInput, FormGroup, Label} from 'reactstrap';
 
 /**
  * Add Actualite
