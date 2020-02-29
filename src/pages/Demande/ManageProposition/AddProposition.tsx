@@ -39,27 +39,11 @@ const AddProposition: React.FC = () => {
         })
     };
 
-    const handleContact = (e: any) => {
+    const handleValue = (e: any) => {
         return e.target.value;
     };
 
-    const handleFrais = (e: any) => {
-        return e.target.value;
-    };
-
-    const handleAxe = (e: any) => {
-        return e.target.value;
-    };
-
-    const handleArrive = (e: any) => {
-        return e.target.value;
-    };
-
-    const handleNombreDePlace = (e: any) => {
-        return e.target.value;
-    };
-
-    const handleDateDepart = (e: any) => {
+    const handleDate = (e: any) => {
         return e.detail.value;
     };
 
@@ -79,32 +63,33 @@ const AddProposition: React.FC = () => {
                             <IonItem>
                                 <IonLabel position="stacked">Toerana Hiaingana</IonLabel>
                                 <IonInput name="lieu" value={depart} required
-                                          onIonChange={(e) => setDepart(handleAxe(e))}/>
+                                          onIonChange={(e) => setDepart(handleValue(e))}/>
                             </IonItem>
                             <IonItem>
                                 <IonLabel position="stacked">Toerana Hahatongavana</IonLabel>
                                 <IonInput name="message" required value={arrive}
-                                          onIonChange={(e) => setArrive(handleArrive(e))}/>
+                                          onIonChange={(e) => setArrive(handleValue(e))}/>
                             </IonItem>
                             <IonItem>
                                 <IonLabel position="stacked">Toerana Malalaka</IonLabel>
                                 <IonInput name="message" required value={nombreDePlace}
-                                          onIonChange={(e) => setNombreDePlace(handleNombreDePlace(e))}/>
+                                          onIonChange={(e) => setNombreDePlace(handleValue(e))}/>
                             </IonItem>
                             <IonItem>
                                 <IonLabel position="stacked">Frais</IonLabel>
                                 <IonInput name="message" required value={frais}
-                                          onIonChange={(e) => setFrais(handleFrais(e))}/>
+                                          onIonChange={(e) => setFrais(handleValue(e))}/>
                             </IonItem>
                             <IonItem>
                                 <IonLabel position="stacked">Contact</IonLabel>
                                 <IonInput name="message" required value={contact}
-                                          onIonChange={(e) => setContact(handleContact(e))}/>
+                                          onIonChange={(e) => setContact(handleValue(e))}/>
                             </IonItem>
                             <IonItem>
                                 <IonLabel position="stacked">Lera Hiaingana</IonLabel>
                                 <IonDatetime displayFormat="YYYY-MM-DDTHH:mm"
-                                             onIonChange={(e) => setDateDepart(handleDateDepart(e))}/>
+                                             min={new Date().toISOString().slice(0, 10)}
+                                             onIonChange={(e) => setDateDepart(handleDate(e))}/>
                             </IonItem>
                             <div className="ion-padding">
                                 <IonButton expand="block" type="submit" className="ion-no-margin">Ajouter</IonButton>
