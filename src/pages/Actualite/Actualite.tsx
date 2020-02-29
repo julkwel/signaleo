@@ -20,7 +20,7 @@ import './Actualite.css';
 import {RefresherEventDetail} from '@ionic/core';
 
 import Header from '../../components/Navigation/Header';
-import {add, alarmOutline, car, location, thumbsDown, thumbsDownOutline, thumbsUpOutline} from 'ionicons/icons';
+import {add, alarmOutline, car, location, thumbsDownOutline, thumbsUpOutline} from 'ionicons/icons';
 import Axios from 'axios';
 import HTTP_BASE_URL from '../../Constant/HttpConstant';
 import img from "../Offre/assets/covoiturage.png";
