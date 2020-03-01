@@ -18,8 +18,7 @@ import {
     IonAlert,
     IonBadge,
     IonCard,
-    IonCardTitle,
-    IonCardContent
+    IonCardContent, IonCardSubtitle
 } from '@ionic/react';
 import './Actualite.css';
 import {RefresherEventDetail} from '@ionic/core';
@@ -152,22 +151,22 @@ class Actualite extends React.Component<any, any> {
 
                             return (
                                 <IonCard mode={"ios"} key={res.id}>
-                                    <img alt="profile" style={{width:'100%',height:"150px"}}
-                                         src={(res.photo && true && res.photo !== '') ? res.photo : img}/>
+                                    <img alt="profile" src={(res.photo && true && res.photo !== '') ? res.photo : img}/>
                                     <IonGrid>
                                         <IonRow>
-                                            <IonCardTitle>{res.user ? (res.user.name ? res.user.name.charAt(0).toUpperCase() + res.user.name.slice(1) : 'Signaleo') : 'Signaleo'}</IonCardTitle>
+                                            <IonCardSubtitle>{res.user ? (res.user.name ? res.user.name.charAt(0).toUpperCase() + res.user.name.slice(1) : 'Signaleo') : 'Signaleo'}</IonCardSubtitle>
                                         </IonRow>
                                         <IonRow>
                                             <IonCol size="6">
                                                 <IonChip color={res.type === "Accident" ? "danger" : "primary"}>
                                                     <IonIcon icon={location} color="primary"/>
-                                                    <IonLabel >{res.lieu.charAt(0).toUpperCase() + res.lieu.slice(1)}</IonLabel>
+                                                    <IonLabel>{res.lieu.charAt(0).toUpperCase() + res.lieu.slice(1)}</IonLabel>
                                                 </IonChip>
                                             </IonCol>
                                             <IonCol size="6">
                                                 <IonChip color={res.type === "Accident" ? "danger" : "primary"}>
-                                                    <IonIcon icon={car} color={res.type === "Accident" ? "danger" : "primary"}/>
+                                                    <IonIcon icon={car}
+                                                             color={res.type === "Accident" ? "danger" : "primary"}/>
                                                     <IonLabel
                                                         color={res.type === "Accident" ? "danger" : "primary"}>{res.type}</IonLabel>
                                                 </IonChip>

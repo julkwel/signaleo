@@ -1,17 +1,14 @@
 import React, {useState} from "react";
 import {
     IonButton,
-    IonCard, IonCardContent,
+    IonCard,
     IonCardTitle,
-    IonContent, IonDatetime, IonInput,
-    IonItem,
-    IonLabel, IonList, IonPage,
+    IonContent, IonDatetime, IonList, IonPage,
 } from "@ionic/react";
 import Header from "../../../components/Navigation/Header";
 import Axios from "axios";
 import HTTP_BASE_URL from "../../../Constant/HttpConstant";
 import {useHistory} from "react-router";
-import AsyncSelect from 'react-select/async';
 import AsyncCreatableSelect from 'react-select/async-creatable';
 
 const AddProposition: React.FC = () => {
@@ -65,15 +62,17 @@ const AddProposition: React.FC = () => {
                     <IonCardTitle>
                         <h2 color={"primary"} className={"text-center title-text"}>Hitondra olona</h2>
                     </IonCardTitle>
-                    <IonCardContent>
-                        <form onSubmit={(e) => {
+                    <div>
+                        <form onSubmit={(e: any) => {
                             e.preventDefault();
                             submit();
+                            e.target.reset();
                         }}>
                             <IonList ion-list lines="full" class="ion-no-margin ion-no-padding">
                                 <div className={"mt-2 p-1"}>
                                     <AsyncCreatableSelect
                                         defaultOptions
+                                        required
                                         cacheOptions
                                         placeholder={"Toerana hiaingana"}
                                         styles={{
@@ -85,6 +84,7 @@ const AddProposition: React.FC = () => {
                                 </div>
                                 <div className={"mt-2 p-1"}>
                                     <AsyncCreatableSelect
+                                        required
                                         defaultOptions
                                         cacheOptions
                                         placeholder={"Toerana aleha"}
@@ -95,34 +95,40 @@ const AddProposition: React.FC = () => {
                                         loadOptions={promiseOptions}
                                     />
                                 </div>
-                                <IonItem>
-                                    <IonLabel position="stacked">Isan'ny toerana malalaka</IonLabel>
-                                    <IonInput name="message" required value={nombreDePlace}
-                                              onIonChange={(e) => setNombreDePlace(handleValue(e))}/>
-                                </IonItem>
-                                <IonItem>
-                                    <IonLabel position="stacked">Frais</IonLabel>
-                                    <IonInput name="message" required value={frais}
-                                              onIonChange={(e) => setFrais(handleValue(e))}/>
-                                </IonItem>
-                                <IonItem>
-                                    <IonLabel position="stacked">Contact</IonLabel>
-                                    <IonInput name="message" required value={contact}
-                                              onIonChange={(e) => setContact(handleValue(e))}/>
-                                </IonItem>
-                                <IonItem>
-                                    <IonLabel position="stacked">Lera Hiaingana</IonLabel>
-                                    <IonDatetime displayFormat="YYYY-MM-DDTHH:mm"
+                                <div className={"form-group mt-2 p-1"}>
+                                    <input type="text" placeholder={"Isan'ny toerana malalaka"}
+                                           required
+                                           value={nombreDePlace}
+                                           className={"form-control"}
+                                           onChange={(e) => setNombreDePlace(handleValue(e))}/>
+                                </div>
+                                <div className={"form-group mt-2 p-1"}>
+                                    <input name="frais"
+                                           className={"form-control"}
+                                           required
+                                           placeholder={"Frais"}
+                                           value={frais}
+                                           onChange={(e) => setFrais(handleValue(e))}/>
+                                </div>
+                                <div className={"form-group mt-2 p-1"}>
+                                    <input className={"form-control"} name="contact"
+                                           required
+                                           value={contact}
+                                           placeholder={"Contact"}
+                                           onChange={(e) => setContact(handleValue(e))}/>
+                                </div>
+                                <div className={"form-group mt-2 p-1"}>
+                                    <IonDatetime placeholder={"Lera hiaingana"} className={"form-control"}
+                                                 displayFormat="YYYY-MM-DDTHH:mm"
                                                  min={new Date().toISOString().slice(0, 10)}
                                                  onIonChange={(e) => setDateDepart(handleDate(e))}/>
-                                </IonItem>
-                                <div className="ion-padding">
-                                    <IonButton expand="block" type="submit"
-                                               className="ion-no-margin">Ajouter</IonButton>
+                                </div>
+                                <div className={"form-group p-1"}>
+                                    <IonButton color="primary" expand="block" type="submit">Alefa</IonButton>
                                 </div>
                             </IonList>
                         </form>
-                    </IonCardContent>
+                    </div>
                 </IonCard>
             </IonContent>
         </IonPage>

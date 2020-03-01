@@ -3,17 +3,13 @@ import {
     IonPage,
     IonContent,
     IonCard,
-    IonInput,
     IonSelect,
-    IonItem,
     IonSelectOption,
     IonButton,
-    IonLabel,
     IonAlert,
-    IonTextarea,
     useIonViewWillEnter,
     IonCardTitle,
-    IonList, IonCardContent
+    IonList,
 } from '@ionic/react';
 import axios from 'axios'
 import {useHistory} from 'react-router';
@@ -121,26 +117,26 @@ const AddActualite: React.FC = () => {
                     <IonCardTitle>
                         <h2 className={"text-center  title-text"}>Signaleo izay hitanao</h2>
                     </IonCardTitle>
-                    <IonCardContent>
+                    <div>
                         <form onSubmit={(e) => {
                             e.preventDefault();
-                            submit();
-                        }}>
+                            submit().then();
+                         }}>
                             <IonList ion-list lines="full" class="ion-no-margin ion-no-padding">
                                 <IonAlert isOpen={false} message=""/>
-                                <IonItem>
-                                    <IonLabel position="stacked">Olana</IonLabel>
-                                    <IonSelect mode={"ios"} name="type" value={cause}
+                                <div className={"form-group mt-2 p-1"}>
+                                    <IonSelect placeholder={"Inona no nitranga ?"} className={"form-control"} mode={"ios"} name="type" value={cause}
                                                onIonChange={(e) => setCause(handleType(e))}>
                                         <IonSelectOption value="Accident">Accident</IonSelectOption>
                                         <IonSelectOption value="FiaraMaty">Fiara Maty</IonSelectOption>
                                         <IonSelectOption value="Embouteillage">Embouteillage be</IonSelectOption>
                                         <IonSelectOption value="Malalaka">Malalaka ny lalana</IonSelectOption>
                                     </IonSelect>
-                                </IonItem>
+                                </div>
                                 <div className={"mt-2 p-1"}>
                                     <AsyncSelect
                                         placeholder={"Toerana"}
+                                        required
                                         styles={{
                                             menu: provided => ({...provided, zIndex: 9999})
                                         }}
@@ -160,18 +156,16 @@ const AddActualite: React.FC = () => {
                                         />
                                     </FormGroup>
                                 </div>
-                                <IonItem>
-                                    <IonLabel position="stacked">Hafatra</IonLabel>
-                                    <IonTextarea name="message" required value={message}
-                                                 onIonChange={(e) => setMessage(handleMessage(e))}/>
-                                </IonItem>
-                                <div className="ion-padding">
-                                    <IonButton expand="block" type="submit"
-                                               className="ion-no-margin">Hampiditra</IonButton>
+                                <div className={"form-group mt-2 p-1"}>
+                                    <textarea placeholder={"Hafatra"}
+                                              required
+                                              onChange={(e) => setMessage(handleMessage(e))}
+                                              className={"form-control"}/>
                                 </div>
+                                <IonButton expand="block" type="submit" >Hampiditra</IonButton>
                             </IonList>
                         </form>
-                    </IonCardContent>
+                    </div>
                 </IonCard>
                 {/*<IonFab vertical="center" onClick={() => {*/}
                 {/*    takePhoto().then(res => {*/}

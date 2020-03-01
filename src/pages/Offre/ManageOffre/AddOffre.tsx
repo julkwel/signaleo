@@ -1,15 +1,13 @@
 import React, {useState} from 'react';
 import {
     IonPage,
-    IonItem,
-    IonLabel,
-    IonInput,
     IonDatetime,
     IonContent,
     IonCard,
     IonButton,
     IonAlert,
-    IonCardTitle, IonCardContent, useIonViewWillEnter, IonList
+    IonCardTitle,
+    useIonViewWillEnter, IonList
 } from '@ionic/react';
 import Header from '../../../components/Navigation/Header';
 import Axios from 'axios';
@@ -89,16 +87,18 @@ const AddOffre: React.FC = () => {
                     <IonCardTitle>
                         <h2 color={"primary"} className={"text-center"}>Hitady mpitondra</h2>
                     </IonCardTitle>
-                    <IonCardContent>
-                        <form onSubmit={e => {
+                    <div>
+                        <form onSubmit={(e: any) => {
                             e.preventDefault();
-                            submit()
+                            submit();
+                            e.target.reset();
                         }}>
                             <IonList ion-list lines="full" class="ion-no-margin ion-no-padding">
                                 <div className={"mt-2 p-1"}>
                                     <AsyncCreatableSelect
                                         defaultOptions
                                         cacheOptions
+                                        required
                                         placeholder={"Toerana hiaingana"}
                                         styles={{
                                             menu: provided => ({...provided, zIndex: 9999})
@@ -111,7 +111,8 @@ const AddOffre: React.FC = () => {
                                     <AsyncCreatableSelect
                                         defaultOptions
                                         cacheOptions
-                                        placeholder={"Toerana hahatongavana"}
+                                        required
+                                        placeholder={"Toerana haleha"}
                                         styles={{
                                             menu: provided => ({...provided, zIndex: 9999})
                                         }}
@@ -119,21 +120,26 @@ const AddOffre: React.FC = () => {
                                         loadOptions={promiseOptions}
                                     />
                                 </div>
-                                <IonItem>
-                                    <IonLabel position="stacked">Contact</IonLabel>
-                                    <IonInput required name="lieu" value={contact}
-                                              onIonChange={(e) => setContact(handleContact(e))}/>
-                                </IonItem>
-                                <IonItem>
-                                    <IonLabel position="stacked">Lera Hiaingana</IonLabel>
-                                    <IonDatetime displayFormat="YYYY-MM-DDTHH:mm"
+                                <div className={"form-group mt-2 p-1"}>
+                                    <input type="text"
+                                           required
+                                           placeholder={"Contact"}
+                                           className={"form-control"}
+                                           onChange={(e) => setContact(handleContact(e))}/>
+                                </div>
+                                <div className={"form-group mt-2 p-1"}>
+                                    <IonDatetime className={"form-control"}
+                                                 placeholder={"Lera Hiaingana"}
+                                                 displayFormat="YYYY-MM-DDTHH:mm"
                                                  min={new Date().toISOString().slice(0, 10)}
                                                  onIonChange={(e) => setDateDepart(handleDateDepart(e))}/>
-                                </IonItem>
-                                <IonButton color="primary" expand="block" type="submit">Ajouter</IonButton>
+                                </div>
+                                <div className={"form-group p-1"}>
+                                    <IonButton color="primary" expand="block" type="submit">Alefa</IonButton>
+                                </div>
                             </IonList>
                         </form>
-                    </IonCardContent>
+                    </div>
                 </IonCard>
             </IonContent>
         </IonPage>
