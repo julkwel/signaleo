@@ -10,7 +10,10 @@ import {
     IonButton,
     IonLabel,
     IonAlert,
-    IonTextarea, IonCardContent, useIonViewWillEnter, IonCardTitle
+    IonTextarea,
+    useIonViewWillEnter,
+    IonCardTitle,
+    IonList, IonCardContent
 } from '@ionic/react';
 import axios from 'axios'
 import {useHistory} from 'react-router';
@@ -20,8 +23,7 @@ import {Plugins} from "@capacitor/core";
 // import {camera} from "ionicons/icons";
 // import {usePhotoGallery} from '../../../hooks/CameraServices';
 import {CustomInput, FormGroup, Label} from 'reactstrap';
-import Select from "react-select";
-import AsyncSelect from 'react-select/async'
+import AsyncSelect from 'react-select/async';
 import Axios from "axios";
 
 /**
@@ -80,10 +82,6 @@ const AddActualite: React.FC = () => {
         });
     };
 
-    const handleLocale = (e: any) => {
-        return e.target.value;
-    };
-
     const handleType = (e: any) => {
         return e.target.value;
     };
@@ -128,48 +126,50 @@ const AddActualite: React.FC = () => {
                             e.preventDefault();
                             submit();
                         }}>
-                            <IonAlert isOpen={false} message=""/>
-                            <IonItem>
-                                <IonLabel position="stacked">Olana</IonLabel>
-                                <IonSelect mode={"ios"} name="type" value={cause}
-                                           onIonChange={(e) => setCause(handleType(e))}>
-                                    <IonSelectOption value="Accident">Accident</IonSelectOption>
-                                    <IonSelectOption value="FiaraMaty">Fiara Maty</IonSelectOption>
-                                    <IonSelectOption value="Embouteillage">Embouteillage be</IonSelectOption>
-                                    <IonSelectOption value="Malalaka">Malalaka ny lalana</IonSelectOption>
-                                </IonSelect>
-                            </IonItem>
-                            {/*<IonItem>*/}
-                            {/*    <IonLabel position="stacked">Toerana</IonLabel>*/}
-                            {/*    <IonInput name="lieu" value={lieu} required*/}
-                            {/*              onIonChange={(e) => setLieu(handleLocale(e))}/>*/}
-                            {/*</IonItem>*/}
-                            <div className={"mt-2 p-1"}>
-                                <IonLabel position="stacked">Toerana</IonLabel>
-                                <AsyncSelect onChange={handleValue} cacheOptions defaultOptions
-                                             loadOptions={promiseOptions}
-                                />
-                            </div>
-                            <IonItem>
-                                <IonLabel position="stacked">Hafatra</IonLabel>
-                                <IonTextarea name="message" required value={message}
-                                             onIonChange={(e) => setMessage(handleMessage(e))}/>
-                            </IonItem>
-                            <div className={"mt-2 p-1"}>
-                                <FormGroup>
-                                    <Label for="uploadImage"/>
-                                    <CustomInput accept="image/*"
-                                                 capture="camera"
-                                                 onChange={e => setPhoto(handlePhoto(e))} type="file"
-                                                 id="uploadImage"
-                                                 name="customFile"
-                                                 label="Asio sary!"
+                            <IonList ion-list lines="full" class="ion-no-margin ion-no-padding">
+                                <IonAlert isOpen={false} message=""/>
+                                <IonItem>
+                                    <IonLabel position="stacked">Olana</IonLabel>
+                                    <IonSelect mode={"ios"} name="type" value={cause}
+                                               onIonChange={(e) => setCause(handleType(e))}>
+                                        <IonSelectOption value="Accident">Accident</IonSelectOption>
+                                        <IonSelectOption value="FiaraMaty">Fiara Maty</IonSelectOption>
+                                        <IonSelectOption value="Embouteillage">Embouteillage be</IonSelectOption>
+                                        <IonSelectOption value="Malalaka">Malalaka ny lalana</IonSelectOption>
+                                    </IonSelect>
+                                </IonItem>
+                                <div className={"mt-2 p-1"}>
+                                    <AsyncSelect
+                                        placeholder={"Toerana"}
+                                        styles={{
+                                            menu: provided => ({...provided, zIndex: 9999})
+                                        }}
+                                        onChange={handleValue} cacheOptions defaultOptions
+                                        loadOptions={promiseOptions}
                                     />
-                                </FormGroup>
-                            </div>
-                            <div className="ion-padding">
-                                <IonButton expand="block" type="submit" className="ion-no-margin">Ajouter</IonButton>
-                            </div>
+                                </div>
+                                <div className={"mt-2 p-1"}>
+                                    <FormGroup>
+                                        <Label for="uploadImage"/>
+                                        <CustomInput accept="image/*"
+                                                     capture="camera"
+                                                     onChange={e => setPhoto(handlePhoto(e))} type="file"
+                                                     id="uploadImage"
+                                                     name="customFile"
+                                                     label="Asio sary!"
+                                        />
+                                    </FormGroup>
+                                </div>
+                                <IonItem>
+                                    <IonLabel position="stacked">Hafatra</IonLabel>
+                                    <IonTextarea name="message" required value={message}
+                                                 onIonChange={(e) => setMessage(handleMessage(e))}/>
+                                </IonItem>
+                                <div className="ion-padding">
+                                    <IonButton expand="block" type="submit"
+                                               className="ion-no-margin">Hampiditra</IonButton>
+                                </div>
+                            </IonList>
                         </form>
                     </IonCardContent>
                 </IonCard>

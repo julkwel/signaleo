@@ -9,13 +9,14 @@ import {
     IonCard,
     IonButton,
     IonAlert,
-    IonCardTitle, IonCardContent, useIonViewWillEnter
+    IonCardTitle, IonCardContent, useIonViewWillEnter, IonList
 } from '@ionic/react';
 import Header from '../../../components/Navigation/Header';
 import Axios from 'axios';
 import HTTP_BASE_URL from '../../../Constant/HttpConstant';
 import {useHistory} from 'react-router';
 import {Plugins} from "@capacitor/core";
+import AsyncCreatableSelect from "react-select/async-creatable";
 
 const AddOffre: React.FC = () => {
     const [depart, setDepart] = useState('');
@@ -38,7 +39,7 @@ const AddOffre: React.FC = () => {
             if ('success' === data.data.message) {
                 setAlert({
                     isOpen: true,
-                    message: 'Hoavy!'
+                    message: 'Voaray ny fangatahana !'
                 });
 
                 history.push('/offre');
@@ -62,13 +63,9 @@ const AddOffre: React.FC = () => {
         });
     });
 
-    const handleDepart = (e: any) => {
-        return e.target.value;
-    };
-
-    const handleArrive = (e: any) => {
-        return e.target.value;
-    };
+    const promiseOptions = (inputValue: any) => Axios.post(HTTP_BASE_URL + '/api/actualite/fokontany/find', {search: inputValue}).then(res => {
+        return res.data.data;
+    });
 
     const handleContact = (e: any) => {
         return e.target.value;
@@ -78,11 +75,16 @@ const AddOffre: React.FC = () => {
         return e.detail.value;
     };
 
+    const handleSelectValue = (e: any) => {
+        return e.value;
+    };
+
+
     return (
         <IonPage>
             <IonContent>
                 <Header/>
-                <IonAlert isOpen={alert.isOpen} message={alert.message}/>
+                <IonAlert mode={"ios"} isOpen={alert.isOpen} message={alert.message}/>
                 <IonCard mode={"ios"}>
                     <IonCardTitle>
                         <h2 color={"primary"} className={"text-center"}>Hitady mpitondra</h2>
@@ -92,28 +94,44 @@ const AddOffre: React.FC = () => {
                             e.preventDefault();
                             submit()
                         }}>
-                            <IonItem>
-                                <IonLabel position="stacked">Hiaingana</IonLabel>
-                                <IonInput required name="lieu" value={depart}
-                                          onIonChange={(e) => setDepart(handleDepart(e))}/>
-                            </IonItem>
-                            <IonItem>
-                                <IonLabel position="stacked">Hatongavana</IonLabel>
-                                <IonInput required name="lieu" value={arrive}
-                                          onIonChange={(e) => setArrive(handleArrive(e))}/>
-                            </IonItem>
-                            <IonItem>
-                                <IonLabel position="stacked">Contact</IonLabel>
-                                <IonInput required name="lieu" value={contact}
-                                          onIonChange={(e) => setContact(handleContact(e))}/>
-                            </IonItem>
-                            <IonItem>
-                                <IonLabel position="stacked">Lera Hiaingana</IonLabel>
-                                <IonDatetime displayFormat="YYYY-MM-DDTHH:mm"
-                                             min={new Date().toISOString().slice(0, 10)}
-                                             onIonChange={(e) => setDateDepart(handleDateDepart(e))}/>
-                            </IonItem>
-                            <IonButton color="primary" expand="block" type="submit">Ajouter</IonButton>
+                            <IonList ion-list lines="full" class="ion-no-margin ion-no-padding">
+                                <div className={"mt-2 p-1"}>
+                                    <AsyncCreatableSelect
+                                        defaultOptions
+                                        cacheOptions
+                                        placeholder={"Toerana hiaingana"}
+                                        styles={{
+                                            menu: provided => ({...provided, zIndex: 9999})
+                                        }}
+                                        onChange={(e) => setDepart(handleSelectValue(e))}
+                                        loadOptions={promiseOptions}
+                                    />
+                                </div>
+                                <div className={"mt-2 p-1"}>
+                                    <AsyncCreatableSelect
+                                        defaultOptions
+                                        cacheOptions
+                                        placeholder={"Toerana hahatongavana"}
+                                        styles={{
+                                            menu: provided => ({...provided, zIndex: 9999})
+                                        }}
+                                        onChange={(e) => setArrive(handleSelectValue(e))}
+                                        loadOptions={promiseOptions}
+                                    />
+                                </div>
+                                <IonItem>
+                                    <IonLabel position="stacked">Contact</IonLabel>
+                                    <IonInput required name="lieu" value={contact}
+                                              onIonChange={(e) => setContact(handleContact(e))}/>
+                                </IonItem>
+                                <IonItem>
+                                    <IonLabel position="stacked">Lera Hiaingana</IonLabel>
+                                    <IonDatetime displayFormat="YYYY-MM-DDTHH:mm"
+                                                 min={new Date().toISOString().slice(0, 10)}
+                                                 onIonChange={(e) => setDateDepart(handleDateDepart(e))}/>
+                                </IonItem>
+                                <IonButton color="primary" expand="block" type="submit">Ajouter</IonButton>
+                            </IonList>
                         </form>
                     </IonCardContent>
                 </IonCard>
