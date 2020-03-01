@@ -20,6 +20,9 @@ import {Plugins} from "@capacitor/core";
 // import {camera} from "ionicons/icons";
 // import {usePhotoGallery} from '../../../hooks/CameraServices';
 import {CustomInput, FormGroup, Label} from 'reactstrap';
+import Select from "react-select";
+import AsyncSelect from 'react-select/async'
+import Axios from "axios";
 
 /**
  * Add Actualite
@@ -89,6 +92,14 @@ const AddActualite: React.FC = () => {
         return e.target.value;
     };
 
+    const promiseOptions = (inputValue: any) => Axios.post(HTTP_BASE_URL + '/api/actualite/fokontany/find', {search: inputValue}).then(res => {
+        return res.data.data;
+    });
+
+    const handleValue = (e: any) => {
+        setLieu(e.value);
+    };
+
     const handlePhoto = (e: any) => {
         const maxAllowedSize = 2 * 1024 * 1024;
         if (e.target.files[0].size > maxAllowedSize) {
@@ -128,17 +139,23 @@ const AddActualite: React.FC = () => {
                                     <IonSelectOption value="Malalaka">Malalaka ny lalana</IonSelectOption>
                                 </IonSelect>
                             </IonItem>
-                            <IonItem>
+                            {/*<IonItem>*/}
+                            {/*    <IonLabel position="stacked">Toerana</IonLabel>*/}
+                            {/*    <IonInput name="lieu" value={lieu} required*/}
+                            {/*              onIonChange={(e) => setLieu(handleLocale(e))}/>*/}
+                            {/*</IonItem>*/}
+                            <div className={"mt-2 p-1"}>
                                 <IonLabel position="stacked">Toerana</IonLabel>
-                                <IonInput name="lieu" value={lieu} required
-                                          onIonChange={(e) => setLieu(handleLocale(e))}/>
-                            </IonItem>
+                                <AsyncSelect onChange={handleValue} cacheOptions defaultOptions
+                                             loadOptions={promiseOptions}
+                                />
+                            </div>
                             <IonItem>
                                 <IonLabel position="stacked">Hafatra</IonLabel>
                                 <IonTextarea name="message" required value={message}
                                              onIonChange={(e) => setMessage(handleMessage(e))}/>
                             </IonItem>
-                            <div className={"mt-2 p-3"}>
+                            <div className={"mt-2 p-1"}>
                                 <FormGroup>
                                     <Label for="uploadImage"/>
                                     <CustomInput accept="image/*"
