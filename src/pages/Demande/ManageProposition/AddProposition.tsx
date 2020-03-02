@@ -3,14 +3,20 @@ import {
     IonButton,
     IonCard,
     IonCardTitle,
-    IonContent, IonDatetime, IonList, IonPage,
+    IonContent, IonDatetime, IonList, IonPage, useIonViewWillEnter,
 } from "@ionic/react";
 import Header from "../../../components/Navigation/Header";
 import Axios from "axios";
 import HTTP_BASE_URL from "../../../Constant/HttpConstant";
 import {useHistory} from "react-router";
 import AsyncCreatableSelect from 'react-select/async-creatable';
+import {Plugins} from "@capacitor/core";
 
+/**
+ * Add proposition covoiturage
+ *
+ * @constructor
+ */
 const AddProposition: React.FC = () => {
     const [frais, setFrais] = useState('');
     const [arrive, setArrive] = useState('');
@@ -18,10 +24,23 @@ const AddProposition: React.FC = () => {
     const [nombreDePlace, setNombreDePlace] = useState('');
     const [contact, setContact] = useState('');
     const [dateDepart, setDateDepart] = useState('');
+    const [userId, setUser] = useState('');
     const history = useHistory();
+    const {Storage} = Plugins;
+
+    useIonViewWillEnter(() => {
+        Storage.get({key: 'user'}).then((res) => {
+            let user = JSON.parse(res.value ? res.value : '{"user":null}');
+            if (user.id) {
+                setUser(user.id);
+            } else {
+                history.push('/login');
+            }
+        });
+    });
 
     let data = {
-        userId: 0,
+        userId: userId,
         destination: arrive,
         depart: depart,
         nombreDePlace: nombreDePlace,

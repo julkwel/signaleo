@@ -88,6 +88,7 @@ class Demande extends React.Component<any, any> {
                     </IonRefresher>
                     {
                         this.state.listOffre.map((item: any) => {
+                            console.log(item)
                             return (
                                 <IonItem key={item.id}>
                                     <img alt="profile" style={{width: "45px", height: "45px"}} src={img}/>

@@ -147,7 +147,6 @@ class Actualite extends React.Component<any, any> {
                     <IonList>
                         {
                             this.state.actu.map((res: any) => {
-                                console.log(res);
                                 let marina = 0;
                                 let diso = 0;
 
