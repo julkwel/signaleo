@@ -17,6 +17,7 @@ import {Plugins} from "@capacitor/core";
 import {personAddOutline} from "ionicons/icons";
 import './Login.css'
 const {Storage} = Plugins;
+
 /**
  * Handle user login
  */
@@ -87,7 +88,7 @@ export default class Login extends React.Component<any, any> {
                     <Header/>
                     <IonCard style={{marginTop: "32%"}}>
                         <IonCardHeader>
-                            <IonTitle color={"primary"} className={"text-center"}>Login</IonTitle>
+                            <IonTitle color={"primary"} className={"text-center"}>Hiditra</IonTitle>
                         </IonCardHeader>
                         <IonCardContent>
                             <form onSubmit={(e) => {

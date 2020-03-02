@@ -18,18 +18,37 @@ import {
     IonAlert,
     IonBadge,
     IonCard,
-    IonCardContent, IonCardSubtitle
+    IonCardContent,
+    IonCardSubtitle,
+    IonImg,
+    IonThumbnail,
+    IonItem,
+    IonAvatar,
+    IonText,
+    IonList,
+    IonRouterOutlet,
+    IonTabs, IonTabBar, IonTabButton
 } from '@ionic/react';
 import './Actualite.css';
 import {RefresherEventDetail} from '@ionic/core';
 
 import Header from '../../components/Navigation/Header';
-import {add, alarmOutline, car, location, thumbsDownOutline, thumbsUpOutline} from 'ionicons/icons';
+import {
+    add,
+    alarmOutline,
+    car,
+    carSportOutline, list,
+    location,
+    peopleOutline,
+    thumbsDownOutline,
+    thumbsUpOutline
+} from 'ionicons/icons';
 import Axios from 'axios';
 import HTTP_BASE_URL from '../../Constant/HttpConstant';
 import img from "../../assets/emboutaka.png";
 import {Plugins} from "@capacitor/core";
-
+import {IonReactRouter} from "@ionic/react-router";
+import {SignaleoRoute} from "../../components/Route/Route";
 const {Storage} = Plugins;
 
 /**
@@ -48,7 +67,7 @@ class Actualite extends React.Component<any, any> {
                 isShow: false,
                 message: ''
             },
-        }
+        };
     }
 
     async getObject() {
@@ -123,7 +142,7 @@ class Actualite extends React.Component<any, any> {
         return (
             <IonPage>
                 <Header/>
-                <IonContent>
+                <IonContent  fullscreen>
                     <IonRefresher slot="fixed" onIonRefresh={(e) => this.doRefresh(e)}>
                         <IonRefresherContent/>
                     </IonRefresher>
@@ -134,69 +153,76 @@ class Actualite extends React.Component<any, any> {
                         header={this.state.alert.message}
                         buttons={['OK']}
                     />
+                    <IonList>
+                        {
+                            this.state.actu.map((res: any) => {
+                                console.log(res);
+                                let marina = 0;
+                                let diso = 0;
 
-                    {
-                        this.state.actu.map((res: any) => {
-                            let marina = 0;
-                            let diso = 0;
+                                res.vote.map((vote: any) => {
+                                    if (vote.type === true) {
+                                        ++marina
+                                    }
+                                    if (vote.type === false) {
+                                        ++diso;
+                                    }
+                                });
 
-                            res.vote.map((vote: any) => {
-                                if (vote.type === true) {
-                                    ++marina
-                                }
-                                if (vote.type === false) {
-                                    ++diso;
-                                }
-                            });
-
-                            return (
-                                <IonCard mode={"ios"} key={res.id}>
-                                    <img alt="profile" src={(res.photo && true && res.photo !== '') ? res.photo : img}/>
-                                    <IonGrid>
-                                        <IonRow>
-                                            <IonCardSubtitle>{res.user ? (res.user.name ? res.user.name.charAt(0).toUpperCase() + res.user.name.slice(1) : 'Signaleo') : 'Signaleo'}</IonCardSubtitle>
-                                        </IonRow>
-                                        <IonRow>
-                                            <IonCol size="6">
-                                                <IonChip color={res.type === "Accident" ? "danger" : "primary"}>
-                                                    <IonIcon icon={location} color="primary"/>
-                                                    <IonLabel>{res.lieu.charAt(0).toUpperCase() + res.lieu.slice(1)}</IonLabel>
-                                                </IonChip>
-                                            </IonCol>
-                                            <IonCol size="6">
-                                                <IonChip color={res.type === "Accident" ? "danger" : "primary"}>
-                                                    <IonIcon icon={car}
-                                                             color={res.type === "Accident" ? "danger" : "primary"}/>
-                                                    <IonLabel
-                                                        color={res.type === "Accident" ? "danger" : "primary"}>{res.type}</IonLabel>
-                                                </IonChip>
-                                            </IonCol>
-                                        </IonRow>
-                                    </IonGrid>
-                                    <IonCardContent>
-                                        {res.message.charAt(0).toUpperCase() + res.message.slice(1)}
-                                    </IonCardContent>
-                                    <IonChip color="dark" className={"actualite-date-chip"} mode={"ios"}>
-                                        <IonIcon icon={alarmOutline} color="dark"/>
-                                        <IonLabel>{res.dateAdd ? (res.dateAdd.split('T')[0] + ' - ' + res.dateAdd.split('T')[1].slice(0, 5)) : 'A confirmer'}</IonLabel>
-                                    </IonChip>
-                                    <IonSegment
-                                        onIonChange={e => this.addVote(HTTP_BASE_URL + '/api/actualite/vote/' + res.id, e.detail.value === 'marina')}>
-                                        <IonSegmentButton value="marina">
-                                            <IonIcon icon={thumbsUpOutline}/>
-                                            <IonLabel>Marina</IonLabel> <IonBadge
-                                            color="primary">{marina}</IonBadge>
-                                        </IonSegmentButton>
-                                        <IonSegmentButton value="diso">
-                                            <IonIcon icon={thumbsDownOutline}/>
-                                            <IonLabel>Diso</IonLabel> <IonBadge
-                                            color="primary">{diso}</IonBadge>
-                                        </IonSegmentButton>
-                                    </IonSegment>
-                                </IonCard>
-                            )
-                        })
-                    }
+                                return (
+                                    <IonCard mode={"ios"} key={res.id}>
+                                        <IonItem>
+                                            <IonAvatar slot="start">
+                                                <IonImg alt="image" src={(res.photo && true && res.photo !== '') ? res.photo : img}/>
+                                            </IonAvatar>
+                                            <IonLabel>
+                                                <h2>
+                                                    <IonCardSubtitle>{res.user ? (res.user.name ? res.user.name.charAt(0).toUpperCase() + res.user.name.slice(1) : 'Signaleo') : 'Signaleo'}</IonCardSubtitle>
+                                                </h2>
+                                                <IonLabel  className={"ion-text-wrap"}>{res.message.charAt(0).toUpperCase() + res.message.slice(1)}</IonLabel>
+                                            </IonLabel>
+                                        </IonItem>
+                                        {/*<IonImg alt="image" src={(res.photo && true && res.photo !== '') ? res.photo : img}/>*/}
+                                        <IonGrid>
+                                            <IonRow>
+                                                <IonCol size="6">
+                                                    <IonChip color={res.type === "Accident" ? "danger" : "primary"}>
+                                                        <IonIcon icon={location} color="primary"/>
+                                                        <IonLabel>{res.lieu.charAt(0).toUpperCase() + res.lieu.slice(1)}</IonLabel>
+                                                    </IonChip>
+                                                </IonCol>
+                                                <IonCol size="6">
+                                                    <IonChip color={res.type === "Accident" ? "danger" : "primary"}>
+                                                        <IonIcon icon={car}
+                                                                 color={res.type === "Accident" ? "danger" : "primary"}/>
+                                                        <IonLabel
+                                                            color={res.type === "Accident" ? "danger" : "primary"}>{res.type}</IonLabel>
+                                                    </IonChip>
+                                                </IonCol>
+                                            </IonRow>
+                                        </IonGrid>
+                                        <IonChip color="dark" className={"actualite-date-chip"} mode={"ios"}>
+                                            <IonIcon icon={alarmOutline} color="dark"/>
+                                            <IonLabel>{res.dateAdd ? (res.dateAdd.split('T')[0] + ' - ' + res.dateAdd.split('T')[1].slice(0, 5)) : 'A confirmer'}</IonLabel>
+                                        </IonChip>
+                                        <IonSegment
+                                            onIonChange={e => this.addVote(HTTP_BASE_URL + '/api/actualite/vote/' + res.id, e.detail.value === 'marina')}>
+                                            <IonSegmentButton value="marina">
+                                                <IonIcon icon={thumbsUpOutline}/>
+                                                <IonLabel>Marina</IonLabel> <IonBadge
+                                                color="primary">{marina}</IonBadge>
+                                            </IonSegmentButton>
+                                            <IonSegmentButton value="diso">
+                                                <IonIcon icon={thumbsDownOutline}/>
+                                                <IonLabel>Diso</IonLabel> <IonBadge
+                                                color="primary">{diso}</IonBadge>
+                                            </IonSegmentButton>
+                                        </IonSegment>
+                                    </IonCard>
+                                )
+                            })
+                        }
+                    </IonList>
                     <IonFab vertical="center" onClick={(e) => {
                         e.preventDefault();
                         this.onRedirect()

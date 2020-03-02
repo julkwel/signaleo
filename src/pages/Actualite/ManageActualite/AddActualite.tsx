@@ -125,7 +125,7 @@ const AddActualite: React.FC = () => {
                             <IonList ion-list lines="full" class="ion-no-margin ion-no-padding">
                                 <IonAlert isOpen={false} message=""/>
                                 <div className={"form-group mt-2 p-1"}>
-                                    <IonSelect placeholder={"Inona no nitranga ?"} className={"form-control"} mode={"ios"} name="type" value={cause}
+                                    <IonSelect placeholder={"Inona no mitrange ?"} className={"form-control"} mode={"ios"} name="type" value={cause}
                                                onIonChange={(e) => setCause(handleType(e))}>
                                         <IonSelectOption value="Accident">Accident</IonSelectOption>
                                         <IonSelectOption value="FiaraMaty">Fiara Maty</IonSelectOption>

@@ -26,6 +26,7 @@ import './theme/variables.css';
 import {Plugins} from "@capacitor/core";
 import {SignaleoRoute} from "./components/Route/Route";
 import {carSportOutline, list, peopleOutline} from "ionicons/icons";
+
 const {Storage} = Plugins;
 
 /**
@@ -35,13 +36,10 @@ class App extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
 
+        this.getUser().then();
         this.state = {
             user: null,
         };
-    }
-
-    ionViewWillEnter() {
-        this.getUser().then();
     }
 
     async getUser() {
