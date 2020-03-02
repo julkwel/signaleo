@@ -40,6 +40,7 @@ import Axios from 'axios';
 import HTTP_BASE_URL from '../../Constant/HttpConstant';
 import img from "../../assets/emboutaka.png";
 import {Plugins} from "@capacitor/core";
+
 const {Storage} = Plugins;
 
 /**
@@ -78,6 +79,8 @@ class Actualite extends React.Component<any, any> {
         this.getObject().then(() => {
             this.getData();
         });
+
+        document.getElementsByTagName("ion-tab-bar")[0].style.display = 'inherit';
     }
 
     getData = () => {
@@ -133,7 +136,7 @@ class Actualite extends React.Component<any, any> {
         return (
             <IonPage>
                 <Header/>
-                <IonContent  fullscreen>
+                <IonContent fullscreen>
                     <IonRefresher slot="fixed" onIonRefresh={(e) => this.doRefresh(e)}>
                         <IonRefresherContent/>
                     </IonRefresher>
@@ -150,26 +153,30 @@ class Actualite extends React.Component<any, any> {
                                 let marina = 0;
                                 let diso = 0;
 
-                                res.vote.map((vote: any) => {
+                                res.vote.map(getVote);
+
+                                function getVote(vote: any) {
                                     if (vote.type === true) {
-                                        ++marina
+                                        ++marina;
                                     }
                                     if (vote.type === false) {
                                         ++diso;
                                     }
-                                });
+                                }
 
                                 return (
                                     <IonCard mode={"ios"} key={res.id}>
                                         <IonItem>
                                             <IonAvatar slot="start">
-                                                <IonImg alt="image" src={(res.photo && true && res.photo !== '') ? res.photo : img}/>
+                                                <IonImg alt="image"
+                                                        src={(res.photo && true && res.photo !== '') ? res.photo : img}/>
                                             </IonAvatar>
                                             <IonLabel>
                                                 <h2>
                                                     <IonCardSubtitle>{res.user ? (res.user.name ? res.user.name.charAt(0).toUpperCase() + res.user.name.slice(1) : 'Signaleo') : 'Signaleo'}</IonCardSubtitle>
                                                 </h2>
-                                                <IonLabel  className={"ion-text-wrap"}>{res.message.charAt(0).toUpperCase() + res.message.slice(1)}</IonLabel>
+                                                <IonLabel
+                                                    className={"ion-text-wrap"}>{res.message.charAt(0).toUpperCase() + res.message.slice(1)}</IonLabel>
                                             </IonLabel>
                                         </IonItem>
                                         {/*<IonImg alt="image" src={(res.photo && true && res.photo !== '') ? res.photo : img}/>*/}

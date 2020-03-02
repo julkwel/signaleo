@@ -1,5 +1,6 @@
 import React from "react";
 import {
+    IonAlert,
     IonButton,
     IonCard,
     IonCardContent, IonCardHeader,
@@ -7,7 +8,7 @@ import {
     IonInput,
     IonItem,
     IonLabel,
-    IonPage,
+    IonPage, IonSpinner,
     IonTitle
 } from "@ionic/react";
 import Header from "../../components/Navigation/Header";
@@ -16,6 +17,7 @@ import HTTP_BASE_URL from "../../Constant/HttpConstant";
 import {Plugins} from "@capacitor/core";
 import {personAddOutline} from "ionicons/icons";
 import './Login.css'
+
 const {Storage} = Plugins;
 
 /**
@@ -26,11 +28,18 @@ export default class Login extends React.Component<any, any> {
         super(props);
 
         this.state = {
-            isLoggedIn: false,
+            isLoggedIn: true,
             email: '',
             password: '',
-            _csrf_token: ''
-        }
+            _csrf_token: '',
+            inputDisabled: false,
+            alert: {
+                isOpen: false,
+                message: '',
+            }
+        };
+
+        document.getElementsByTagName("ion-tab-bar")[0].style.display = 'none';
     }
 
     componentDidMount(): void {
@@ -61,12 +70,39 @@ export default class Login extends React.Component<any, any> {
             mobile: true
         };
 
+        this.setState({
+            isLoggedIn: false,
+            inputDisabled: true,
+        });
+
         Axios.post(HTTP_BASE_URL + '/login/api', data).then(res => {
             if (res.data.status === 'success') {
                 this.setStorage(res).then(() => {
                     this.props.history.push('/actualite');
                 });
+
+                this.setState({
+                    isLoggedIn: true,
+                });
+            } else {
+                this.setState({
+                    alert: {
+                        isShow: true,
+                        message: 'Diso ny email na ny teny miafina !',
+                    },
+                    isLoggedIn: true,
+                    inputDisabled: false,
+                });
             }
+        }).catch(e => {
+            this.setState({
+                alert: {
+                    isShow: true,
+                    message: 'Diso ny email na ny teny miafina !',
+                },
+                isLoggedIn: true,
+                inputDisabled: false,
+            });
         })
     };
 
@@ -86,23 +122,34 @@ export default class Login extends React.Component<any, any> {
             <IonPage>
                 <IonContent>
                     <Header/>
+                    <IonAlert mode={"ios"}
+                              buttons={['OK']}
+                              onDidDismiss={() => this.setState({alert: {isShow: false}})}
+                              header={this.state.alert.message}
+                              isOpen={this.state.alert.isShow}/>
                     <IonCard style={{marginTop: "32%"}}>
                         <IonCardHeader>
                             <IonTitle color={"primary"} className={"text-center"}>Hiditra</IonTitle>
                         </IonCardHeader>
                         <IonCardContent>
+                            <div className={"text-center"}>
+                                <IonSpinner hidden={this.state.isLoggedIn} duration={1000} name="lines"
+                                            color="tertiary"/>
+                            </div>
                             <form onSubmit={(e) => {
                                 e.preventDefault();
                                 this.logIn()
                             }}>
                                 <IonItem>
                                     <IonLabel position="stacked">Email</IonLabel>
-                                    <IonInput type={"email"} name="lieu" required value={this.state.email}
+                                    <IonInput disabled={this.state.inputDisabled} type={"email"} name="lieu" required
+                                              value={this.state.email}
                                               onIonChange={(e) => this.handleEmail(e)}/>
                                 </IonItem>
                                 <IonItem>
                                     <IonLabel position="stacked">Teny miafina</IonLabel>
-                                    <IonInput type={"password"} required name="lieu" value={this.state.password}
+                                    <IonInput disabled={this.state.inputDisabled} type={"password"} required name="lieu"
+                                              value={this.state.password}
                                               onIonChange={(e) => this.handlePassword(e)}/>
                                 </IonItem>
                                 <IonButton color="primary" expand="block" type="submit">Login</IonButton>

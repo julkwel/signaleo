@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    IonApp, IonIcon, IonLabel, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs,
+    IonApp, IonIcon, IonLabel, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs, withIonLifeCycle,
 } from '@ionic/react';
 import {IonReactRouter} from '@ionic/react-router';
 /* Core CSS required for Ionic components to work properly */
@@ -29,9 +29,6 @@ import {carSportOutline, list, peopleOutline} from "ionicons/icons";
 
 const {Storage} = Plugins;
 
-/**
- * App Entry
- */
 class App extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
@@ -82,4 +79,4 @@ class App extends React.Component<any, any> {
     }
 }
 
-export default App;
+export default withIonLifeCycle(App);
