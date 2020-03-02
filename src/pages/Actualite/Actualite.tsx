@@ -18,16 +18,11 @@ import {
     IonAlert,
     IonBadge,
     IonCard,
-    IonCardContent,
     IonCardSubtitle,
     IonImg,
-    IonThumbnail,
     IonItem,
     IonAvatar,
-    IonText,
     IonList,
-    IonRouterOutlet,
-    IonTabs, IonTabBar, IonTabButton
 } from '@ionic/react';
 import './Actualite.css';
 import {RefresherEventDetail} from '@ionic/core';
@@ -37,9 +32,7 @@ import {
     add,
     alarmOutline,
     car,
-    carSportOutline, list,
     location,
-    peopleOutline,
     thumbsDownOutline,
     thumbsUpOutline
 } from 'ionicons/icons';
@@ -47,8 +40,6 @@ import Axios from 'axios';
 import HTTP_BASE_URL from '../../Constant/HttpConstant';
 import img from "../../assets/emboutaka.png";
 import {Plugins} from "@capacitor/core";
-import {IonReactRouter} from "@ionic/react-router";
-import {SignaleoRoute} from "../../components/Route/Route";
 const {Storage} = Plugins;
 
 /**
