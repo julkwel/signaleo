@@ -1,3 +1,9 @@
 ion-content ion-toolbar {
   --background: translucent;
 }
+
+.actualite-date-chip{
+  display: block;
+  border-radius: 8px;
+  text-align: center;
+}

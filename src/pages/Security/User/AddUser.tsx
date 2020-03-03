@@ -8,13 +8,19 @@ import {
     IonCard,
     IonButton,
     IonAlert,
-    IonTitle, IonCardTitle, IonCardContent
+    IonTitle, IonCardTitle, IonCardContent, IonFabButton, IonIcon, IonFab
 } from '@ionic/react';
 import Header from '../../../components/Navigation/Header';
 import Axios from 'axios';
 import HTTP_BASE_URL from '../../../Constant/HttpConstant';
 import {useHistory} from 'react-router';
+import {arrowBack} from "ionicons/icons";
 
+/**
+ * User inscription
+ *
+ * @constructor
+ */
 const AddUser: React.FC = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -35,7 +41,7 @@ const AddUser: React.FC = () => {
             } else {
                 setAlert({
                     isOpen: true,
-                    message: 'Misy olana ny tolotra na efa nisy naka ny email : ' + email + ' !'
+                    message: 'Misy olana ny signaleo na efa nisy naka ny email : ' + email + ' !'
                 })
             }
         })
@@ -57,7 +63,7 @@ const AddUser: React.FC = () => {
         <IonPage>
             <IonContent>
                 <Header/>
-                <IonAlert isOpen={alert.isOpen} message={alert.message}/>
+                <IonAlert mode={"ios"} isOpen={alert.isOpen} message={alert.message}/>
                 <IonCard className="dark-orange">
                     <IonCardTitle>
                         <IonTitle color={"primary"} className={"text-center"}>Hisoratra Anarana</IonTitle>
@@ -69,21 +75,34 @@ const AddUser: React.FC = () => {
                         }}>
                             <IonItem>
                                 <IonLabel position="stacked">Anarana</IonLabel>
-                                <IonInput required name="name" value={name} onIonChange={(e) => setName(handleName(e))}/>
+                                <IonInput required name="name" value={name}
+                                          onIonChange={(e) => setName(handleName(e))}/>
                             </IonItem>
                             <IonItem>
                                 <IonLabel position="stacked">Email</IonLabel>
-                                <IonInput type={"email"} required name="email" value={email} onIonChange={(e) => setEmail(handleEmail(e))}/>
+                                <IonInput type={"email"} required name="email" value={email}
+                                          onIonChange={(e) => setEmail(handleEmail(e))}/>
                             </IonItem>
                             <IonItem>
                                 <IonLabel position="stacked">Teny miafina</IonLabel>
                                 <IonInput required name="email" value={password}
                                           onIonChange={(e) => setPassword(handlePassword(e))}/>
                             </IonItem>
-                            <IonButton color="primary" expand="block" type="submit">Ajouter</IonButton>
+                            <IonButton color="primary" expand="block" type="submit">Hisoratra</IonButton>
                         </form>
                     </IonCardContent>
                 </IonCard>
+
+                <IonFab
+                    vertical="bottom"
+                    onClick={() => {
+                        history.push('/login');
+                    }}
+                    horizontal="end" slot="fixed">
+                    <IonFabButton>
+                        <IonIcon icon={arrowBack}/>
+                    </IonFabButton>
+                </IonFab>
             </IonContent>
         </IonPage>
     )
