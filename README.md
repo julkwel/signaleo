@@ -47,5 +47,6 @@ For build run :
 
 `- Add functional camera and send png file to api`
 
+`- Build ios version`
 
 Happy Coding give a star for this repository 🥰
