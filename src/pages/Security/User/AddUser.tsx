@@ -41,7 +41,7 @@ const AddUser: React.FC = () => {
             } else {
                 setAlert({
                     isOpen: true,
-                    message: 'Misy olana ny tolotra na efa nisy naka ny email : ' + email + ' !'
+                    message: 'Misy olana ny signaleo na efa nisy naka ny email : ' + email + ' !'
                 })
             }
         })
@@ -63,7 +63,7 @@ const AddUser: React.FC = () => {
         <IonPage>
             <IonContent>
                 <Header/>
-                <IonAlert isOpen={alert.isOpen} message={alert.message}/>
+                <IonAlert mode={"ios"} isOpen={alert.isOpen} message={alert.message}/>
                 <IonCard className="dark-orange">
                     <IonCardTitle>
                         <IonTitle color={"primary"} className={"text-center"}>Hisoratra Anarana</IonTitle>
@@ -88,7 +88,7 @@ const AddUser: React.FC = () => {
                                 <IonInput required name="email" value={password}
                                           onIonChange={(e) => setPassword(handlePassword(e))}/>
                             </IonItem>
-                            <IonButton color="primary" expand="block" type="submit">Ajouter</IonButton>
+                            <IonButton color="primary" expand="block" type="submit">Hisoratra</IonButton>
                         </form>
                     </IonCardContent>
                 </IonCard>

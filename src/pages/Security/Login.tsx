@@ -153,7 +153,7 @@ export default class Login extends React.Component<any, any> {
                                               value={this.state.password}
                                               onIonChange={(e) => this.handlePassword(e)}/>
                                 </IonItem>
-                                <IonButton color="primary" expand="block" type="submit">Login</IonButton>
+                                <IonButton color="primary" expand="block" type="submit">Hiditra</IonButton>
                             </form>
                         </IonCardContent>
                     </IonCard>

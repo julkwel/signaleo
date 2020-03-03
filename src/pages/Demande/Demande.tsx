@@ -39,6 +39,7 @@ class Demande extends React.Component<any, any> {
             listOffre: [],
             showLoading: true,
         };
+
         this.getData = this.getData.bind(this);
     }
 
