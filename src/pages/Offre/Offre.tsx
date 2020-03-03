@@ -7,7 +7,7 @@ import {
     IonIcon,
     IonItem,
     IonLabel,
-    IonChip, IonRefresherContent, IonRefresher, withIonLifeCycle
+    IonChip, IonRefresherContent, IonRefresher, withIonLifeCycle, IonLoading
 } from '@ionic/react';
 import './Offre.css';
 import Header from '../../components/Navigation/Header';
@@ -33,6 +33,7 @@ class ZaMbaEnto extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
         this.state = {
+            showLoading: true,
             zambaento: [],
             user: '',
         };
@@ -60,6 +61,12 @@ class ZaMbaEnto extends React.Component<any, any> {
                 this.setState({
                     zambaento: data.data.data
                 });
+
+                if (this.state.zambaento.length !== 0) {
+                    this.setState({
+                        showLoading: false
+                    })
+                }
             }
         })
     };
@@ -94,6 +101,10 @@ class ZaMbaEnto extends React.Component<any, any> {
                     <IonRefresher slot="fixed" onIonRefresh={(e) => this.doRefresh(e)}>
                         <IonRefresherContent/>
                     </IonRefresher>
+                    <IonLoading
+                        isOpen={this.state.showLoading}
+                        message={'Mahandrasa kely azafady ...'}
+                    />
                     {
                         this.state.zambaento.map((item: any) => {
                             return (

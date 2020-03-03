@@ -22,7 +22,7 @@ import {
     IonImg,
     IonItem,
     IonAvatar,
-    IonList,
+    IonList, IonLoading,
 } from '@ionic/react';
 import './Actualite.css';
 import {RefresherEventDetail} from '@ionic/core';
@@ -55,6 +55,7 @@ class Actualite extends React.Component<any, any> {
         this.state = {
             actu: [],
             user: null,
+            showLoading: true,
             alert: {
                 isShow: false,
                 message: ''
@@ -85,9 +86,13 @@ class Actualite extends React.Component<any, any> {
 
     getData = () => {
         Axios.post(HTTP_BASE_URL + '/api/actualite/list').then(res => {
-            if (this.state.actu.length !== res.data.data.length) {
+            this.setState({
+                actu: res.data.data
+            });
+
+            if (this.state.actu.length !== 0) {
                 this.setState({
-                    actu: res.data.data
+                    showLoading: false
                 });
             }
         })
@@ -123,11 +128,7 @@ class Actualite extends React.Component<any, any> {
                     })
                 }
 
-                Axios.post(HTTP_BASE_URL + '/api/actualite/list').then(res => {
-                    this.setState({
-                        actu: res.data.data
-                    });
-                })
+                this.getData();
             });
         }
     }
@@ -140,6 +141,10 @@ class Actualite extends React.Component<any, any> {
                     <IonRefresher slot="fixed" onIonRefresh={(e) => this.doRefresh(e)}>
                         <IonRefresherContent/>
                     </IonRefresher>
+                    <IonLoading
+                        isOpen={this.state.showLoading}
+                        message={'Mahandrasa kely azafady ...'}
+                    />
                     <IonAlert
                         mode={"ios"}
                         isOpen={this.state.alert.isShow}

@@ -8,7 +8,8 @@ import {
     IonInput,
     IonItem,
     IonLabel,
-    IonPage, IonSpinner,
+    IonPage,
+    IonSpinner,
     IonTitle
 } from "@ionic/react";
 import Header from "../../components/Navigation/Header";

@@ -6,7 +6,7 @@ import {
     IonFabButton,
     IonIcon,
     IonItem,
-    IonLabel,
+    IonLabel, IonLoading,
     IonPage,
     IonRefresher,
     IonRefresherContent,
@@ -36,7 +36,8 @@ class Demande extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
         this.state = {
-            listOffre: []
+            listOffre: [],
+            showLoading: true,
         };
         this.getData = this.getData.bind(this);
     }
@@ -51,6 +52,7 @@ class Demande extends React.Component<any, any> {
     async getUser() {
         const ret = await Storage.get({key: 'user'});
         const user = JSON.parse(ret && ret.value ? ret.value : '{"user":null}');
+
         if (user.id) {
             this.setState({
                 user: user
@@ -68,7 +70,13 @@ class Demande extends React.Component<any, any> {
         Axios.post(HTTP_BASE_URL + '/api/offre/list').then(res => {
             this.setState({
                 listOffre: res.data.message
-            })
+            });
+
+            if (this.state.listOffre.length !== 0) {
+                this.setState({
+                    showLoading: false,
+                })
+            }
         })
     }
 
@@ -86,6 +94,10 @@ class Demande extends React.Component<any, any> {
                     <IonRefresher slot="fixed" onIonRefresh={(e) => this.doRefresh(e)}>
                         <IonRefresherContent/>
                     </IonRefresher>
+                    <IonLoading
+                        isOpen={this.state.showLoading}
+                        message={'Mahandrasa kely azafady ...'}
+                    />
                     {
                         this.state.listOffre.map((item: any) => {
                             return (
@@ -95,10 +107,10 @@ class Demande extends React.Component<any, any> {
                                         <h2>{item.user ? (item.user.name ? item.user.name : 'Signaleo') : 'Signaleo'}</h2>
                                         <IonChip color="primary">
                                             <IonIcon icon={location} color="primary"/>
-                                            <IonLabel  className={"ion-text-wrap"}>{item.depart}</IonLabel>&nbsp;
+                                            <IonLabel className={"ion-text-wrap"}>{item.depart}</IonLabel>&nbsp;
                                             <IonIcon icon={ellipsisHorizontalOutline}/>&nbsp;
                                             <IonIcon icon={location} color="success"/>
-                                            <IonLabel  className={"ion-text-wrap"}>{item.arrive}</IonLabel>
+                                            <IonLabel className={"ion-text-wrap"}>{item.arrive}</IonLabel>
                                         </IonChip>
                                         <p>
                                             <IonChip color="warning">
