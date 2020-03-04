@@ -23,7 +23,7 @@ import {
     IonItem,
     IonAvatar,
     IonList,
-    IonLoading,
+    IonLoading, IonInfiniteScroll, IonInfiniteScrollContent,
 } from '@ionic/react';
 import './Actualite.css';
 import {RefresherEventDetail} from '@ionic/core';
@@ -54,11 +54,16 @@ const INITIAL_STATE = {
  * Receive actualite , map actualite
  */
 class Actualite extends React.Component<any, any> {
+    ionInfiniteScrollRef: React.RefObject<HTMLIonInfiniteScrollElement>;
+
     constructor(props: any) {
         super(props);
+        this.ionInfiniteScrollRef = React.createRef<HTMLIonInfiniteScrollElement>();
 
         this.state = {
             actu: [],
+            hasMore: true,
+            page: 0,
             user: null,
             showLoading: true,
             alert: {
@@ -164,6 +169,12 @@ class Actualite extends React.Component<any, any> {
                 })
             }
         );
+    }
+
+    loadMoreItems(e: any) {
+        console.log(e);
+
+        (e.target as HTMLIonInfiniteScrollElement).complete();
     }
 
     addVote(uri: any, value: any) {
@@ -282,6 +293,13 @@ class Actualite extends React.Component<any, any> {
                             })
                         }
                     </IonList>
+                    <IonInfiniteScroll threshold="100px" ref={this.ionInfiniteScrollRef}
+                                       onIonInfinite={(e) => this.loadMoreItems(e)}>
+                        <IonInfiniteScrollContent
+                            loadingSpinner="bubbles"
+                            loadingText="Loading more data...">
+                        </IonInfiniteScrollContent>
+                    </IonInfiniteScroll>
                     {/*<IonButton expand="full" onClick={() => this.push()}>Register for Push</IonButton>*/}
                     <IonFab vertical="center" onClick={(e) => {
                         e.preventDefault();
