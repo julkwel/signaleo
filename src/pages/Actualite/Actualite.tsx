@@ -21,9 +21,11 @@ import {
     IonCardSubtitle,
     IonImg,
     IonItem,
-    IonAvatar,
     IonList,
-    IonLoading, IonInfiniteScroll, IonInfiniteScrollContent,
+    IonLoading,
+    IonInfiniteScroll,
+    IonInfiniteScrollContent,
+    IonThumbnail,
 } from '@ionic/react';
 import './Actualite.css';
 import {RefresherEventDetail} from '@ionic/core';
@@ -95,8 +97,11 @@ class Actualite extends React.Component<any, any> {
         document.getElementsByTagName("ion-tab-bar")[0].style.display = 'inherit';
     }
 
-    getData = () => {
-        Axios.post(HTTP_BASE_URL + '/api/actualite/list').then(res => {
+    getData = (page: any = 0) => {
+        let form = new FormData();
+        form.append('limit', page);
+
+        Axios.post(HTTP_BASE_URL + '/api/actualite/list', form).then(res => {
             this.setState({
                 actu: res.data.data
             });
@@ -172,9 +177,14 @@ class Actualite extends React.Component<any, any> {
     }
 
     loadMoreItems(e: any) {
-        console.log(e);
+        console.log(this.state.page);
+        this.getData(this.state.page + 10);
 
-        (e.target as HTMLIonInfiniteScrollElement).complete();
+        (e.target as HTMLIonInfiniteScrollElement).complete().then(() => {
+            this.setState({
+                page: this.state.page + 10
+            })
+        });
     }
 
     addVote(uri: any, value: any) {
@@ -223,27 +233,13 @@ class Actualite extends React.Component<any, any> {
                     <IonList>
                         {
                             this.state.actu.map((res: any) => {
-                                let marina = 0;
-                                let diso = 0;
-
-                                res.vote.map(getVote);
-
-                                function getVote(vote: any) {
-                                    if (vote.type === true) {
-                                        ++marina;
-                                    }
-                                    if (vote.type === false) {
-                                        ++diso;
-                                    }
-                                }
-
                                 return (
                                     <IonCard mode={"ios"} key={res.id}>
                                         <IonItem>
-                                            <IonAvatar slot="start">
-                                                <IonImg alt="image"
-                                                        src={(res.photo && true && res.photo !== '') ? res.photo : img}/>
-                                            </IonAvatar>
+                                            <IonThumbnail slot="start">
+                                                <IonImg
+                                                    src={(res.photo && true && res.photo !== '') ? res.photo : img}/>
+                                            </IonThumbnail>
                                             <IonLabel>
                                                 <h2>
                                                     <IonCardSubtitle>{res.user ? (res.user.name ? res.user.name.charAt(0).toUpperCase() + res.user.name.slice(1) : 'Signaleo') : 'Signaleo'}</IonCardSubtitle>
@@ -252,7 +248,6 @@ class Actualite extends React.Component<any, any> {
                                                     className={"ion-text-wrap"}>{res.message.charAt(0).toUpperCase() + res.message.slice(1)}</IonLabel>
                                             </IonLabel>
                                         </IonItem>
-                                        {/*<IonImg alt="image" src={(res.photo && true && res.photo !== '') ? res.photo : img}/>*/}
                                         <IonGrid>
                                             <IonRow>
                                                 <IonCol size="6">
@@ -273,19 +268,19 @@ class Actualite extends React.Component<any, any> {
                                         </IonGrid>
                                         <IonChip color="dark" className={"actualite-date-chip"} mode={"ios"}>
                                             <IonIcon icon={alarmOutline} color="dark"/>
-                                            <IonLabel>{res.dateAdd ? (res.dateAdd.split('T')[0].split('-').reverse().join('-') + ' - ' + res.dateAdd.split('T')[1].slice(0, 5)) : 'A confirmer'}</IonLabel>
+                                            <IonLabel>{res.dateAdd}</IonLabel>
                                         </IonChip>
-                                        <IonSegment
-                                            onIonChange={e => this.addVote(HTTP_BASE_URL + '/api/actualite/vote/' + res.id, e.detail.value === 'marina')}>
+                                        <IonSegment color={!res.actu.isOk ? "default" : "danger"}
+                                                    onIonChange={e => this.addVote(HTTP_BASE_URL + '/api/actualite/vote/' + res.id, e.detail.value === 'marina')}>
                                             <IonSegmentButton value="marina">
                                                 <IonIcon icon={thumbsUpOutline}/>
                                                 <IonLabel>Marina</IonLabel> <IonBadge
-                                                color="primary">{marina}</IonBadge>
+                                                color="primary">{res.vote.marina}</IonBadge>
                                             </IonSegmentButton>
                                             <IonSegmentButton value="diso">
                                                 <IonIcon icon={thumbsDownOutline}/>
                                                 <IonLabel>Diso</IonLabel> <IonBadge
-                                                color="primary">{diso}</IonBadge>
+                                                color="primary">{res.vote.diso}</IonBadge>
                                             </IonSegmentButton>
                                         </IonSegment>
                                     </IonCard>
@@ -293,18 +288,18 @@ class Actualite extends React.Component<any, any> {
                             })
                         }
                     </IonList>
-                    <IonInfiniteScroll threshold="100px" ref={this.ionInfiniteScrollRef}
+                    <IonInfiniteScroll threshold="20px"
+                                       ref={this.ionInfiniteScrollRef}
                                        onIonInfinite={(e) => this.loadMoreItems(e)}>
                         <IonInfiniteScrollContent
                             loadingSpinner="bubbles"
                             loadingText="Loading more data...">
                         </IonInfiniteScrollContent>
                     </IonInfiniteScroll>
-                    {/*<IonButton expand="full" onClick={() => this.push()}>Register for Push</IonButton>*/}
-                    <IonFab vertical="center" onClick={(e) => {
+                    <IonFab onClick={(e) => {
                         e.preventDefault();
                         this.onRedirect()
-                    }} horizontal="end" slot="fixed">
+                    }} vertical="bottom" horizontal="end" slot="fixed">
                         <IonFabButton>
                             <IonIcon icon={add}/>
                         </IonFabButton>
