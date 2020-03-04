@@ -22,7 +22,8 @@ import {
     IonImg,
     IonItem,
     IonAvatar,
-    IonList, IonLoading,
+    IonList,
+    IonLoading,
 } from '@ionic/react';
 import './Actualite.css';
 import {RefresherEventDetail} from '@ionic/core';
@@ -39,9 +40,13 @@ import {
 import Axios from 'axios';
 import HTTP_BASE_URL from '../../Constant/HttpConstant';
 import img from "../../assets/emboutaka.png";
-import {Plugins} from "@capacitor/core";
+import {Plugins, PushNotification, PushNotificationToken, PushNotificationActionPerformed} from '@capacitor/core';
 
-const {Storage} = Plugins;
+const {Storage, PushNotifications} = Plugins;
+
+const INITIAL_STATE = {
+    notifications: [{id: 'id', title: "Test Push", body: "This is my first push notification"}],
+};
 
 /**
  * Class actualite ,
@@ -60,6 +65,7 @@ class Actualite extends React.Component<any, any> {
                 isShow: false,
                 message: ''
             },
+            pushNotification: {...INITIAL_STATE}
         };
     }
 
@@ -107,6 +113,57 @@ class Actualite extends React.Component<any, any> {
 
     onRedirect() {
         this.props.history.push('/addActu');
+    }
+
+    // TODO implement notification push
+    push() {
+        // Register with Apple / Google to receive push via APNS/FCM
+        PushNotifications.register().then();
+
+        // On succcess, we should be able to receive notifications
+        PushNotifications.addListener('registration',
+            (token: PushNotificationToken) => {
+                alert('Push registration success, token: ' + token.value);
+            }
+        );
+
+        // Some issue with your setup and push will not work
+        PushNotifications.addListener('registrationError',
+            (error: any) => {
+                alert('Error on registration: ' + JSON.stringify(error));
+            }
+        );
+
+        // Show us the notification payload if the app is open on our device
+        PushNotifications.addListener('pushNotificationReceived',
+            (notification: PushNotification) => {
+                let notif = this.state.pushNotification.notifications;
+                notif.push({id: notification.id, title: notification.title, body: notification.body});
+                this.setState({
+                    pushNotification: {
+                        notifications: notif
+                    }
+                })
+            }
+        );
+
+        // Method called when tapping on a notification
+        PushNotifications.addListener('pushNotificationActionPerformed',
+            (notification: PushNotificationActionPerformed) => {
+                let notif = this.state.pushNotification.notifications;
+                notif.push({
+                    id: notification.notification.data.id,
+                    title: notification.notification.data.title,
+                    body: notification.notification.data.body
+                });
+
+                this.setState({
+                    pushNotification: {
+                        notifications: notif
+                    }
+                })
+            }
+        );
     }
 
     addVote(uri: any, value: any) {
@@ -205,7 +262,7 @@ class Actualite extends React.Component<any, any> {
                                         </IonGrid>
                                         <IonChip color="dark" className={"actualite-date-chip"} mode={"ios"}>
                                             <IonIcon icon={alarmOutline} color="dark"/>
-                                            <IonLabel>{res.dateAdd ? (res.dateAdd.split('T')[0] + ' - ' + res.dateAdd.split('T')[1].slice(0, 5)) : 'A confirmer'}</IonLabel>
+                                            <IonLabel>{res.dateAdd ? (res.dateAdd.split('T')[0].split('-').reverse().join('-') + ' - ' + res.dateAdd.split('T')[1].slice(0, 5)) : 'A confirmer'}</IonLabel>
                                         </IonChip>
                                         <IonSegment
                                             onIonChange={e => this.addVote(HTTP_BASE_URL + '/api/actualite/vote/' + res.id, e.detail.value === 'marina')}>
@@ -225,6 +282,7 @@ class Actualite extends React.Component<any, any> {
                             })
                         }
                     </IonList>
+                    {/*<IonButton expand="full" onClick={() => this.push()}>Register for Push</IonButton>*/}
                     <IonFab vertical="center" onClick={(e) => {
                         e.preventDefault();
                         this.onRedirect()
