@@ -105,7 +105,7 @@ class Offre extends React.Component<any, any> {
                                 <IonItem key={item.id}>
                                     <img alt="profile" style={{width: "45px", height: "45px"}} src={img}/>
                                     <IonLabel>
-                                        <h2>{item.user ? (item.user.name ? item.user.name : 'Signaleo') : 'Signaleo'}</h2>
+                                        <h2>{item.user}</h2>
                                         <IonChip color="primary">
                                             <IonIcon icon={location} color="primary"/>
                                             <IonLabel className={"ion-text-wrap"}>{item.depart}</IonLabel>&nbsp;
@@ -116,7 +116,7 @@ class Offre extends React.Component<any, any> {
                                         <p>
                                             <IonChip color="warning">
                                                 <IonIcon icon={alarmOutline} color="dark"/>
-                                                <IonLabel>{item.dateDepart ? item.dateDepart.split('T')[0] + ' ' + item.dateDepart.split('T')[1].substring(0, 5) : 'Androany'}</IonLabel>
+                                                <IonLabel>{item.dateDepart}</IonLabel>
                                             </IonChip>
                                             <IonChip color="warning">
                                                 <IonIcon icon={people} color="dark"/>
