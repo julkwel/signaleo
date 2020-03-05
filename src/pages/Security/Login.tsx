@@ -114,7 +114,7 @@ export default class Login extends React.Component<any, any> {
     async setStorage(res: any) {
         await Storage.set({
             key: 'user',
-            value: res.data.user
+            value: JSON.stringify(res.data.user)
         });
     }
 

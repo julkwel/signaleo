@@ -1,54 +1,32 @@
-import React, {useState} from 'react';
+import React, {useState} from "react";
 import {
-    IonPage,
-    IonDatetime,
-    IonContent,
-    IonCard,
     IonButton,
-    IonAlert,
+    IonCard,
     IonCardTitle,
-    useIonViewWillEnter, IonList
-} from '@ionic/react';
-import Header from '../../../components/Navigation/Header';
-import Axios from 'axios';
-import HTTP_BASE_URL from '../../../Constant/HttpConstant';
-import {useHistory} from 'react-router';
+    IonContent, IonDatetime, IonList, IonPage, useIonViewWillEnter,
+} from "@ionic/react";
+import Header from "../../../components/Navigation/Header";
+import Axios from "axios";
+import HTTP_BASE_URL from "../../../Constant/HttpConstant";
+import {useHistory} from "react-router";
+import AsyncCreatableSelect from 'react-select/async-creatable';
 import {Plugins} from "@capacitor/core";
-import AsyncCreatableSelect from "react-select/async-creatable";
 
-const AddOffre: React.FC = () => {
-    const [depart, setDepart] = useState('');
+/**
+ * Add proposition covoiturage
+ *
+ * @constructor
+ */
+const AddProposition: React.FC = () => {
+    const [frais, setFrais] = useState('');
     const [arrive, setArrive] = useState('');
-    const [user, setUser] = useState('');
-    const [dateDepart, setDateDepart] = useState('');
+    const [depart, setDepart] = useState('');
+    const [nombreDePlace, setNombreDePlace] = useState('');
     const [contact, setContact] = useState('');
+    const [dateDepart, setDateDepart] = useState('');
+    const [userId, setUser] = useState('');
     const history = useHistory();
-    const [alert, setAlert] = useState({isOpen: false, message: ''});
     const {Storage} = Plugins;
-
-    const submit = () => {
-        Axios.post(HTTP_BASE_URL + '/api/zambaento/manage', {
-            depart: depart,
-            arrive: arrive,
-            dateDepart: dateDepart,
-            userId: user,
-            contact: contact
-        }).then((data) => {
-            if ('success' === data.data.message) {
-                setAlert({
-                    isOpen: true,
-                    message: 'Voaray ny fangatahana !'
-                });
-
-                history.push('/offre');
-            } else {
-                setAlert({
-                    isOpen: true,
-                    message: 'Misy olana ny tolotra!'
-                })
-            }
-        })
-    };
 
     useIonViewWillEnter(() => {
         Storage.get({key: 'user'}).then((res) => {
@@ -61,15 +39,33 @@ const AddOffre: React.FC = () => {
         });
     });
 
+    let data = {
+        userId: userId,
+        destination: arrive,
+        depart: depart,
+        nombreDePlace: nombreDePlace,
+        contact: contact,
+        frais: frais,
+        dateDepart: dateDepart
+    };
+
+    const submit = () => {
+        Axios.post(HTTP_BASE_URL + '/api/offre/manage', data).then(res => {
+            if (res.data.status === 'success') {
+                history.push('/offre');
+            }
+        })
+    };
+
     const promiseOptions = (inputValue: any) => Axios.post(HTTP_BASE_URL + '/api/actualite/fokontany/find', {search: inputValue}).then(res => {
         return res.data.data;
     });
 
-    const handleContact = (e: any) => {
+    const handleValue = (e: any) => {
         return e.target.value;
     };
 
-    const handleDateDepart = (e: any) => {
+    const handleDate = (e: any) => {
         return e.detail.value;
     };
 
@@ -77,15 +73,13 @@ const AddOffre: React.FC = () => {
         return e.value;
     };
 
-
     return (
         <IonPage>
-            <IonContent>
+            <IonContent fullscreen>
                 <Header/>
-                <IonAlert mode={"ios"} isOpen={alert.isOpen} message={alert.message}/>
                 <IonCard mode={"ios"}>
                     <IonCardTitle>
-                        <h2 color={"primary"} className={"text-center"}>Hitady mpitondra</h2>
+                        <h2 color={"primary"} className={"text-center title-text"}>Hitondra olona</h2>
                     </IonCardTitle>
                     <div>
                         <form onSubmit={(e: any) => {
@@ -97,8 +91,8 @@ const AddOffre: React.FC = () => {
                                 <div className={"mt-2 p-1"}>
                                     <AsyncCreatableSelect
                                         defaultOptions
-                                        cacheOptions
                                         required
+                                        cacheOptions
                                         placeholder={"Toerana hiaingana"}
                                         styles={{
                                             menu: provided => ({...provided, zIndex: 9999})
@@ -109,10 +103,10 @@ const AddOffre: React.FC = () => {
                                 </div>
                                 <div className={"mt-2 p-1"}>
                                     <AsyncCreatableSelect
+                                        required
                                         defaultOptions
                                         cacheOptions
-                                        required
-                                        placeholder={"Toerana haleha"}
+                                        placeholder={"Toerana aleha"}
                                         styles={{
                                             menu: provided => ({...provided, zIndex: 9999})
                                         }}
@@ -121,18 +115,32 @@ const AddOffre: React.FC = () => {
                                     />
                                 </div>
                                 <div className={"form-group mt-2 p-1"}>
-                                    <input type="text"
+                                    <input type="text" placeholder={"Isan'ny toerana malalaka"}
                                            required
-                                           placeholder={"Contact"}
+                                           value={nombreDePlace}
                                            className={"form-control"}
-                                           onChange={(e) => setContact(handleContact(e))}/>
+                                           onChange={(e) => setNombreDePlace(handleValue(e))}/>
                                 </div>
                                 <div className={"form-group mt-2 p-1"}>
-                                    <IonDatetime className={"form-control"}
-                                                 placeholder={"Lera Hiaingana"}
+                                    <input name="frais"
+                                           className={"form-control"}
+                                           required
+                                           placeholder={"Frais"}
+                                           value={frais}
+                                           onChange={(e) => setFrais(handleValue(e))}/>
+                                </div>
+                                <div className={"form-group mt-2 p-1"}>
+                                    <input className={"form-control"} name="contact"
+                                           required
+                                           value={contact}
+                                           placeholder={"Contact"}
+                                           onChange={(e) => setContact(handleValue(e))}/>
+                                </div>
+                                <div className={"form-group mt-2 p-1"}>
+                                    <IonDatetime placeholder={"Lera hiaingana"} className={"form-control"}
                                                  displayFormat="YYYY-MM-DDTHH:mm"
                                                  min={new Date().toISOString().slice(0, 10)}
-                                                 onIonChange={(e) => setDateDepart(handleDateDepart(e))}/>
+                                                 onIonChange={(e) => setDateDepart(handleDate(e))}/>
                                 </div>
                                 <div className={"form-group p-1"}>
                                     <IonButton color="primary" expand="block" type="submit">Alefa</IonButton>
@@ -146,4 +154,4 @@ const AddOffre: React.FC = () => {
     )
 }
 
-export default AddOffre;
+export default AddProposition;

@@ -1,44 +1,60 @@
 import React from 'react';
 import {
+    IonChip,
     IonContent,
-    IonPage,
     IonFab,
     IonFabButton,
-    IonIcon,
+    IonIcon, IonInfiniteScroll, IonInfiniteScrollContent,
     IonItem,
-    IonLabel,
-    IonChip, IonRefresherContent, IonRefresher, withIonLifeCycle, IonLoading
+    IonLabel, IonLoading,
+    IonPage,
+    IonRefresher,
+    IonRefresherContent,
+    withIonLifeCycle
 } from '@ionic/react';
 import './Offre.css';
-import Header from '../../components/Navigation/Header';
+import Header from "../../components/Navigation/Header";
 import {
     add,
     alarmOutline,
     ellipsisHorizontalOutline,
-    location,
-    phonePortraitOutline,
-} from 'ionicons/icons';
-import Axios from 'axios';
-import HTTP_BASE_URL from '../../Constant/HttpConstant';
-import img from "./assets/covoiturage.png";
-import {RefresherEventDetail} from "@ionic/core";
+    location, people,
+    phonePortraitOutline, wallet
+} from "ionicons/icons";
+import Axios from "axios";
+import HTTP_BASE_URL from "../../Constant/HttpConstant";
 import {Plugins} from "@capacitor/core";
+import img from "../../assets/covoiturage.png";
+import {RefresherEventDetail} from "@ionic/core";
 
 const {Storage} = Plugins;
 
 /**
- * Manage onUserDemande
+ * Handle all offre data
  */
-class ZaMbaEnto extends React.Component<any, any> {
+class Offre extends React.Component<any, any> {
+    ionInfiniteScrollRef: React.RefObject<HTMLIonInfiniteScrollElement>;
+
     constructor(props: any) {
         super(props);
+        this.ionInfiniteScrollRef = React.createRef<HTMLIonInfiniteScrollElement>();
+
         this.state = {
+            listOffre: [],
             showLoading: true,
-            zambaento: [],
-            user: '',
         };
 
-        this.getData = this.getData.bind(this)
+        this.getData = this.getData.bind(this);
+    }
+
+    loadMoreItems(e: any) {
+        this.getData(this.state.page + 10);
+
+        (e.target as HTMLIonInfiniteScrollElement).complete().then(() => {
+            this.setState({
+                page: this.state.page + 10
+            })
+        });
     }
 
     doRefresh(event: CustomEvent<RefresherEventDetail>) {
@@ -48,32 +64,10 @@ class ZaMbaEnto extends React.Component<any, any> {
         }, 2000);
     }
 
-    onAddDemande = () => {
-        this.props.history.push('/offreAdd');
-    };
-
-    /**
-     * Get data from server
-     */
-    getData = () => {
-        Axios.post(HTTP_BASE_URL + '/api/zambaento/list').then((data) => {
-            if ((data.data.data.length !== 0) && (this.state.zambaento.length !== data.data.data.length)) {
-                this.setState({
-                    zambaento: data.data.data
-                });
-
-                if (this.state.zambaento.length !== 0) {
-                    this.setState({
-                        showLoading: false
-                    })
-                }
-            }
-        })
-    };
-
     async getUser() {
         const ret = await Storage.get({key: 'user'});
         const user = JSON.parse(ret && ret.value ? ret.value : '{"user":null}');
+
         if (user.id) {
             this.setState({
                 user: user
@@ -83,14 +77,31 @@ class ZaMbaEnto extends React.Component<any, any> {
         }
     }
 
+    onRedirect() {
+        this.props.history.push('/addOffre');
+    }
+
+    getData(page: any = 0) {
+        let form = new FormData();
+        form.append('limit', page);
+
+        Axios.post(HTTP_BASE_URL + '/api/offre/list', form).then(res => {
+            this.setState({
+                listOffre: res.data.message
+            });
+
+            if (this.state.listOffre.length !== 0) {
+                this.setState({
+                    showLoading: false,
+                })
+            }
+        })
+    }
+
     ionViewWillEnter() {
         this.getUser().then((res: any) => {
             this.getData();
         });
-    }
-
-    componentDidUpdate(prevProps: Readonly<any>, prevState: Readonly<any>, snapshot?: any): void {
-        this.getData()
     }
 
     render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | React.ReactNodeArray | React.ReactPortal | boolean | null | undefined {
@@ -106,30 +117,37 @@ class ZaMbaEnto extends React.Component<any, any> {
                         message={'Mahandrasa kely azafady ...'}
                     />
                     {
-                        this.state.zambaento.map((item: any) => {
+                        this.state.listOffre.map((item: any) => {
                             return (
                                 <IonItem key={item.id}>
                                     <img alt="profile" style={{width: "45px", height: "45px"}} src={img}/>
                                     <IonLabel>
-                                        <h2>Mba ho
-                                            ento {item.user ? (item.user.name ? item.user.name : 'Aho') : 'Aho'}</h2>
+                                        <h2>{item.user}</h2>
                                         <IonChip color="primary">
                                             <IonIcon icon={location} color="primary"/>
-                                            <IonLabel>{item.depart}</IonLabel>&nbsp;
+                                            <IonLabel className={"ion-text-wrap"}>{item.depart}</IonLabel>&nbsp;
                                             <IonIcon icon={ellipsisHorizontalOutline}/>&nbsp;
                                             <IonIcon icon={location} color="success"/>
-                                            <IonLabel>{item.arrive}</IonLabel>
+                                            <IonLabel className={"ion-text-wrap"}>{item.arrive}</IonLabel>
                                         </IonChip>
                                         <p>
                                             <IonChip color="warning">
                                                 <IonIcon icon={alarmOutline} color="dark"/>
-                                                <IonLabel>{item.dateDepart.split('T')[0] + ' ' + item.dateDepart.split('T')[1].substring(0, 5)}</IonLabel>
+                                                <IonLabel>{item.dateDepart}</IonLabel>
+                                            </IonChip>
+                                            <IonChip color="warning">
+                                                <IonIcon icon={people} color="dark"/>
+                                                <IonLabel>{item.nombreDePlace}</IonLabel>
                                             </IonChip>
                                         </p>
                                         <p>
                                             <IonChip color="warning">
+                                                <IonIcon icon={wallet} color="dark"/>
+                                                <IonLabel>{item.frais}</IonLabel>
+                                            </IonChip>
+                                            <IonChip color="warning">
                                                 <IonIcon icon={phonePortraitOutline} color="dark"/>
-                                                <IonLabel>{item.contact ? item.contact : 'Signaleo'}</IonLabel>
+                                                <IonLabel>{item.contact}</IonLabel>
                                             </IonChip>
                                         </p>
                                     </IonLabel>
@@ -137,8 +155,18 @@ class ZaMbaEnto extends React.Component<any, any> {
                             )
                         })
                     }
-                    <IonFab vertical="center" onClick={() => {
-                        this.onAddDemande()
+                    <IonInfiniteScroll threshold="20px"
+                                       ref={this.ionInfiniteScrollRef}
+                                       onIonInfinite={(e) => this.loadMoreItems(e)}>
+                        <IonInfiniteScrollContent
+                            loadingSpinner="bubbles"
+                            loadingText="Loading more data...">
+                        </IonInfiniteScrollContent>
+                    </IonInfiniteScroll>
+
+                    <IonFab vertical="bottom" onClick={(e) => {
+                        e.preventDefault();
+                        this.onRedirect()
                     }} horizontal="end" slot="fixed">
                         <IonFabButton>
                             <IonIcon icon={add}/>
@@ -150,4 +178,4 @@ class ZaMbaEnto extends React.Component<any, any> {
     }
 }
 
-export default withIonLifeCycle(ZaMbaEnto);
+export default withIonLifeCycle(Offre);
