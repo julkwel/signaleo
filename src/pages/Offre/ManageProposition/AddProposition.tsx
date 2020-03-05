@@ -3,7 +3,7 @@ import {
     IonButton,
     IonCard,
     IonCardTitle,
-    IonContent, IonDatetime, IonList, IonPage, useIonViewWillEnter,
+    IonContent, IonDatetime, IonList, IonLoading, IonPage, useIonViewWillEnter,
 } from "@ionic/react";
 import Header from "../../../components/Navigation/Header";
 import Axios from "axios";
@@ -25,6 +25,7 @@ const AddProposition: React.FC = () => {
     const [contact, setContact] = useState('');
     const [dateDepart, setDateDepart] = useState('');
     const [userId, setUser] = useState('');
+    const [showLoading, setShowLoading] = useState(false);
     const history = useHistory();
     const {Storage} = Plugins;
 
@@ -50,10 +51,13 @@ const AddProposition: React.FC = () => {
     };
 
     const submit = () => {
+        setShowLoading(true);
         Axios.post(HTTP_BASE_URL + '/api/offre/manage', data).then(res => {
             if (res.data.status === 'success') {
                 history.push('/offre');
             }
+
+            setShowLoading(false)
         })
     };
 
@@ -77,6 +81,10 @@ const AddProposition: React.FC = () => {
         <IonPage>
             <IonContent fullscreen>
                 <Header/>
+                <IonLoading
+                    isOpen={showLoading}
+                    message={'Mahandrasa kely azafady ...'}
+                />
                 <IonCard mode={"ios"}>
                     <IonCardTitle>
                         <h2 color={"primary"} className={"text-center title-text"}>Hitondra olona</h2>

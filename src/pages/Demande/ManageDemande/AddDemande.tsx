@@ -7,7 +7,7 @@ import {
     IonButton,
     IonAlert,
     IonCardTitle,
-    useIonViewWillEnter, IonList
+    useIonViewWillEnter, IonList, IonLoading
 } from '@ionic/react';
 import Header from '../../../components/Navigation/Header';
 import Axios from 'axios';
@@ -24,9 +24,11 @@ const AddDemande: React.FC = () => {
     const [contact, setContact] = useState('');
     const history = useHistory();
     const [alert, setAlert] = useState({isOpen: false, message: ''});
+    const [showLoading, setShowLoading] = useState(false);
     const {Storage} = Plugins;
 
     const submit = () => {
+        setShowLoading(true);
         Axios.post(HTTP_BASE_URL + '/api/zambaento/manage', {
             depart: depart,
             arrive: arrive,
@@ -40,12 +42,15 @@ const AddDemande: React.FC = () => {
                     message: 'Voaray ny fangatahana !'
                 });
 
+                setShowLoading(false);
                 history.push('/demande');
             } else {
                 setAlert({
                     isOpen: true,
                     message: 'Misy olana ny tolotra!'
-                })
+                });
+
+                setShowLoading(false)
             }
         })
     };
@@ -82,6 +87,10 @@ const AddDemande: React.FC = () => {
         <IonPage>
             <IonContent>
                 <Header/>
+                <IonLoading
+                    isOpen={showLoading}
+                    message={'Mahandrasa kely azafady ...'}
+                />
                 <IonAlert mode={"ios"} isOpen={alert.isOpen} message={alert.message}/>
                 <IonCard mode={"ios"}>
                     <IonCardTitle>
