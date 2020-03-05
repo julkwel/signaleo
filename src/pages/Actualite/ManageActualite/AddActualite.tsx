@@ -9,7 +9,7 @@ import {
     IonAlert,
     useIonViewWillEnter,
     IonCardTitle,
-    IonList,
+    IonList, IonLoading,
 } from '@ionic/react';
 import axios from 'axios'
 import {useHistory} from 'react-router';
@@ -32,6 +32,7 @@ const AddActualite: React.FC = () => {
     const [cause, setCause] = useState('');
     const [message, setMessage] = useState('');
     const [photo, setPhoto] = useState('');
+    const [showLoading, setShowLoading] = useState(false);
     const history = useHistory();
     const [user, setUser] = useState('');
     const {Storage} = Plugins;
@@ -55,6 +56,8 @@ const AddActualite: React.FC = () => {
     });
 
     const submit = async () => {
+        setShowLoading(true);
+
         var data = new FormData();
         data.append('image', photo);
         data.append('lieu', lieu);
@@ -67,14 +70,19 @@ const AddActualite: React.FC = () => {
                 isShow: true,
                 message: 'Misaotra nizara !!!'
             });
+
             if (res.status === 200) {
                 history.push('/actualite');
             }
+
+            setShowLoading(false);
         }).catch(reject => {
             setAlert({
                 isShow: true,
-                message: 'Une erreur c\'est produite'
+                message: 'Misy olana ny signaleo'
             });
+
+            setShowLoading(false);
         });
     };
 
@@ -112,6 +120,11 @@ const AddActualite: React.FC = () => {
         <IonPage>
             <IonContent fullscreen>
                 <Header/>
+                <IonLoading
+                    isOpen={showLoading}
+                    message={'Mahandrasa kely azafady ...'}
+                />
+
                 <IonAlert mode={"ios"} isOpen={alert.isShow} message={alert.message}/>
                 <IonCard mode={"ios"}>
                     <IonCardTitle>
