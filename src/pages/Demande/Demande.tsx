@@ -7,7 +7,13 @@ import {
     IonIcon,
     IonItem,
     IonLabel,
-    IonChip, IonRefresherContent, IonRefresher, withIonLifeCycle, IonLoading
+    IonChip,
+    IonRefresherContent,
+    IonRefresher,
+    withIonLifeCycle,
+    IonLoading,
+    IonInfiniteScrollContent,
+    IonInfiniteScroll
 } from '@ionic/react';
 import './Demande.css';
 import Header from '../../components/Navigation/Header';
@@ -30,12 +36,17 @@ const {Storage} = Plugins;
  * Manage onUserDemande
  */
 class Demande extends React.Component<any, any> {
+    ionInfiniteScrollRef: React.RefObject<HTMLIonInfiniteScrollElement>;
+
     constructor(props: any) {
         super(props);
+        this.ionInfiniteScrollRef = React.createRef<HTMLIonInfiniteScrollElement>();
+
         this.state = {
             showLoading: true,
             zambaento: [],
             user: '',
+            page: 0,
         };
 
         this.getData = this.getData.bind(this)
@@ -55,8 +66,11 @@ class Demande extends React.Component<any, any> {
     /**
      * Get data from server
      */
-    getData = () => {
-        Axios.post(HTTP_BASE_URL + '/api/zambaento/list').then((data) => {
+    getData = (page: any = 0) => {
+        let form = new FormData();
+        form.append('limit', page);
+
+        Axios.post(HTTP_BASE_URL + '/api/zambaento/list', form).then((data) => {
             this.setState({
                 zambaento: data.data.data
             });
@@ -68,6 +82,16 @@ class Demande extends React.Component<any, any> {
             }
         })
     };
+
+    loadMoreItems(e: any) {
+        this.getData(this.state.page + 10);
+
+        (e.target as HTMLIonInfiniteScrollElement).complete().then(() => {
+            this.setState({
+                page: this.state.page + 10
+            })
+        });
+    }
 
     async getUser() {
         const ret = await Storage.get({key: 'user'});
@@ -82,7 +106,7 @@ class Demande extends React.Component<any, any> {
     }
 
     async ionViewWillEnter() {
-       await this.getUser().then((res: any) => {
+        await this.getUser().then((res: any) => {
             this.getData();
         });
     }
@@ -123,7 +147,7 @@ class Demande extends React.Component<any, any> {
                                         <p>
                                             <IonChip color="warning">
                                                 <IonIcon icon={phonePortraitOutline} color="dark"/>
-                                                <IonLabel>{item.contact}</IonLabel>
+                                                <IonLabel>{item.contact ? item.contact : 'Signaleo'}</IonLabel>
                                             </IonChip>
                                         </p>
                                     </IonLabel>
@@ -131,7 +155,15 @@ class Demande extends React.Component<any, any> {
                             )
                         })
                     }
-                    <IonFab vertical="center" onClick={() => {
+                    <IonInfiniteScroll threshold="20px"
+                                       ref={this.ionInfiniteScrollRef}
+                                       onIonInfinite={(e) => this.loadMoreItems(e)}>
+                        <IonInfiniteScrollContent
+                            loadingSpinner="bubbles"
+                            loadingText="Loading more data...">
+                        </IonInfiniteScrollContent>
+                    </IonInfiniteScroll>
+                    <IonFab vertical="bottom" onClick={() => {
                         this.onAddDemande()
                     }} horizontal="end" slot="fixed">
                         <IonFabButton>

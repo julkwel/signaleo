@@ -177,7 +177,6 @@ class Actualite extends React.Component<any, any> {
     }
 
     loadMoreItems(e: any) {
-        console.log(this.state.page);
         this.getData(this.state.page + 10);
 
         (e.target as HTMLIonInfiniteScrollElement).complete().then(() => {
@@ -242,7 +241,7 @@ class Actualite extends React.Component<any, any> {
                                             </IonThumbnail>
                                             <IonLabel>
                                                 <h2>
-                                                    <IonCardSubtitle>{res.user ? (res.user.name ? res.user.name.charAt(0).toUpperCase() + res.user.name.slice(1) : 'Signaleo') : 'Signaleo'}</IonCardSubtitle>
+                                                    <IonCardSubtitle>{res.user.name.charAt(0).toUpperCase() + res.user.name.slice(1)}</IonCardSubtitle>
                                                 </h2>
                                                 <IonLabel
                                                     className={"ion-text-wrap"}>{res.message.charAt(0).toUpperCase() + res.message.slice(1)}</IonLabel>
@@ -252,7 +251,8 @@ class Actualite extends React.Component<any, any> {
                                             <IonRow>
                                                 <IonCol size="6">
                                                     <IonChip color={res.type === "Accident" ? "danger" : "primary"}>
-                                                        <IonIcon icon={location} color="primary"/>
+                                                        <IonIcon icon={location}
+                                                                 color={res.type === "Accident" ? "danger" : "primary"}/>
                                                         <IonLabel>{res.lieu.charAt(0).toUpperCase() + res.lieu.slice(1)}</IonLabel>
                                                     </IonChip>
                                                 </IonCol>

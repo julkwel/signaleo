@@ -4,7 +4,7 @@ import {
     IonContent,
     IonFab,
     IonFabButton,
-    IonIcon,
+    IonIcon, IonInfiniteScroll, IonInfiniteScrollContent,
     IonItem,
     IonLabel, IonLoading,
     IonPage,
@@ -33,14 +33,28 @@ const {Storage} = Plugins;
  * Handle all offre data
  */
 class Offre extends React.Component<any, any> {
+    ionInfiniteScrollRef: React.RefObject<HTMLIonInfiniteScrollElement>;
+
     constructor(props: any) {
         super(props);
+        this.ionInfiniteScrollRef = React.createRef<HTMLIonInfiniteScrollElement>();
+
         this.state = {
             listOffre: [],
             showLoading: true,
         };
 
         this.getData = this.getData.bind(this);
+    }
+
+    loadMoreItems(e: any) {
+        this.getData(this.state.page + 10);
+
+        (e.target as HTMLIonInfiniteScrollElement).complete().then(() => {
+            this.setState({
+                page: this.state.page + 10
+            })
+        });
     }
 
     doRefresh(event: CustomEvent<RefresherEventDetail>) {
@@ -67,8 +81,11 @@ class Offre extends React.Component<any, any> {
         this.props.history.push('/addOffre');
     }
 
-    getData() {
-        Axios.post(HTTP_BASE_URL + '/api/offre/list').then(res => {
+    getData(page: any = 0) {
+        let form = new FormData();
+        form.append('limit', page);
+
+        Axios.post(HTTP_BASE_URL + '/api/offre/list', form).then(res => {
             this.setState({
                 listOffre: res.data.message
             });
@@ -138,8 +155,16 @@ class Offre extends React.Component<any, any> {
                             )
                         })
                     }
+                    <IonInfiniteScroll threshold="20px"
+                                       ref={this.ionInfiniteScrollRef}
+                                       onIonInfinite={(e) => this.loadMoreItems(e)}>
+                        <IonInfiniteScrollContent
+                            loadingSpinner="bubbles"
+                            loadingText="Loading more data...">
+                        </IonInfiniteScrollContent>
+                    </IonInfiniteScroll>
 
-                    <IonFab vertical="center" onClick={(e) => {
+                    <IonFab vertical="bottom" onClick={(e) => {
                         e.preventDefault();
                         this.onRedirect()
                     }} horizontal="end" slot="fixed">
