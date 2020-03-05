@@ -28,18 +28,18 @@ export class About extends React.Component<any, any> {
                             SIGNALEO DIA :
                             <ul>
                                 <li>
-                                    Signaleo dia application OpenSource natao hifampizarana ireo tranga samy hafa misy
-                                    eny rehetra eny azonao jerena ao amin'ny
+                                    Application OpenSource natao hifampizarana ireo tranga samy hafa misy
+                                    eny rehetra eny azo jerena ao amin'ny
                                     <a href="https://github.com/julkwel/signaleo"> Github </a> ny kaodiny.
                                 </li>
                                 <li>
                                     <IonItem/>
-                                    Ny Signaleo dia tsy tompon'andraikitra ny amin'ireo tranga na SARY izay zarain'ireo
+                                    Tsy tompon'andraikitra ny amin'ireo tranga na SARY izay zarain'ireo
                                     olona mampiasa azy.
                                 </li>
                                 <li>
                                     <IonItem/>
-                                    Ny Signaleo dia tsy mamoaka ary tsy hamoaka velively ny tahirin'olona (données
+                                    Tsy mamoaka ary tsy hamoaka velively ny tahirin'olona (données
                                     d'utilisateur) ato anatiny.
                                 </li>
                             </ul>
