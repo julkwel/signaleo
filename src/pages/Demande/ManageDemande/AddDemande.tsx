@@ -16,7 +16,7 @@ import {useHistory} from 'react-router';
 import {Plugins} from "@capacitor/core";
 import AsyncCreatableSelect from "react-select/async-creatable";
 
-const AddOffre: React.FC = () => {
+const AddDemande: React.FC = () => {
     const [depart, setDepart] = useState('');
     const [arrive, setArrive] = useState('');
     const [user, setUser] = useState('');
@@ -146,4 +146,4 @@ const AddOffre: React.FC = () => {
     )
 }
 
-export default AddOffre;
+export default AddDemande;

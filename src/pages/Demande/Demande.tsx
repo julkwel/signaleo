@@ -1,46 +1,44 @@
 import React from 'react';
 import {
-    IonChip,
     IonContent,
+    IonPage,
     IonFab,
     IonFabButton,
     IonIcon,
     IonItem,
-    IonLabel, IonLoading,
-    IonPage,
-    IonRefresher,
-    IonRefresherContent,
-    withIonLifeCycle
+    IonLabel,
+    IonChip, IonRefresherContent, IonRefresher, withIonLifeCycle, IonLoading
 } from '@ionic/react';
 import './Demande.css';
-import Header from "../../components/Navigation/Header";
+import Header from '../../components/Navigation/Header';
 import {
     add,
     alarmOutline,
     ellipsisHorizontalOutline,
-    location, people,
-    phonePortraitOutline, wallet
-} from "ionicons/icons";
-import Axios from "axios";
-import HTTP_BASE_URL from "../../Constant/HttpConstant";
-import {Plugins} from "@capacitor/core";
-import img from "../Offre/assets/covoiturage.png";
+    location,
+    phonePortraitOutline,
+} from 'ionicons/icons';
+import Axios from 'axios';
+import HTTP_BASE_URL from '../../Constant/HttpConstant';
+import img from "../../assets/covoiturage.png";
 import {RefresherEventDetail} from "@ionic/core";
+import {Plugins} from "@capacitor/core";
 
 const {Storage} = Plugins;
 
 /**
- * Handle all offre data
+ * Manage onUserDemande
  */
 class Demande extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
         this.state = {
-            listOffre: [],
             showLoading: true,
+            zambaento: [],
+            user: '',
         };
 
-        this.getData = this.getData.bind(this);
+        this.getData = this.getData.bind(this)
     }
 
     doRefresh(event: CustomEvent<RefresherEventDetail>) {
@@ -50,10 +48,32 @@ class Demande extends React.Component<any, any> {
         }, 2000);
     }
 
+    onAddDemande = () => {
+        this.props.history.push('/addDemande');
+    };
+
+    /**
+     * Get data from server
+     */
+    getData = () => {
+        Axios.post(HTTP_BASE_URL + '/api/zambaento/list').then((data) => {
+            if ((data.data.data.length !== 0) && (this.state.zambaento.length !== data.data.data.length)) {
+                this.setState({
+                    zambaento: data.data.data
+                });
+
+                if (this.state.zambaento.length !== 0) {
+                    this.setState({
+                        showLoading: false
+                    })
+                }
+            }
+        })
+    };
+
     async getUser() {
         const ret = await Storage.get({key: 'user'});
         const user = JSON.parse(ret && ret.value ? ret.value : '{"user":null}');
-
         if (user.id) {
             this.setState({
                 user: user
@@ -63,28 +83,14 @@ class Demande extends React.Component<any, any> {
         }
     }
 
-    onRedirect() {
-        this.props.history.push('/demande');
-    }
-
-    getData() {
-        Axios.post(HTTP_BASE_URL + '/api/offre/list').then(res => {
-            this.setState({
-                listOffre: res.data.message
-            });
-
-            if (this.state.listOffre.length !== 0) {
-                this.setState({
-                    showLoading: false,
-                })
-            }
-        })
-    }
-
     ionViewWillEnter() {
         this.getUser().then((res: any) => {
             this.getData();
         });
+    }
+
+    componentDidUpdate(prevProps: Readonly<any>, prevState: Readonly<any>, snapshot?: any): void {
+        this.getData()
     }
 
     render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | React.ReactNodeArray | React.ReactPortal | boolean | null | undefined {
@@ -100,34 +106,27 @@ class Demande extends React.Component<any, any> {
                         message={'Mahandrasa kely azafady ...'}
                     />
                     {
-                        this.state.listOffre.map((item: any) => {
+                        this.state.zambaento.map((item: any) => {
                             return (
                                 <IonItem key={item.id}>
                                     <img alt="profile" style={{width: "45px", height: "45px"}} src={img}/>
                                     <IonLabel>
-                                        <h2>{item.user ? (item.user.name ? item.user.name : 'Signaleo') : 'Signaleo'}</h2>
+                                        <h2>Mba ho
+                                            ento {item.user ? (item.user.name ? item.user.name : 'Aho') : 'Aho'}</h2>
                                         <IonChip color="primary">
                                             <IonIcon icon={location} color="primary"/>
-                                            <IonLabel className={"ion-text-wrap"}>{item.depart}</IonLabel>&nbsp;
+                                            <IonLabel>{item.depart}</IonLabel>&nbsp;
                                             <IonIcon icon={ellipsisHorizontalOutline}/>&nbsp;
                                             <IonIcon icon={location} color="success"/>
-                                            <IonLabel className={"ion-text-wrap"}>{item.arrive}</IonLabel>
+                                            <IonLabel>{item.arrive}</IonLabel>
                                         </IonChip>
                                         <p>
                                             <IonChip color="warning">
                                                 <IonIcon icon={alarmOutline} color="dark"/>
-                                                <IonLabel>{item.dateDepart ? item.dateDepart.split('T')[0] + ' ' + item.dateDepart.split('T')[1].substring(0, 5) : 'Androany'}</IonLabel>
-                                            </IonChip>
-                                            <IonChip color="warning">
-                                                <IonIcon icon={people} color="dark"/>
-                                                <IonLabel>{item.nombreDePlace}</IonLabel>
+                                                <IonLabel>{item.dateDepart}</IonLabel>
                                             </IonChip>
                                         </p>
                                         <p>
-                                            <IonChip color="warning">
-                                                <IonIcon icon={wallet} color="dark"/>
-                                                <IonLabel>{item.frais}</IonLabel>
-                                            </IonChip>
                                             <IonChip color="warning">
                                                 <IonIcon icon={phonePortraitOutline} color="dark"/>
                                                 <IonLabel>{item.contact}</IonLabel>
@@ -138,10 +137,8 @@ class Demande extends React.Component<any, any> {
                             )
                         })
                     }
-
-                    <IonFab vertical="center" onClick={(e) => {
-                        e.preventDefault();
-                        this.onRedirect()
+                    <IonFab vertical="center" onClick={() => {
+                        this.onAddDemande()
                     }} horizontal="end" slot="fixed">
                         <IonFabButton>
                             <IonIcon icon={add}/>

@@ -63,11 +63,11 @@ class App extends React.Component<any, any> {
                                 <IonLabel>Signaleo</IonLabel>
                                 <IonIcon icon={list}/>
                             </IonTabButton>
-                            <IonTabButton tab="offre" href="/offre">
+                            <IonTabButton tab="demande" href="/demande">
                                 <IonLabel>Mba ho ento</IonLabel>
                                 <IonIcon icon={carSportOutline}/>
                             </IonTabButton>
-                            <IonTabButton tab="listDemande" href="/listDemande">
+                            <IonTabButton tab="offre" href="/offre">
                                 <IonLabel>Hitondra olona</IonLabel>
                                 <IonIcon icon={peopleOutline}/>
                             </IonTabButton>
