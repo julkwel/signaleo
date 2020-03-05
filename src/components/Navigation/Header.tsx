@@ -68,6 +68,8 @@ const Header: React.FC = () => {
                                     Storage.remove({key: 'user'}).then(() => {
                                         history.push('/login');
                                     });
+
+                                    window.location.reload();
                                 }
                             }, {
                                 text: 'A propos',

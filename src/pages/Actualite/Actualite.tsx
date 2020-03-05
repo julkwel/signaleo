@@ -219,6 +219,7 @@ class Actualite extends React.Component<any, any> {
                         <IonRefresherContent/>
                     </IonRefresher>
                     <IonLoading
+                        duration={2000}
                         isOpen={this.state.showLoading}
                         message={'Mahandrasa kely azafady ...'}
                     />
