@@ -270,7 +270,7 @@ class Actualite extends React.Component<any, any> {
                                             <IonIcon icon={alarmOutline} color="dark"/>
                                             <IonLabel>{res.dateAdd}</IonLabel>
                                         </IonChip>
-                                        <IonSegment color={!res.actu.isOk ? "default" : "danger"}
+                                        <IonSegment color={res.actu.isOk ? "default" : "danger"}
                                                     onIonChange={e => this.addVote(HTTP_BASE_URL + '/api/actualite/vote/' + res.id, e.detail.value === 'marina')}>
                                             <IonSegmentButton value="marina">
                                                 <IonIcon icon={thumbsUpOutline}/>
