@@ -74,7 +74,7 @@ const Header: React.FC = () => {
                             }, {
                                 text: 'A propos',
                                 handler: () => {
-                                    console.log('Favorite clicked');
+                                    history.push('/apropos');
                                 }
                             }
                         ]}

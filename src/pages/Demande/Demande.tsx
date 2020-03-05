@@ -129,8 +129,7 @@ class Demande extends React.Component<any, any> {
                                 <IonItem key={item.id}>
                                     <img alt="profile" style={{width: "45px", height: "45px"}} src={img}/>
                                     <IonLabel>
-                                        <h2>Mba ho
-                                            ento {item.user ? (item.user.name ? item.user.name : 'Aho') : 'Aho'}</h2>
+                                        <h2>Mba ho ento {item.user.name.charAt(0).toUpperCase() + item.user.name.slice(1)}</h2>
                                         <IonChip color="primary">
                                             <IonIcon icon={location} color="primary"/>
                                             <IonLabel>{item.depart}</IonLabel>&nbsp;
