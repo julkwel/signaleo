@@ -52,7 +52,7 @@ const AddProposition: React.FC = () => {
     const submit = () => {
         Axios.post(HTTP_BASE_URL + '/api/offre/manage', data).then(res => {
             if (res.data.status === 'success') {
-                history.push('/listDemande');
+                history.push('/offre');
             }
         })
     };

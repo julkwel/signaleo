@@ -57,16 +57,14 @@ class Demande extends React.Component<any, any> {
      */
     getData = () => {
         Axios.post(HTTP_BASE_URL + '/api/zambaento/list').then((data) => {
-            if ((data.data.data.length !== 0) && (this.state.zambaento.length !== data.data.data.length)) {
-                this.setState({
-                    zambaento: data.data.data
-                });
+            this.setState({
+                zambaento: data.data.data
+            });
 
-                if (this.state.zambaento.length !== 0) {
-                    this.setState({
-                        showLoading: false
-                    })
-                }
+            if (this.state.zambaento.length !== 0) {
+                this.setState({
+                    showLoading: false
+                })
             }
         })
     };
@@ -83,14 +81,10 @@ class Demande extends React.Component<any, any> {
         }
     }
 
-    ionViewWillEnter() {
-        this.getUser().then((res: any) => {
+    async ionViewWillEnter() {
+       await this.getUser().then((res: any) => {
             this.getData();
         });
-    }
-
-    componentDidUpdate(prevProps: Readonly<any>, prevState: Readonly<any>, snapshot?: any): void {
-        this.getData()
     }
 
     render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | React.ReactNodeArray | React.ReactPortal | boolean | null | undefined {

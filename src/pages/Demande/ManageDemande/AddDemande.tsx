@@ -40,7 +40,7 @@ const AddDemande: React.FC = () => {
                     message: 'Voaray ny fangatahana !'
                 });
 
-                history.push('/offre');
+                history.push('/demande');
             } else {
                 setAlert({
                     isOpen: true,
