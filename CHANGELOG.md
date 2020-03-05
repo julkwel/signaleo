@@ -1,6 +1,6 @@
 # Version Test - 1 [VT-1]
 
-`- Fix login page`
+`- Fix login page banner`
 
 `- Infinite scroll`
 
@@ -9,3 +9,5 @@
 `- Add loader on data handling`
 
 `- Add user feedback [Malagasy langue,components arrangement]`
+
+`- Handle user on add data`
