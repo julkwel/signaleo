@@ -10,10 +10,12 @@ import {IonRouterOutlet} from "@ionic/react";
 import AddDemande from "../../pages/Demande/ManageDemande/AddDemande";
 import Offre from "../../pages/Offre/Offre";
 import {About} from "../../pages/Signaleo/About";
+import Profile from "../../pages/Security/User/Profile";
 
 export const SignaleoRoute : React.FC = () => {
     return (
         <IonRouterOutlet>
+            <Route path="/profile" component={Profile} exact={true}/>
             <Route path="/apropos" component={About} exact={true}/>
             <Route path="/offre" component={Offre} exact={true}/>
             <Route path="/addOffre" component={AddProposition} exact={true}/>

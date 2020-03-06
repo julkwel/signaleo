@@ -73,10 +73,10 @@ const AddActualite: React.FC = () => {
 
             if (res.status === 200) {
                 history.push('/actualite');
-            }
 
-            setShowLoading(false);
-        }).catch(reject => {
+                setShowLoading(false);
+            }
+        }).catch(() => {
             setAlert({
                 isShow: true,
                 message: 'Misy olana ny signaleo'
@@ -103,7 +103,7 @@ const AddActualite: React.FC = () => {
     };
 
     const handlePhoto = (e: any) => {
-        const maxAllowedSize = 2 * 1024 * 1024;
+        const maxAllowedSize = 10 * 1024 * 1024;
         if (e.target.files[0].size > maxAllowedSize) {
             setAlert({
                 isShow: true,

@@ -25,7 +25,7 @@ import {
     IonLoading,
     IonInfiniteScroll,
     IonInfiniteScrollContent,
-    IonThumbnail,
+    IonAvatar, IonCardContent,
 } from '@ionic/react';
 import './Actualite.css';
 import {RefresherEventDetail} from '@ionic/core';
@@ -33,15 +33,13 @@ import {RefresherEventDetail} from '@ionic/core';
 import Header from '../../components/Navigation/Header';
 import {
     add,
-    alarmOutline,
     car,
     location,
-    thumbsDownOutline,
-    thumbsUpOutline
 } from 'ionicons/icons';
 import Axios from 'axios';
 import HTTP_BASE_URL from '../../Constant/HttpConstant';
 import img from "../../assets/emboutaka.png";
+import avatar from "../../assets/user_avatar.png";
 import {Plugins, PushNotification, PushNotificationToken, PushNotificationActionPerformed} from '@capacitor/core';
 
 const {Storage, PushNotifications} = Plugins;
@@ -234,19 +232,28 @@ class Actualite extends React.Component<any, any> {
                             this.state.actu.map((res: any) => {
                                 return (
                                     <IonCard mode={"ios"} key={res.id}>
-                                        <IonItem>
-                                            <IonThumbnail slot="start">
-                                                <IonImg
-                                                    src={(res.photo && true && res.photo !== '') ? res.photo : img}/>
-                                            </IonThumbnail>
+                                        <IonItem mode={"ios"} lines={"none"}>
                                             <IonLabel>
-                                                <h2>
-                                                    <IonCardSubtitle>{res.user.name.charAt(0).toUpperCase() + res.user.name.slice(1)}</IonCardSubtitle>
-                                                </h2>
+                                                <IonRow>
+                                                    <IonCol size={"3"}>
+                                                        <IonAvatar>
+                                                            <IonImg src={avatar} />
+                                                        </IonAvatar>
+                                                    </IonCol>
+                                                    <IonCol size={"9"}>
+                                                        <IonCardSubtitle>{res.user.name.charAt(0).toUpperCase() + res.user.name.slice(1)}</IonCardSubtitle>
+                                                        <IonChip color="dark" className={"actualite-date-chip"} mode={"ios"}>
+                                                           <span>{res.dateAdd}</span>
+                                                        </IonChip>
+                                                    </IonCol>
+                                                </IonRow>
                                                 <IonLabel
                                                     className={"ion-text-wrap"}>{res.message.charAt(0).toUpperCase() + res.message.slice(1)}</IonLabel>
                                             </IonLabel>
                                         </IonItem>
+                                        <IonCardContent>
+                                            <IonImg src={(res.photo && true && res.photo !== '') ? res.photo : img}/>
+                                        </IonCardContent>
                                         <IonGrid>
                                             <IonRow>
                                                 <IonCol size="6">
@@ -266,21 +273,25 @@ class Actualite extends React.Component<any, any> {
                                                 </IonCol>
                                             </IonRow>
                                         </IonGrid>
-                                        <IonChip color="dark" className={"actualite-date-chip"} mode={"ios"}>
-                                            <IonIcon icon={alarmOutline} color="dark"/>
-                                            <IonLabel>{res.dateAdd}</IonLabel>
-                                        </IonChip>
                                         <IonSegment color={res.actu.isOk ? "default" : "danger"}
-                                                    onIonChange={e => this.addVote(HTTP_BASE_URL + '/api/actualite/vote/' + res.id, e.detail.value === 'marina')}>
-                                            <IonSegmentButton value="marina">
-                                                <IonIcon icon={thumbsUpOutline}/>
-                                                <IonLabel>Marina</IonLabel> <IonBadge
-                                                color="primary">{res.vote.marina}</IonBadge>
+                                                    onIonChange={e => this.addVote(HTTP_BASE_URL + '/api/actualite/vote/' + res.id, e.detail.value)}>
+                                            <IonSegmentButton value="marina" layout="icon-end">
+                                             <span role={"img"} aria-label={"marina"}>   👍</span>
+                                                <IonLabel>
+                                                    <IonBadge color="primary">{res.vote.marina}</IonBadge>
+                                                </IonLabel>
                                             </IonSegmentButton>
-                                            <IonSegmentButton value="diso">
-                                                <IonIcon icon={thumbsDownOutline}/>
-                                                <IonLabel>Diso</IonLabel> <IonBadge
-                                                color="primary">{res.vote.diso}</IonBadge>
+                                            <IonSegmentButton value="diso" layout="icon-end">
+                                             <span role={"img"} aria-label={"diso"}>   👎</span>
+                                                <IonLabel>
+                                                    <IonBadge color="primary">{res.vote.diso}</IonBadge>
+                                                </IonLabel>
+                                            </IonSegmentButton>
+                                            <IonSegmentButton value="haha" layout="icon-end">
+                                                <span role={"img"} aria-label={"haha"}>😆</span>
+                                                <IonLabel>
+                                                    <IonBadge color="primary">{res.vote.haha}</IonBadge>
+                                                </IonLabel>
                                             </IonSegmentButton>
                                         </IonSegment>
                                     </IonCard>

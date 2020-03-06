@@ -5,5 +5,6 @@ ion-content ion-toolbar {
 .actualite-date-chip{
   display: block;
   border-radius: 8px;
-  text-align: center;
+  text-align: left;
+  margin: 0px;
 }
