@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
     IonPage,
     IonItem,
@@ -13,8 +13,8 @@ import {
 import Header from '../../../components/Navigation/Header';
 import Axios from 'axios';
 import HTTP_BASE_URL from '../../../Constant/HttpConstant';
-import {useHistory} from 'react-router';
-import {arrowBack} from "ionicons/icons";
+import { useHistory } from 'react-router';
+import { arrowBack } from "ionicons/icons";
 
 /**
  * User inscription
@@ -25,26 +25,34 @@ const AddUser: React.FC = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [passwordConfirmation, setPasswordConfirmation] = useState('');
     const history = useHistory();
-    const [alert, setAlert] = useState({isOpen: false, message: ''});
+    const [alert, setAlert] = useState({ isOpen: false, message: '' });
 
     const submit = () => {
-        Axios.post(HTTP_BASE_URL + '/add/user/api', {name: name, email: email, password: password}).then((data) => {
-            console.log(data);
-            if ('success' === data.data.message) {
-                setAlert({
-                    isOpen: true,
-                    message: 'Voasoratra ny anaranao , ny login hidiranao dia : ' + email + ' !'
-                });
+        if (password === passwordConfirmation) {
+            Axios.post(HTTP_BASE_URL + '/add/user/api', { name: name, email: email, password: password }).then((data) => {
+                console.log(data);
+                if ('success' === data.data.message) {
+                    setAlert({
+                        isOpen: true,
+                        message: 'Voasoratra ny anaranao , ny login hidiranao dia : ' + email + ' !'
+                    });
 
-                history.push('/login');
-            } else {
-                setAlert({
-                    isOpen: true,
-                    message: 'Misy olana ny signaleo na efa nisy naka ny email : ' + email + ' !'
-                })
-            }
-        })
+                    history.push('/login');
+                } else {
+                    setAlert({
+                        isOpen: true,
+                        message: 'Misy olana ny signaleo na efa nisy naka ny email : ' + email + ' !'
+                    })
+                }
+            })
+        } else {
+            setAlert({
+                isOpen: true,
+                message: 'Tsy mifanaraka ny teny miafina sy ny fanamarinany voasoratra !'
+            })
+        }
     };
 
     const handleName = (e: any) => {
@@ -59,11 +67,17 @@ const AddUser: React.FC = () => {
         return e.target.value;
     };
 
+    const handlePasswordConfirmation = (e: any) => {
+        return e.target.value;
+    }
+
+    // OnDidDismiss set alert state to close, if we not check this event, alert can't show many times.
     return (
         <IonPage>
             <IonContent>
-                <Header/>
-                <IonAlert mode={"ios"} isOpen={alert.isOpen} message={alert.message}/>
+                <Header />
+                <IonAlert mode={"ios"} isOpen={alert.isOpen} message={alert.message}
+                    onDidDismiss={() => setAlert({ isOpen: false, message: '' })} />
                 <IonCard className="dark-orange">
                     <IonCardTitle>
                         <IonTitle color={"primary"} className={"text-center"}>Hisoratra Anarana</IonTitle>
@@ -76,17 +90,22 @@ const AddUser: React.FC = () => {
                             <IonItem>
                                 <IonLabel position="stacked">Anarana</IonLabel>
                                 <IonInput required name="name" value={name}
-                                          onIonChange={(e) => setName(handleName(e))}/>
+                                    onIonChange={(e) => setName(handleName(e))} />
                             </IonItem>
                             <IonItem>
                                 <IonLabel position="stacked">Email</IonLabel>
                                 <IonInput type={"email"} required name="email" value={email}
-                                          onIonChange={(e) => setEmail(handleEmail(e))}/>
+                                    onIonChange={(e) => setEmail(handleEmail(e))} />
                             </IonItem>
                             <IonItem>
                                 <IonLabel position="stacked">Teny miafina</IonLabel>
-                                <IonInput required name="email" value={password}
-                                          onIonChange={(e) => setPassword(handlePassword(e))}/>
+                                <IonInput type={"password"} required name="password" value={password}
+                                    onIonChange={(e) => setPassword(handlePassword(e))} />
+                            </IonItem>
+                            <IonItem>
+                                <IonLabel position="stacked">Fanamarinana ny teny miafina</IonLabel>
+                                <IonInput type={"password"} required name="password_confirmation" value={passwordConfirmation}
+                                    onIonChange={(e) => setPasswordConfirmation(handlePasswordConfirmation(e))} />
                             </IonItem>
                             <IonButton color="primary" expand="block" type="submit">Hisoratra</IonButton>
                         </form>
@@ -100,7 +119,7 @@ const AddUser: React.FC = () => {
                     }}
                     horizontal="end" slot="fixed">
                     <IonFabButton>
-                        <IonIcon icon={arrowBack}/>
+                        <IonIcon icon={arrowBack} />
                     </IonFabButton>
                 </IonFab>
             </IonContent>
