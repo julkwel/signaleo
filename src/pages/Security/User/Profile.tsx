@@ -1,11 +1,12 @@
 import React from "react";
 import {
+    IonAvatar,
     IonCard,
     IonCardContent,
     IonCardHeader,
     IonCardSubtitle,
     IonCardTitle,
-    IonContent,
+    IonContent, IonImg, IonLabel,
     IonPage,
     withIonLifeCycle
 } from "@ionic/react";
@@ -13,6 +14,7 @@ import Header from "../../../components/Navigation/Header";
 import Axios from "axios";
 import HTTP_BASE_URL from "../../../Constant/HttpConstant";
 import {Plugins} from "@capacitor/core";
+import img from '../../../assets/user_avatar.png';
 
 const {Storage} = Plugins;
 
@@ -59,11 +61,17 @@ class Profile extends React.Component<any, any> {
                 <IonContent>
                     <Header/>
                     <IonCard mode={"ios"}>
-                        <IonCardSubtitle>{(this.state.userData && this.state.userData.pseudo) ? this.state.userData.pseudo : 'Signaleo'}</IonCardSubtitle>
-                        <IonCardTitle>{(this.state.userData && this.state.userData.name) ? this.state.userData.name : 'Signaleo'}</IonCardTitle>
                         <IonCardContent>
-                            Keep close to Nature's heart... and break clear away, once in awhile,
-                            and climb a mountain or spend a week in the woods. Wash your spirit clean.
+                            <IonAvatar>
+                                <IonImg
+                                    src={this.state.userData && this.state.userData.photo ? this.state.userData.photo : img}/>
+                            </IonAvatar>
+                            <IonCardSubtitle>{(this.state.userData && this.state.userData.pseudo) ? this.state.userData.pseudo : 'Signaleo'}</IonCardSubtitle>
+                            <IonCardTitle>{(this.state.userData && this.state.userData.name) ? this.state.userData.name : 'Signaleo'}</IonCardTitle>
+                            <IonLabel>
+                                email
+                                : {(this.state.userData && this.state.userData.contact) ? this.state.userData.contact : 'Signaleo'}
+                            </IonLabel>
                         </IonCardContent>
                     </IonCard>
                 </IonContent>
