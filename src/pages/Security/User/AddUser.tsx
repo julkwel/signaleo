@@ -97,34 +97,43 @@ const AddUser: React.FC = () => {
                             submit()
                         }}>
                             <IonLabel position="stacked">Lahy ianao sa vavy</IonLabel>
-                            <IonSelect placeholder={"Lahy ianao sa vavy ? "} className={"form-control"} mode={"ios"}
+                            <IonSelect placeholder={"..."} className={"form-control"} mode={"ios"}
                                        name="type"
                                        onIonChange={(e) => setGender(handleGender(e))}>
                                 <IonSelectOption value="Vavy">Vavy</IonSelectOption>
                                 <IonSelectOption value="Lahy">Lahy</IonSelectOption>
                             </IonSelect>
-                            <IonItem>
+                            <div className={"form-group mt-2 p-1"}>
                                 <IonLabel position="stacked">Anarana</IonLabel>
-                                <IonInput required name="name" value={name}
-                                          onIonChange={(e) => setName(handleName(e))}/>
-                            </IonItem>
-                            <IonItem>
+                                <input type="text"
+                                       required
+                                       className={"form-control"}
+                                       onChange={(e) => setName(handleName(e))}/>
+                            </div>
+                            <div className={"form-group mt-2 p-1"}>
                                 <IonLabel position="stacked">Email</IonLabel>
-                                <IonInput type={"email"} required name="email" value={email}
-                                          onIonChange={(e) => setEmail(handleEmail(e))}/>
-                            </IonItem>
-                            <IonItem>
+                                <input type="text"
+                                       required
+                                       className={"form-control"}
+                                       onChange={(e) => setEmail(handleEmail(e))}/>
+                            </div>
+                            <div className={"form-group mt-2 p-1"}>
                                 <IonLabel position="stacked">Teny miafina</IonLabel>
-                                <IonInput type={"password"} required name="password" value={password}
-                                          onIonChange={(e) => setPassword(handlePassword(e))}/>
-                            </IonItem>
-                            <IonItem>
-                                <IonLabel position="stacked">Fanamarinana ny teny miafina</IonLabel>
-                                <IonInput type={"password"} required name="password_confirmation"
-                                          value={passwordConfirmation}
-                                          onIonChange={(e) => setPasswordConfirmation(handlePasswordConfirmation(e))}/>
-                            </IonItem>
-                            <IonButton color="primary" expand="block" type="submit">Hisoratra</IonButton>
+                                <input type="password"
+                                       required
+                                       className={"form-control"}
+                                       onChange={(e) => setPassword(handlePassword(e))}/>
+                            </div>
+                            <div className={"form-group mt-2 p-1"}>
+                                <IonLabel position="stacked">Fanamafisana teny miafina</IonLabel>
+                                <input type={"password"}
+                                       name="password_confirmation"
+                                       required
+                                       className={"form-control"}
+                                       value={passwordConfirmation}
+                                       onChange={(e) => setPassword(handlePasswordConfirmation(e))}/>
+                            </div>
+                            <IonButton color="primary" expand="full" type="submit">Hisoratra</IonButton>
                         </form>
                     </IonCardContent>
                 </IonCard>

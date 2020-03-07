@@ -5,9 +5,9 @@ import {
     IonCardContent,
     IonCardHeader,
     IonCardSubtitle,
-    IonCardTitle,
-    IonContent, IonImg, IonLabel,
-    IonPage,
+    IonCardTitle, IonCol,
+    IonContent, IonFab, IonFabButton, IonIcon, IonImg, IonLabel,
+    IonPage, IonRow,
     withIonLifeCycle
 } from "@ionic/react";
 import Header from "../../../components/Navigation/Header";
@@ -15,6 +15,7 @@ import Axios from "axios";
 import HTTP_BASE_URL from "../../../Constant/HttpConstant";
 import {Plugins} from "@capacitor/core";
 import img from '../../../assets/user_avatar.png';
+import {add, pencil} from "ionicons/icons";
 
 const {Storage} = Plugins;
 
@@ -62,18 +63,31 @@ class Profile extends React.Component<any, any> {
                     <Header/>
                     <IonCard mode={"ios"}>
                         <IonCardContent>
-                            <IonAvatar>
-                                <IonImg
-                                    src={this.state.userData && this.state.userData.photo ? this.state.userData.photo : img}/>
-                            </IonAvatar>
-                            <IonCardSubtitle>{(this.state.userData && this.state.userData.pseudo) ? this.state.userData.pseudo : 'Signaleo'}</IonCardSubtitle>
-                            <IonCardTitle>{(this.state.userData && this.state.userData.name) ? this.state.userData.name : 'Signaleo'}</IonCardTitle>
+                            <IonRow>
+                                <IonCol size={"3"}>
+                                    <IonAvatar>
+                                        <IonImg src={this.state.userData && this.state.userData.photo ? this.state.userData.photo : img}/>
+                                    </IonAvatar>
+                                </IonCol>
+                                <IonCol size={"9"}>
+                                    <IonCardSubtitle>{(this.state.userData && this.state.userData.pseudo) ? this.state.userData.pseudo : 'Signaleo'}</IonCardSubtitle>
+                                    <IonCardTitle>{(this.state.userData && this.state.userData.name) ? this.state.userData.name : 'Signaleo'}</IonCardTitle>
+                                </IonCol>
+                            </IonRow>
                             <IonLabel>
-                                email
+                                Email
                                 : {(this.state.userData && this.state.userData.contact) ? this.state.userData.contact : 'Signaleo'}
                             </IonLabel>
                         </IonCardContent>
                     </IonCard>
+                    <IonFab vertical="bottom" onClick={(e) => {
+                        e.preventDefault();
+                        this.props.history.push('/inscription')
+                    }} horizontal="end" slot="fixed">
+                        <IonFabButton>
+                            <IonIcon icon={pencil}/>
+                        </IonFabButton>
+                    </IonFab>
                 </IonContent>
             </IonPage>
         )
