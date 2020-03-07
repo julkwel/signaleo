@@ -13,3 +13,7 @@
 .item.sc-ion-label-md-h, .item .sc-ion-label-md-h{
     font-size: 0.6rem;
 }
+
+.tab-selected{
+   background-color:  #3880ff;color: white;
+}

@@ -113,6 +113,7 @@ const AddDemande: React.FC = () => {
                                         styles={{
                                             menu: provided => ({...provided, zIndex: 9999})
                                         }}
+                                        className={"ion-select-custom"}
                                         onChange={(e) => setDepart(handleSelectValue(e))}
                                         loadOptions={promiseOptions}
                                     />
@@ -126,6 +127,7 @@ const AddDemande: React.FC = () => {
                                         styles={{
                                             menu: provided => ({...provided, zIndex: 9999})
                                         }}
+                                        className={"ion-select-custom"}
                                         onChange={(e) => setArrive(handleSelectValue(e))}
                                         loadOptions={promiseOptions}
                                     />
