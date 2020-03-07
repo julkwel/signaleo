@@ -88,6 +88,7 @@ const AddDemande: React.FC = () => {
             <IonContent>
                 <Header/>
                 <IonLoading
+                    mode={"ios"}
                     isOpen={showLoading}
                     message={'Mahandrasa kely azafady ...'}
                 />
@@ -144,7 +145,7 @@ const AddDemande: React.FC = () => {
                                                  onIonChange={(e) => setDateDepart(handleDateDepart(e))}/>
                                 </div>
                                 <div className={"form-group p-1"}>
-                                    <IonButton color="primary" expand="block" type="submit">Alefa</IonButton>
+                                    <IonButton color="primary" expand="full" type="submit">Alefa</IonButton>
                                 </div>
                             </IonList>
                         </form>

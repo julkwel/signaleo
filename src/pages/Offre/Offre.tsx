@@ -113,6 +113,7 @@ class Offre extends React.Component<any, any> {
                         <IonRefresherContent/>
                     </IonRefresher>
                     <IonLoading
+                        mode={"ios"}
                         isOpen={this.state.showLoading}
                         message={'Mahandrasa kely azafady ...'}
                     />

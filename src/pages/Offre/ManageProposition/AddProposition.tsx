@@ -11,6 +11,7 @@ import HTTP_BASE_URL from "../../../Constant/HttpConstant";
 import {useHistory} from "react-router";
 import AsyncCreatableSelect from 'react-select/async-creatable';
 import {Plugins} from "@capacitor/core";
+import AsyncSelect from "react-select/src/Async";
 
 /**
  * Add proposition covoiturage
@@ -82,6 +83,7 @@ const AddProposition: React.FC = () => {
             <IonContent fullscreen>
                 <Header/>
                 <IonLoading
+                    mode={"ios"}
                     isOpen={showLoading}
                     message={'Mahandrasa kely azafady ...'}
                 />
@@ -105,6 +107,7 @@ const AddProposition: React.FC = () => {
                                         styles={{
                                             menu: provided => ({...provided, zIndex: 9999})
                                         }}
+                                        className={"ion-select-custom"}
                                         onChange={(e) => setDepart(handleSelectValue(e))}
                                         loadOptions={promiseOptions}
                                     />
@@ -118,6 +121,7 @@ const AddProposition: React.FC = () => {
                                         styles={{
                                             menu: provided => ({...provided, zIndex: 9999})
                                         }}
+                                        className={"ion-select-custom"}
                                         onChange={(e) => setArrive(handleSelectValue(e))}
                                         loadOptions={promiseOptions}
                                     />
@@ -151,7 +155,9 @@ const AddProposition: React.FC = () => {
                                                  onIonChange={(e) => setDateDepart(handleDate(e))}/>
                                 </div>
                                 <div className={"form-group p-1"}>
-                                    <IonButton color="primary" expand="block" type="submit">Alefa</IonButton>
+                                    <IonButton color="primary"
+                                               expand="full"
+                                               type="submit">Alefa</IonButton>
                                 </div>
                             </IonList>
                         </form>

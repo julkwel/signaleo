@@ -1,10 +1,18 @@
 ion-content ion-toolbar {
-  --background: translucent;
+    --background: translucent;
 }
 
-.actualite-date-chip{
-  display: block;
-  border-radius: 8px;
-  text-align: left;
-  margin: 0px;
+.actualite-date-chip {
+    display: block;
+    border-radius: 8px;
+    text-align: left;
+    margin: 0;
+}
+
+.ion-p-small {
+    font-size: 11px !important;
+}
+
+.ion-segment-actu {
+    border-radius: 0 !important;
 }

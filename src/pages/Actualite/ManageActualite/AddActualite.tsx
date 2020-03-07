@@ -121,6 +121,7 @@ const AddActualite: React.FC = () => {
             <IonContent fullscreen>
                 <Header/>
                 <IonLoading
+                    mode={"ios"}
                     isOpen={showLoading}
                     message={'Mahandrasa kely azafady ...'}
                 />
@@ -134,11 +135,12 @@ const AddActualite: React.FC = () => {
                         <form onSubmit={(e) => {
                             e.preventDefault();
                             submit().then();
-                         }}>
+                        }}>
                             <IonList ion-list lines="full" class="ion-no-margin ion-no-padding">
                                 <IonAlert isOpen={false} message=""/>
                                 <div className={"form-group mt-2 p-1"}>
-                                    <IonSelect placeholder={"Inona no mitrange ?"} className={"form-control"} mode={"ios"} name="type" value={cause}
+                                    <IonSelect placeholder={"Inona no mitranga ?"} className={"form-control"}
+                                               mode={"ios"} name="type" value={cause}
                                                onIonChange={(e) => setCause(handleType(e))}>
                                         <IonSelectOption value="Accident">Accident</IonSelectOption>
                                         <IonSelectOption value="FiaraMaty">Fiara Maty</IonSelectOption>
@@ -151,8 +153,9 @@ const AddActualite: React.FC = () => {
                                         placeholder={"Toerana"}
                                         required
                                         styles={{
-                                            menu: provided => ({...provided, zIndex: 9999})
+                                            menu: provided => ({...provided, zIndex: 9999,borderRadius:0})
                                         }}
+                                        className={"ion-select-custom"}
                                         onChange={handleValue} cacheOptions defaultOptions
                                         loadOptions={promiseOptions}
                                     />
@@ -162,6 +165,7 @@ const AddActualite: React.FC = () => {
                                         <Label for="uploadImage"/>
                                         <CustomInput accept="image/*"
                                                      capture="camera"
+                                                     className={"ion-select-custom"}
                                                      onChange={e => setPhoto(handlePhoto(e))} type="file"
                                                      id="uploadImage"
                                                      name="customFile"
@@ -175,7 +179,9 @@ const AddActualite: React.FC = () => {
                                               onChange={(e) => setMessage(handleMessage(e))}
                                               className={"form-control"}/>
                                 </div>
-                                <IonButton expand="block" type="submit" >Hampiditra</IonButton>
+                                <IonButton color="primary"
+                                           expand="full"
+                                           type="submit">Hampiditra</IonButton>
                             </IonList>
                         </form>
                     </div>

@@ -1,0 +1,15 @@
+.form-control, .custom-file-input,.button-native, .custom-file-label, .button, .ion-select-custom > div {
+    border-radius: 0!important;
+}
+
+*{
+    font-family: 'Montserrat', sans-serif!important;
+}
+
+.form-control{
+    font-size: 0.9rem;
+}
+
+.item.sc-ion-label-md-h, .item .sc-ion-label-md-h{
+    font-size: 0.6rem;
+}

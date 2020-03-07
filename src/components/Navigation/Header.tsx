@@ -71,6 +71,12 @@ const Header: React.FC = () => {
                                 }
                             },
                             {
+                                text: 'Signaleo',
+                                handler: () => {
+                                    history.push('/apropos');
+                                }
+                            },
+                            {
                                 text: 'Hiala',
                                 handler: () => {
                                     Storage.remove({key: 'user'}).then(() => {
@@ -78,11 +84,6 @@ const Header: React.FC = () => {
                                     });
 
                                     window.location.reload();
-                                }
-                            }, {
-                                text: 'A propos',
-                                handler: () => {
-                                    history.push('/apropos');
                                 }
                             }
                         ]}
