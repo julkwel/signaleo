@@ -5,8 +5,6 @@ import {
     IonCard,
     IonCardContent, IonCardHeader,
     IonContent, IonFab, IonFabButton, IonIcon,
-    IonInput,
-    IonItem,
     IonLabel,
     IonPage,
     IonSpinner,
@@ -141,18 +139,20 @@ export default class Login extends React.Component<any, any> {
                                 e.preventDefault();
                                 this.logIn()
                             }}>
-                                <IonItem>
+                                <div className={"form-group mt-2 p-1"}>
                                     <IonLabel position="stacked">Email</IonLabel>
-                                    <IonInput disabled={this.state.inputDisabled} type={"email"} name="lieu" required
-                                              value={this.state.email}
-                                              onIonChange={(e) => this.handleEmail(e)}/>
-                                </IonItem>
-                                <IonItem>
+                                    <input disabled={this.state.inputDisabled} type={"email"} name="lieu" required
+                                           value={this.state.email}
+                                           className={"form-control"}
+                                           onChange={(e) => this.handleEmail(e)}/>
+                                </div>
+                                <div className={"form-group mt-2 p-1"}>
                                     <IonLabel position="stacked">Teny miafina</IonLabel>
-                                    <IonInput disabled={this.state.inputDisabled} type={"password"} required name="lieu"
-                                              value={this.state.password}
-                                              onIonChange={(e) => this.handlePassword(e)}/>
-                                </IonItem>
+                                    <input disabled={this.state.inputDisabled} type={"password"} required name="lieu"
+                                           value={this.state.password}
+                                           className={"form-control"}
+                                           onChange={(e) => this.handlePassword(e)}/>
+                                </div>
                                 <IonButton color="primary" expand="block" type="submit">Hiditra</IonButton>
                             </form>
                         </IonCardContent>

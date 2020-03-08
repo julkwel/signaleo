@@ -10,8 +10,8 @@
     font-size: 0.9rem;
 }
 
-.item.sc-ion-label-md-h, .item .sc-ion-label-md-h{
-    font-size: 0.6rem;
+ion-chip > .item.sc-ion-label-md-h, .item .sc-ion-label-md-h{
+    font-size: 0.7rem;
 }
 
 .tab-selected{

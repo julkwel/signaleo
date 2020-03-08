@@ -3,7 +3,6 @@ import {
     IonAvatar,
     IonCard,
     IonCardContent,
-    IonCardHeader,
     IonCardSubtitle,
     IonCardTitle, IonCol,
     IonContent, IonFab, IonFabButton, IonIcon, IonImg, IonLabel,
@@ -14,8 +13,10 @@ import Header from "../../../components/Navigation/Header";
 import Axios from "axios";
 import HTTP_BASE_URL from "../../../Constant/HttpConstant";
 import {Plugins} from "@capacitor/core";
-import img from '../../../assets/user_avatar.png';
-import {add, pencil} from "ionicons/icons";
+import {pencil} from "ionicons/icons";
+import avatarGirl from "../../../assets/avatar-girl.png";
+import avatarMen from "../../../assets/avatar-men.png";
+import avatar from "../../../assets/user-default.png";
 
 const {Storage} = Plugins;
 
@@ -52,11 +53,23 @@ class Profile extends React.Component<any, any> {
         })
     }
 
+    handlePhoto(gender: string) {
+        let img = avatar;
+        if ('Lahy' === gender) {
+            img = avatarMen;
+        } else if ('Vavy' === gender) {
+            img = avatarGirl;
+        }
+
+        return img;
+    }
+
     ionViewWillEnter() {
         this.getObject().then(() => this.getUserDetails());
     }
 
     render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | React.ReactNodeArray | React.ReactPortal | boolean | null | undefined {
+        console.log(this.state.userData)
         return (
             <IonPage>
                 <IonContent>
@@ -66,7 +79,8 @@ class Profile extends React.Component<any, any> {
                             <IonRow>
                                 <IonCol size={"3"}>
                                     <IonAvatar>
-                                        <IonImg src={this.state.userData && this.state.userData.photo ? this.state.userData.photo : img}/>
+                                        <IonImg
+                                            src={(this.state.userData && this.state.userData.gender) ? this.handlePhoto(this.state.userData.gender) : this.handlePhoto('People')}/>
                                     </IonAvatar>
                                 </IonCol>
                                 <IonCol size={"9"}>
@@ -75,14 +89,13 @@ class Profile extends React.Component<any, any> {
                                 </IonCol>
                             </IonRow>
                             <IonLabel>
-                                Email
-                                : {(this.state.userData && this.state.userData.contact) ? this.state.userData.contact : 'Signaleo'}
+                                {(this.state.userData && this.state.userData.contact) ? this.state.userData.contact : 'Signaleo'}
                             </IonLabel>
                         </IonCardContent>
                     </IonCard>
                     <IonFab vertical="bottom" onClick={(e) => {
                         e.preventDefault();
-                        this.props.history.push('/inscription')
+                        this.props.history.push('/inscription', {user: (this.state.userData && this.state.userData.id) ? this.state.userData.id : null})
                     }} horizontal="end" slot="fixed">
                         <IonFabButton>
                             <IonIcon icon={pencil}/>

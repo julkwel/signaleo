@@ -17,7 +17,6 @@ import {Plugins} from "@capacitor/core";
 const Header: React.FC = () => {
     const [alert, setAlert] = useState(false);
     const [user, setUser] = useState(false);
-    const [thisUser, setThisUser] = useState('');
     const history = useHistory();
     const {Storage} = Plugins;
 
@@ -27,7 +26,6 @@ const Header: React.FC = () => {
 
         if (user.id) {
             setUser(true);
-            setThisUser(user.name);
         }
     }
 
