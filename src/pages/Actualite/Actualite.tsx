@@ -25,7 +25,7 @@ import {
     IonLoading,
     IonInfiniteScroll,
     IonInfiniteScrollContent,
-    IonAvatar, IonButton,
+    IonAvatar,
 } from '@ionic/react';
 import './Actualite.css';
 import {RefresherEventDetail} from '@ionic/core';
@@ -33,8 +33,8 @@ import {RefresherEventDetail} from '@ionic/core';
 import Header from '../../components/Navigation/Header';
 import {
     add,
-    car,
-    location,thumbsDown, thumbsUp,
+    car, ellipsisVertical,
+    location, thumbsDown, thumbsUp,
 } from 'ionicons/icons';
 import Axios from 'axios';
 import HTTP_BASE_URL from '../../Constant/HttpConstant';
@@ -210,6 +210,14 @@ class Actualite extends React.Component<any, any> {
         }
     }
 
+    deleteArticle(id: any) {
+        if (window.confirm('Hofafana?')) {
+            Axios.post(HTTP_BASE_URL + '/api/actualite/delete/' + id + '/' + this.state.user).then((res) => {
+                this.getData();
+            })
+        }
+    }
+
     render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | React.ReactNodeArray | React.ReactPortal | boolean | null | undefined {
         return (
             <IonPage>
@@ -244,9 +252,16 @@ class Actualite extends React.Component<any, any> {
                                                                 src={(res.user.gender !== 'Vavy' && res.user.gender === 'Lahy') ? (res.user.gender === 'Vavy' ? avatarGirl : avatarMen) : avatar}/>
                                                         </IonAvatar>
                                                     </IonCol>
-                                                    <IonCol size={"9"}>
+                                                    <IonCol size={"8"}>
                                                         <IonCardSubtitle>{res.user.name.charAt(0).toUpperCase() + res.user.name.slice(1)}</IonCardSubtitle>
                                                         <p className={"ion-p-small"}>{res.dateAdd}</p>
+                                                    </IonCol>
+                                                    <IonCol size={"1"}>
+                                                        <IonIcon icon={ellipsisVertical} onClick={() => {
+                                                            if (this.state.user.id === res.user.id) {
+                                                                this.deleteArticle(res.id);
+                                                            }
+                                                        }}/>
                                                     </IonCol>
                                                 </IonRow>
                                                 <IonLabel
