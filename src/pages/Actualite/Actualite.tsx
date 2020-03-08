@@ -25,7 +25,7 @@ import {
     IonLoading,
     IonInfiniteScroll,
     IonInfiniteScrollContent,
-    IonAvatar,
+    IonAvatar, IonButton,
 } from '@ionic/react';
 import './Actualite.css';
 import {RefresherEventDetail} from '@ionic/core';
@@ -34,7 +34,7 @@ import Header from '../../components/Navigation/Header';
 import {
     add,
     car,
-    location,
+    location,thumbsDown, thumbsUp,
 } from 'ionicons/icons';
 import Axios from 'axios';
 import HTTP_BASE_URL from '../../Constant/HttpConstant';
@@ -44,7 +44,7 @@ import avatarMen from "../../assets/avatar-men.png";
 import avatar from "../../assets/user-default.png";
 import {Plugins, PushNotification, PushNotificationToken, PushNotificationActionPerformed} from '@capacitor/core';
 
-const {Storage, PushNotifications} = Plugins;
+const {Storage, PushNotifications, Share} = Plugins;
 
 const INITIAL_STATE = {
     notifications: [{id: 'id', title: "Test Push", body: "This is my first push notification"}],
@@ -106,7 +106,7 @@ class Actualite extends React.Component<any, any> {
                 actu: res.data.data
             });
 
-            if (this.state.actu.length !== 0) {
+            if (res.status === 200) {
                 this.setState({
                     showLoading: false
                 });
@@ -277,13 +277,17 @@ class Actualite extends React.Component<any, any> {
                                                     color={res.actu.isOk ? "default" : "danger"}
                                                     onIonChange={e => this.addVote(HTTP_BASE_URL + '/api/actualite/vote/' + res.id, e.detail.value)}>
                                             <IonSegmentButton value="marina" layout="icon-end">
-                                                <span role={"img"} aria-label={"marina"}>   👍</span>
+                                                <span role={"img"} aria-label={"marina"}>
+                                                    <IonIcon icon={thumbsUp}/>
+                                                </span>
                                                 <IonLabel>
                                                     <IonBadge color="primary">{res.vote.marina}</IonBadge>
                                                 </IonLabel>
                                             </IonSegmentButton>
                                             <IonSegmentButton value="diso" layout="icon-end">
-                                                <span role={"img"} aria-label={"diso"}>   👎</span>
+                                                <span role={"img"} aria-label={"diso"}>
+                                                    <IonIcon icon={thumbsDown}/>
+                                                </span>
                                                 <IonLabel>
                                                     <IonBadge color="primary">{res.vote.diso}</IonBadge>
                                                 </IonLabel>
