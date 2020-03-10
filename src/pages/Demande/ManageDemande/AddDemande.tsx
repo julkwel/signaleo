@@ -135,7 +135,7 @@ const AddDemande: React.FC = () => {
                                 <div className={"form-group mt-2 p-1"}>
                                     <input type="text"
                                            required
-                                           placeholder={"Contact"}
+                                           placeholder={"Finday"}
                                            className={"form-control"}
                                            onChange={(e) => setContact(handleContact(e))}/>
                                 </div>

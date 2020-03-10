@@ -136,7 +136,7 @@ const AddProposition: React.FC = () => {
                                     <input name="frais"
                                            className={"form-control"}
                                            required
-                                           placeholder={"Frais"}
+                                           placeholder={"Saran-dalana"}
                                            value={frais}
                                            onChange={(e) => setFrais(handleValue(e))}/>
                                 </div>
@@ -144,7 +144,7 @@ const AddProposition: React.FC = () => {
                                     <input className={"form-control"} name="contact"
                                            required
                                            value={contact}
-                                           placeholder={"Contact"}
+                                           placeholder={"Finday"}
                                            onChange={(e) => setContact(handleValue(e))}/>
                                 </div>
                                 <div className={"form-group mt-2 p-1"}>

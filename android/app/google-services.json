@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:842234291753:android:3dcc3d755cf6ec740fde38",
         "android_client_info": {
-          "package_name": "io.ionic.starter"
+          "package_name": "com.signaleo.io"
         }
       },
       "oauth_client": [

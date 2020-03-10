@@ -248,7 +248,7 @@ class Actualite extends React.Component<any, any> {
                                                 <IonRow>
                                                     <IonCol size={"3"}>
                                                         <IonAvatar>
-                                                            <IonImg
+                                                            <IonImg alt={"Signaleo"}
                                                                 src={(res.user.gender !== 'Vavy' && res.user.gender === 'Lahy') ? (res.user.gender === 'Vavy' ? avatarGirl : avatarMen) : avatar}/>
                                                         </IonAvatar>
                                                     </IonCol>
