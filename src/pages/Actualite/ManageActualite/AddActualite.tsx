@@ -146,6 +146,7 @@ const AddActualite: React.FC = () => {
                                         <IonSelectOption value="FiaraMaty">Fiara Maty</IonSelectOption>
                                         <IonSelectOption value="Embouteillage">Embouteillage be</IonSelectOption>
                                         <IonSelectOption value="Malalaka">Malalaka ny lalana</IonSelectOption>
+                                        <IonSelectOption value="Fanendahana">Fanendahana</IonSelectOption>
                                     </IonSelect>
                                 </div>
                                 <div className={"mt-2 p-1"}>

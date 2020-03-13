@@ -187,6 +187,8 @@ class Actualite extends React.Component<any, any> {
     }
 
     addVote(uri: any, value: any) {
+        console.log(value);
+
         if (this.state.user && this.state.user.id) {
             Axios.post(uri, {vote: value, user: this.state.user.id}).then(res => {
                 if (res.data.status === 'success') {
@@ -212,7 +214,7 @@ class Actualite extends React.Component<any, any> {
 
     deleteArticle(id: any) {
         if (window.confirm('Hofafana?')) {
-            Axios.post(HTTP_BASE_URL + '/api/actualite/delete/' + id + '/' + this.state.user).then((res) => {
+            Axios.post(HTTP_BASE_URL + '/api/actualite/delete/' + id + '/' + this.state.user.id).then((res) => {
                 this.getData();
             })
         }
