@@ -7,15 +7,18 @@ import {
     IonActionSheet,
     IonIcon,
     IonButtons,
-    IonMenuButton,
     useIonViewWillEnter,
     IonItem,
     IonPopover,
     IonLabel,
     IonBadge,
-    IonAvatar
+    IonAvatar,
 } from '@ionic/react';
-import {car, notificationsCircle, notificationsCircleOutline} from 'ionicons/icons';
+import {
+    car, menu,
+    notificationsCircle,
+    notificationsCircleOutline
+} from 'ionicons/icons';
 import './Header.css';
 import {useHistory} from 'react-router';
 import {Plugins} from "@capacitor/core";
@@ -25,6 +28,7 @@ import avatar from '../../assets/user-default.png';
 
 const Header: React.FC = () => {
     const [alert, setAlert] = useState(false);
+    const [urgence, setUrgence] = useState(false);
     const [user, setUser] = useState(false);
     const [userId, setUserId] = useState('');
     const history = useHistory();
@@ -71,11 +75,13 @@ const Header: React.FC = () => {
                     user ? (
                         <IonButtons slot="start">
                             <IonButton onClick={() => history.push('/')}>
-                                <IonIcon icon={car}/>
+                                <IonIcon icon={car} size={"large"}/>
                             </IonButton>
                         </IonButtons>
                     ) : ''
                 }
+
+
                 <IonTitle className="text-center">SIGNALEO</IonTitle>
                 {
                     user ? (
@@ -118,7 +124,7 @@ const Header: React.FC = () => {
                                 </IonPopover>
                             </IonButtons>
                             <IonButtons slot="end" onClick={() => setAlert(true)}>
-                                <IonMenuButton auto-hide="false"/>
+                                <IonIcon icon={menu} size={"large"}/>
                             </IonButtons>
                         </>
                     ) : ''
@@ -127,36 +133,65 @@ const Header: React.FC = () => {
 
             {
                 user ? (
-                    <IonActionSheet
-                        isOpen={alert}
-                        onDidDismiss={() => setAlert(false)}
-                        mode={"ios"}
-                        buttons={[
-                            {
-                                text: 'Profile',
-                                handler: () => {
-                                    history.push('/profile');
+                    <>
+                        <IonActionSheet
+                            isOpen={urgence}
+                            onDidDismiss={() => setUrgence(false)}
+                            mode={"ios"}
+                            buttons={[
+                                {
+                                    text: 'Stations services',
+                                    handler: () => {
+                                        console.log('station')
+                                    }
+                                },
+                                {
+                                    text: 'Pharmacie',
+                                    handler: () => {
+                                        console.log('pharmacie')
+                                    }
+                                },
+                                {
+                                    text: 'Police',
+                                    handler: () => {
+                                        console.log('police')
+                                    }
                                 }
-                            },
-                            {
-                                text: 'Signaleo',
-                                handler: () => {
-                                    history.push('/apropos');
-                                }
-                            },
-                            {
-                                text: 'Hiala',
-                                handler: () => {
-                                    Storage.remove({key: 'user'}).then(() => {
-                                        history.push('/login');
-                                    });
+                            ]}
+                        >
+                        </IonActionSheet>
 
-                                    window.location.reload();
+                        <IonActionSheet
+                            isOpen={alert}
+                            onDidDismiss={() => setAlert(false)}
+                            mode={"ios"}
+                            buttons={[
+                                {
+                                    text: 'Profile',
+                                    handler: () => {
+                                        history.push('/profile');
+                                    }
+                                },
+                                {
+                                    text: 'Signaleo',
+                                    handler: () => {
+                                        history.push('/apropos');
+                                    }
+                                },
+                                {
+                                    text: 'Hiala',
+                                    handler: () => {
+                                        Storage.remove({key: 'user'}).then(() => {
+                                            history.push('/login');
+                                        });
+
+                                        window.location.reload();
+                                    }
                                 }
-                            }
-                        ]}
-                    >
-                    </IonActionSheet>
+                            ]}
+                        >
+                        </IonActionSheet>
+                    </>
                 ) : ''
             }
         </IonHeader>

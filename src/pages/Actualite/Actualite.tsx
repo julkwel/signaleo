@@ -25,7 +25,7 @@ import {
     IonLoading,
     IonInfiniteScroll,
     IonInfiniteScrollContent,
-    IonAvatar,
+    IonAvatar, IonFabList
 } from '@ionic/react';
 import './Actualite.css';
 import {RefresherEventDetail} from '@ionic/core';
@@ -33,8 +33,18 @@ import {RefresherEventDetail} from '@ionic/core';
 import Header from '../../components/Navigation/Header';
 import {
     add,
-    car, ellipsisVertical,
-    location, thumbsDown, thumbsUp,
+    car,
+    ellipsisVertical,
+    location,
+    logoFacebook,
+    logoTwitter,
+    medkitOutline,
+    people,
+    phonePortraitOutline,
+    pulseOutline,
+    speedometerOutline,
+    thumbsDown,
+    thumbsUp,
 } from 'ionicons/icons';
 import Axios from 'axios';
 import HTTP_BASE_URL from '../../Constant/HttpConstant';
@@ -224,6 +234,22 @@ class Actualite extends React.Component<any, any> {
         return (
             <IonPage>
                 <Header/>
+                <IonFab horizontal="start" vertical="bottom" slot="fixed">
+                    <IonFabButton color={"danger"}>
+                        <IonIcon icon={pulseOutline}/>
+                    </IonFabButton>
+                    <IonFabList side={"top"}>
+                        <IonFabButton color="dark">
+                            <IonIcon icon={speedometerOutline}/>
+                        </IonFabButton>
+                        <IonFabButton color="dark">
+                            <IonIcon icon={medkitOutline}/>
+                        </IonFabButton>
+                        <IonFabButton color="dark">
+                            <IonIcon icon={phonePortraitOutline}/>
+                        </IonFabButton>
+                    </IonFabList>
+                </IonFab>
                 <IonContent fullscreen>
                     <IonRefresher slot="fixed" onIonRefresh={(e) => this.doRefresh(e)}>
                         <IonRefresherContent/>

@@ -56,7 +56,8 @@ const AddActualite: React.FC = () => {
     });
 
     const submit = async () => {
-        setShowLoading(true);
+
+        let valid = [];
 
         var data = new FormData();
         data.append('image', photo);
@@ -65,25 +66,47 @@ const AddActualite: React.FC = () => {
         data.append('message', message);
         data.append('userId', user);
 
-        axios.post(HTTP_BASE_URL + '/api/actualite/manage', data).then(res => {
+        if (!lieu || '' === lieu) {
             setAlert({
                 isShow: true,
-                message: 'Misaotra nizara !!!'
+                message: 'Ampidiro ny toerana ?'
             });
 
-            if (res.status === 200) {
-                history.push('/actualite');
+            valid.push(false);
+        }
+
+        if (!cause || '' === cause) {
+            setAlert({
+                isShow: true,
+                message: 'Inona no mitranga ?'
+            });
+
+            valid.push(false);
+        }
+
+        if (!valid.includes(false)) {
+            setShowLoading(true);
+
+            axios.post(HTTP_BASE_URL + '/api/actualite/manage', data).then(res => {
+                setAlert({
+                    isShow: true,
+                    message: 'Misaotra nizara !!!'
+                });
+
+                if (res.status === 200) {
+                    history.push('/actualite');
+
+                    setShowLoading(false);
+                }
+            }).catch(() => {
+                setAlert({
+                    isShow: true,
+                    message: 'Misy olana ny signaleo'
+                });
 
                 setShowLoading(false);
-            }
-        }).catch(() => {
-            setAlert({
-                isShow: true,
-                message: 'Misy olana ny signaleo'
             });
-
-            setShowLoading(false);
-        });
+        }
     };
 
     const handleType = (e: any) => {
@@ -154,7 +177,7 @@ const AddActualite: React.FC = () => {
                                         placeholder={"Toerana"}
                                         required
                                         styles={{
-                                            menu: provided => ({...provided, zIndex: 9999,borderRadius:0})
+                                            menu: provided => ({...provided, zIndex: 9999, borderRadius: 0})
                                         }}
                                         className={"ion-select-custom"}
                                         onChange={handleValue} cacheOptions defaultOptions
