@@ -255,7 +255,7 @@ class Actualite extends React.Component<any, any> {
                                                         </IonAvatar>
                                                     </IonCol>
                                                     <IonCol size={"8"}>
-                                                        <IonCardSubtitle>{res.user.name.charAt(0).toUpperCase() + res.user.name.slice(1)}</IonCardSubtitle>
+                                                        <IonCardSubtitle>{res.user.name.charAt(0).toUpperCase() + res.user.name.slice(1)} | ({(res.user.point < 0) ? 0 : res.user.point + '+' })</IonCardSubtitle>
                                                         <p className={"ion-p-small"}>{res.dateAdd}</p>
                                                     </IonCol>
                                                     <IonCol size={"1"}>
