@@ -44,7 +44,7 @@ import avatarMen from "../../assets/avatar-men.png";
 import avatar from "../../assets/user-default.png";
 import {Plugins, PushNotification, PushNotificationToken, PushNotificationActionPerformed} from '@capacitor/core';
 
-const {Storage, PushNotifications, Share} = Plugins;
+const {Storage, PushNotifications} = Plugins;
 
 const INITIAL_STATE = {
     notifications: [{id: 'id', title: "Test Push", body: "This is my first push notification"}],
