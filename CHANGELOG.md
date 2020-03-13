@@ -11,3 +11,14 @@
 `- Add user feedback [Malagasy langue,components arrangement]`
 
 `- Handle user on add data`
+
+
+# Version BETA
+
+`- App on Playstore (waiting)`
+
+`- Design actuality page `
+
+`- User avatar`
+
+`- Notifications`
