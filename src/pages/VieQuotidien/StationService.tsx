@@ -33,7 +33,6 @@ export default class StationService extends React.Component<any, any> {
 
     getRegion() {
         Axios.post(HTTP_BASE_URL + '/api/station/list/region').then((res) => {
-            console.log(res.data.data);
             if (res.status === 200) {
                 this.setState({
                     region: res.data.data
