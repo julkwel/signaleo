@@ -21,6 +21,7 @@ import {Plugins} from "@capacitor/core";
 import {CustomInput, FormGroup, Label} from 'reactstrap';
 import AsyncSelect from 'react-select/async';
 import Axios from "axios";
+import {FabButton} from "../../../components/Navigation/FabButton";
 
 /**
  * Add Actualite
@@ -143,6 +144,7 @@ const AddActualite: React.FC = () => {
         <IonPage>
             <IonContent fullscreen>
                 <Header/>
+                <FabButton/>
                 <IonLoading
                     mode={"ios"}
                     isOpen={showLoading}

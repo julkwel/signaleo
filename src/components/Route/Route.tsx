@@ -11,6 +11,8 @@ import AddDemande from "../../pages/Demande/ManageDemande/AddDemande";
 import Offre from "../../pages/Offre/Offre";
 import {About} from "../../pages/Signaleo/About";
 import Profile from "../../pages/Security/User/Profile";
+import StationService from "../../pages/VieQuotidien/StationService";
+import PhoneUtils from "../../pages/VieQuotidien/PhoneUtils";
 
 export const SignaleoRoute : React.FC = () => {
     return (
@@ -25,6 +27,8 @@ export const SignaleoRoute : React.FC = () => {
             <Route path="/addDemande" component={AddDemande}/>
             <Route path="/login" component={Login}/>
             <Route path="/inscription" component={AddUser}/>
+            <Route path="/station" component={StationService}/>
+            <Route path="/phone" component={PhoneUtils}/>
             <Route path="/" render={() => <Redirect to="/actualite"/>} exact={true}/>
         </IonRouterOutlet>
     )

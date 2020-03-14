@@ -12,12 +12,12 @@ import {
     IonPopover,
     IonLabel,
     IonBadge,
-    IonAvatar,
+    IonAvatar, IonFab, IonFabButton, IonFabList, IonPage,
 } from '@ionic/react';
 import {
-    car, menu,
+    car, medkitOutline, menu,
     notificationsCircle,
-    notificationsCircleOutline
+    notificationsCircleOutline, phonePortraitOutline, pulseOutline, speedometerOutline
 } from 'ionicons/icons';
 import './Header.css';
 import {useHistory} from 'react-router';
@@ -82,13 +82,12 @@ const Header: React.FC = () => {
                 }
 
 
-                <IonTitle className="text-center">SIGNALEO</IonTitle>
+                <IonTitle className="text-center font-weight-bold">SIGNALEO</IonTitle>
                 {
                     user ? (
                         <>
                             <IonButtons slot="end" onClick={() => {
                                 setShowPopover(true);
-                                showAllNotifications();
                             }}>
                                 <IonIcon size="large" icon={notificationsCircleOutline}/>
                                 {
@@ -96,28 +95,33 @@ const Header: React.FC = () => {
                                 }
                                 <IonPopover
                                     isOpen={showPopover}
-                                    onDidDismiss={() => setShowPopover(false)}
+                                    onDidDismiss={() => {
+                                        setShowPopover(false);
+                                        showAllNotifications();
+                                    }
+                                    }
                                 >
                                     {
                                         notifs.length !== 0 ?
-                                        notifs.map((item: any) => {
-                                            return (
-                                                <IonItem key={item.id}>
-                                                    <IonAvatar slot="start">
-                                                        <img src={avatar} alt={"Avatar"}/>
-                                                    </IonAvatar>
-                                                    <IonLabel>
-                                                        <p className={"ion-text-wrap"}>{item.title}</p>
-                                                    </IonLabel>
-                                                </IonItem>
-                                            )
-                                        }) :
+                                            notifs.map((item: any) => {
+                                                return (
+                                                    <IonItem key={item.id}>
+                                                        <IonAvatar slot="start">
+                                                            <img src={avatar} alt={"Avatar"}/>
+                                                        </IonAvatar>
+                                                        <IonLabel>
+                                                            <p className={"ion-text-wrap"}>{item.title}</p>
+                                                        </IonLabel>
+                                                    </IonItem>
+                                                )
+                                            }) :
                                             <IonItem>
                                                 <IonAvatar slot="start">
                                                     <IonIcon icon={notificationsCircle} size={"large"}/>
                                                 </IonAvatar>
                                                 <IonLabel>
-                                                    <p className={"ion-text-wrap"}>Tsy manana fanairana vaovao ianao!</p>
+                                                    <p className={"ion-text-wrap"}>Tsy manana fanairana vaovao
+                                                        ianao!</p>
                                                 </IonLabel>
                                             </IonItem>
                                     }
@@ -126,6 +130,23 @@ const Header: React.FC = () => {
                             <IonButtons slot="end" onClick={() => setAlert(true)}>
                                 <IonIcon icon={menu} size={"large"}/>
                             </IonButtons>
+
+                            <IonFab horizontal="start" vertical="bottom" slot="fixed">
+                                <IonFabButton color={"danger"}>
+                                    <IonIcon icon={pulseOutline}/>
+                                </IonFabButton>
+                                <IonFabList side={"top"}>
+                                    <IonFabButton onClick={() => history.push('/station')} color="dark">
+                                        <IonIcon icon={speedometerOutline}/>
+                                    </IonFabButton>
+                                    <IonFabButton color="dark">
+                                        <IonIcon icon={medkitOutline}/>
+                                    </IonFabButton>
+                                    <IonFabButton color="dark">
+                                        <IonIcon icon={phonePortraitOutline}/>
+                                    </IonFabButton>
+                                </IonFabList>
+                            </IonFab>
                         </>
                     ) : ''
                 }

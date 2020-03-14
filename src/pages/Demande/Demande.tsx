@@ -29,6 +29,7 @@ import HTTP_BASE_URL from '../../Constant/HttpConstant';
 import img from "../../assets/covoiturage.png";
 import {RefresherEventDetail} from "@ionic/core";
 import {Plugins} from "@capacitor/core";
+import {FabButton} from "../../components/Navigation/FabButton";
 
 const {Storage} = Plugins;
 
@@ -75,7 +76,7 @@ class Demande extends React.Component<any, any> {
                 zambaento: data.data.data
             });
 
-            if (this.state.zambaento.length !== 0) {
+            if (data.status === 200) {
                 this.setState({
                     showLoading: false
                 })
@@ -115,6 +116,7 @@ class Demande extends React.Component<any, any> {
         return (
             <IonPage>
                 <Header/>
+                <FabButton/>
                 <IonContent>
                     <IonRefresher slot="fixed" onIonRefresh={(e) => this.doRefresh(e)}>
                         <IonRefresherContent/>
@@ -130,7 +132,8 @@ class Demande extends React.Component<any, any> {
                                 <IonItem key={item.id}>
                                     <img alt="profile" style={{width: "45px", height: "45px"}} src={img}/>
                                     <IonLabel>
-                                        <h2>Mba ho ento {item.user.name.charAt(0).toUpperCase() + item.user.name.slice(1)}</h2>
+                                        <h2>Mba ho
+                                            ento {item.user.name.charAt(0).toUpperCase() + item.user.name.slice(1)}</h2>
                                         <IonChip color="primary">
                                             <IonIcon icon={location} color="primary"/>
                                             <IonLabel>{item.depart}</IonLabel>&nbsp;

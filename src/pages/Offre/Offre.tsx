@@ -26,6 +26,7 @@ import HTTP_BASE_URL from "../../Constant/HttpConstant";
 import {Plugins} from "@capacitor/core";
 import img from "../../assets/covoiturage.png";
 import {RefresherEventDetail} from "@ionic/core";
+import {FabButton} from "../../components/Navigation/FabButton";
 
 const {Storage} = Plugins;
 
@@ -90,7 +91,7 @@ class Offre extends React.Component<any, any> {
                 listOffre: res.data.message
             });
 
-            if (this.state.listOffre.length !== 0) {
+            if (res.status === 200) {
                 this.setState({
                     showLoading: false,
                 })
@@ -108,6 +109,7 @@ class Offre extends React.Component<any, any> {
         return (
             <IonPage>
                 <Header/>
+                <FabButton/>
                 <IonContent>
                     <IonRefresher slot="fixed" onIonRefresh={(e) => this.doRefresh(e)}>
                         <IonRefresherContent/>

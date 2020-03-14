@@ -25,7 +25,7 @@ import {
     IonLoading,
     IonInfiniteScroll,
     IonInfiniteScrollContent,
-    IonAvatar, IonFabList
+    IonAvatar
 } from '@ionic/react';
 import './Actualite.css';
 import {RefresherEventDetail} from '@ionic/core';
@@ -36,10 +36,6 @@ import {
     car,
     ellipsisVertical,
     location,
-    medkitOutline,
-    phonePortraitOutline,
-    pulseOutline,
-    speedometerOutline,
     thumbsDown,
     thumbsUp,
 } from 'ionicons/icons';
@@ -50,6 +46,7 @@ import avatarGirl from "../../assets/avatar-girl.png";
 import avatarMen from "../../assets/avatar-men.png";
 import avatar from "../../assets/user-default.png";
 import {Plugins, PushNotification, PushNotificationToken, PushNotificationActionPerformed} from '@capacitor/core';
+import {FabButton} from "../../components/Navigation/FabButton";
 
 const {Storage, PushNotifications} = Plugins;
 
@@ -231,22 +228,7 @@ class Actualite extends React.Component<any, any> {
         return (
             <IonPage>
                 <Header/>
-                <IonFab horizontal="start" vertical="bottom" slot="fixed">
-                    <IonFabButton color={"danger"}>
-                        <IonIcon icon={pulseOutline}/>
-                    </IonFabButton>
-                    <IonFabList side={"top"}>
-                        <IonFabButton color="dark">
-                            <IonIcon icon={speedometerOutline}/>
-                        </IonFabButton>
-                        <IonFabButton color="dark">
-                            <IonIcon icon={medkitOutline}/>
-                        </IonFabButton>
-                        <IonFabButton color="dark">
-                            <IonIcon icon={phonePortraitOutline}/>
-                        </IonFabButton>
-                    </IonFabList>
-                </IonFab>
+                <FabButton/>
                 <IonContent fullscreen>
                     <IonRefresher slot="fixed" onIonRefresh={(e) => this.doRefresh(e)}>
                         <IonRefresherContent/>
@@ -274,11 +256,12 @@ class Actualite extends React.Component<any, any> {
                                                     <IonCol size={"3"}>
                                                         <IonAvatar>
                                                             <IonImg alt={"Signaleo"}
-                                                                src={(res.user.gender !== 'Vavy' && res.user.gender === 'Lahy') ? (res.user.gender === 'Vavy' ? avatarGirl : avatarMen) : avatar}/>
+                                                                    src={(res.user.gender !== 'Vavy' && res.user.gender === 'Lahy') ? (res.user.gender === 'Vavy' ? avatarGirl : avatarMen) : avatar}/>
                                                         </IonAvatar>
                                                     </IonCol>
                                                     <IonCol size={"8"}>
-                                                        <IonCardSubtitle>{res.user.name.charAt(0).toUpperCase() + res.user.name.slice(1)} | ({(res.user.point < 0) ? 0 : res.user.point + '+' })</IonCardSubtitle>
+                                                        <IonCardSubtitle>{res.user.name.charAt(0).toUpperCase() + res.user.name.slice(1)} |
+                                                            ({(res.user.point < 0) ? 0 : res.user.point + '+'})</IonCardSubtitle>
                                                         <p className={"ion-p-small"}>{res.dateAdd}</p>
                                                     </IonCol>
                                                     <IonCol size={"1"}>
