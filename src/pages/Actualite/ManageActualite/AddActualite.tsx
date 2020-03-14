@@ -168,10 +168,10 @@ const AddActualite: React.FC = () => {
                                                mode={"ios"} name="type" value={cause}
                                                onIonChange={(e) => setCause(handleType(e))}>
                                         <IonSelectOption value="Accident">Accident</IonSelectOption>
+                                        <IonSelectOption value="Fanafihana">Fanafihana</IonSelectOption>
                                         <IonSelectOption value="FiaraMaty">Fiara Maty</IonSelectOption>
                                         <IonSelectOption value="Embouteillage">Embouteillage be</IonSelectOption>
                                         <IonSelectOption value="Malalaka">Malalaka ny lalana</IonSelectOption>
-                                        <IonSelectOption value="Fanendahana">Fanendahana</IonSelectOption>
                                     </IonSelect>
                                 </div>
                                 <div className={"mt-2 p-1"}>
