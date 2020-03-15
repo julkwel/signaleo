@@ -26,6 +26,15 @@ ion-chip > .item.sc-ion-label-md-h, .item .sc-ion-label-md-h{
     margin-left: 15px;
 }
 
+.searchbar-input-container > input{
+    box-shadow: 0 2px 2px 0 rgba(4, 0, 251, 0.2), 0 3px 1px -2px rgba(200, 204, 255, 0.24), 0 1px 5px 0 rgba(36, 23, 230, 0.15)!important;
+}
+
+.actualite-card{
+    padding: 0;
+    margin: 5px 0 0;
+}
+
 /*ion-tab-button.tab-selected > ion-icon{*/
 /*    border: solid 1px #fbfbfb;*/
 /*    transition: box-shadow 280ms cubic-bezier(0.4,0,0.2,1),background-color 280ms cubic-bezier(0.4,0,0.2,1),color 280ms cubic-bezier(0.4,0,0.2,1),opacity 15ms linear 30ms,transform 270ms cubic-bezier(0,0,0.2,1) 0ms;;*/

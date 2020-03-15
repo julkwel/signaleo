@@ -257,7 +257,7 @@ class Actualite extends React.Component<any, any> {
                         {
                             this.state.actu.map((res: any) => {
                                 return (
-                                    <IonCard mode={"ios"} key={res.id}>
+                                    <IonCard className={"actualite-card"} mode={"ios"} key={res.id}>
                                         <IonItem mode={"ios"} lines={"none"}>
                                             <IonLabel>
                                                 <IonRow>
