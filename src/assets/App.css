@@ -13,7 +13,3 @@
 ion-chip > .item.sc-ion-label-md-h, .item .sc-ion-label-md-h{
     font-size: 0.7rem;
 }
-
-.tab-selected{
-   background-color:  #3880ff;color: white;
-}

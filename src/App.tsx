@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    IonApp, IonIcon, IonLabel, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs, withIonLifeCycle,
+    IonApp, IonFabButton, IonIcon, IonLabel, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs, withIonLifeCycle,
 } from '@ionic/react';
 import {IonReactRouter} from '@ionic/react-router';
 /* Core CSS required for Ionic components to work properly */
@@ -25,7 +25,8 @@ import './assets/App.css';
 import './theme/variables.css';
 import {Plugins} from "@capacitor/core";
 import {SignaleoRoute} from "./components/Route/Route";
-import {carSportOutline, list, peopleOutline} from "ionicons/icons";
+import {carSportOutline, list, peopleOutline, pulseOutline} from "ionicons/icons";
+import {FabButton} from "./components/Navigation/FabButton";
 
 const {Storage} = Plugins;
 
