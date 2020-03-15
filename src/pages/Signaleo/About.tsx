@@ -1,16 +1,14 @@
 import React from "react";
 import {
-    IonAvatar,
     IonCard,
-    IonCardContent,
     IonCardTitle,
     IonContent,
     IonIcon,
     IonItem, IonLabel, IonList,
-    IonPage, IonText
+    IonPage
 } from "@ionic/react";
 import Header from "../../components/Navigation/Header";
-import {logoGithub, mail, phonePortraitOutline} from "ionicons/icons";
+import {logoGithub, phonePortraitOutline} from "ionicons/icons";
 
 export class About extends React.Component<any, any> {
     // eslint-disable-next-line @typescript-eslint/no-useless-constructor
@@ -21,8 +19,8 @@ export class About extends React.Component<any, any> {
     render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | React.ReactNodeArray | React.ReactPortal | boolean | null | undefined {
         return (
             <IonPage>
+                <Header/>
                 <IonContent>
-                    <Header/>
                     <IonCard mode={"ios"}>
                         <IonCardTitle className={"text-center"}>SIGNALEO DIA :</IonCardTitle>
                         <IonList lines={"full"}>
