@@ -22,3 +22,12 @@
 `- User avatar`
 
 `- Notifications`
+
+# Verions 1.1 
+```
+ - Revert toolbar design
+ - Add sos contact
+ - Add energy station
+ - Search Bar
+ - Timeline tri
+```
