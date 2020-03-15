@@ -1,6 +1,6 @@
 import React from "react";
 import {IonFab, IonFabButton, IonFabList, IonIcon} from "@ionic/react";
-import {callOutline, pulseOutline, speedometerOutline} from "ionicons/icons";
+import {callOutline, pulseOutline, speedometerOutline, sunnyOutline} from "ionicons/icons";
 import {useHistory} from "react-router";
 
 export const FabButton: React.FC = () => {
@@ -9,7 +9,7 @@ export const FabButton: React.FC = () => {
     return (
         <IonFab horizontal="start" vertical="bottom" slot="fixed">
             <IonFabButton color={"danger"}>
-                <IonIcon icon={pulseOutline}/>
+                <IonIcon icon={sunnyOutline}/>
             </IonFabButton>
             <IonFabList side={"top"}>
                 <IonFabButton onClick={() => history.push('/station')} color="danger">

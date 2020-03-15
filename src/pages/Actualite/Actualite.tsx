@@ -34,10 +34,10 @@ import Header from '../../components/Navigation/Header';
 import {
     add,
     car,
-    ellipsisVertical,
+    ellipsisVertical, happy, happyOutline,
     location,
-    thumbsDown,
-    thumbsUp,
+    thumbsDown, thumbsDownOutline,
+    thumbsUp, thumbsUpOutline,
 } from 'ionicons/icons';
 import Axios from 'axios';
 import HTTP_BASE_URL from '../../Constant/HttpConstant';
@@ -104,6 +104,7 @@ class Actualite extends React.Component<any, any> {
     getData = (page: any = 0) => {
         let form = new FormData();
         form.append('limit', page);
+        form.append('user', this.state.user ? this.state.user.id : this.state.user);
 
         Axios.post(HTTP_BASE_URL + '/api/actualite/list', form).then(res => {
             this.setState({
@@ -158,6 +159,7 @@ class Actualite extends React.Component<any, any> {
                         notifications: notif
                     }
                 })
+
             }
         );
 
@@ -248,6 +250,7 @@ class Actualite extends React.Component<any, any> {
                     <IonList>
                         {
                             this.state.actu.map((res: any) => {
+                                console.log(res)
                                 return (
                                     <IonCard mode={"ios"} key={res.id}>
                                         <IonItem mode={"ios"} lines={"none"}>
@@ -298,10 +301,23 @@ class Actualite extends React.Component<any, any> {
                                         </IonGrid>
                                         <IonSegment className={"ion-segment-actu"}
                                                     color={res.actu.isOk ? "default" : "danger"}
-                                                    onIonChange={e => this.addVote(HTTP_BASE_URL + '/api/actualite/vote/' + res.id, e.detail.value)}>
+                                                    onIonChange={(e: any) => this.addVote(HTTP_BASE_URL + '/api/actualite/vote/' + res.id, e.detail.value)}>
                                             <IonSegmentButton value="marina" layout="icon-end">
                                                 <span role={"img"} aria-label={"marina"}>
-                                                    <IonIcon icon={thumbsUp}/>
+                                                    <IonIcon className={"reaction-icon"}
+                                                             color={
+                                                                 res.vote.user && res.vote.user[0].type === "marina" ?
+                                                                     "primary" : "medium"
+                                                             }
+                                                             icon={
+                                                                 res.vote.user && res.vote.user[0].type === "marina" ?
+                                                                     thumbsUp : thumbsUpOutline
+                                                             }
+                                                             mode={"ios"}/>
+                                                             <span className={
+                                                                 res.vote.user && res.vote.user[0].type === "marina" ?
+                                                                     "icon-text text-primary" : "icon-text text-default"
+                                                             }>Marina</span>
                                                 </span>
                                                 <IonLabel>
                                                     <IonBadge color="primary">{res.vote.marina}</IonBadge>
@@ -309,14 +325,43 @@ class Actualite extends React.Component<any, any> {
                                             </IonSegmentButton>
                                             <IonSegmentButton value="diso" layout="icon-end">
                                                 <span role={"img"} aria-label={"diso"}>
-                                                    <IonIcon icon={thumbsDown}/>
+                                                    <IonIcon className={"reaction-icon"}
+                                                             color={
+                                                                 res.vote.user && res.vote.user[0].type === "diso" ?
+                                                                     "danger" : "medium"
+                                                             }
+                                                             icon={
+                                                                 res.vote.user && res.vote.user[0].type === "diso" ?
+                                                                     thumbsDown : thumbsDownOutline
+                                                             }
+                                                             mode={"ios"}/>
+                                                             <span className={
+                                                                 res.vote.user && res.vote.user[0].type === "diso" ?
+                                                                     "icon-text text-danger" : "icon-text text-default"
+                                                             }>Diso</span>
                                                 </span>
                                                 <IonLabel>
                                                     <IonBadge color="primary">{res.vote.diso}</IonBadge>
                                                 </IonLabel>
                                             </IonSegmentButton>
                                             <IonSegmentButton value="haha" layout="icon-end">
-                                                <span role={"img"} aria-label={"haha"}>😂</span>
+                                                <span role={"img"} aria-label={"haha"}>
+                                                    <IonIcon
+                                                        color={
+                                                            res.vote.user && res.vote.user[0].type === "haha" ?
+                                                                "warning" : "medium"
+                                                        }
+                                                        className={"reaction-icon"}
+                                                        mode={"ios"}
+                                                        icon={
+                                                            res.vote.user && res.vote.user[0].type === "haha" ?
+                                                                happy : happyOutline
+                                                        }/>
+                                                             <span className={
+                                                                 res.vote.user && res.vote.user[0].type === "haha" ?
+                                                                     "icon-text text-warning" : "icon-text text-default"
+                                                             }>Haha</span>
+                                                </span>
                                                 <IonLabel>
                                                     <IonBadge color="primary">{res.vote.haha}</IonBadge>
                                                 </IonLabel>
