@@ -25,7 +25,7 @@ import {
     IonLoading,
     IonInfiniteScroll,
     IonInfiniteScrollContent,
-    IonAvatar
+    IonAvatar, IonSearchbar
 } from '@ionic/react';
 import './Actualite.css';
 import {RefresherEventDetail} from '@ionic/core';
@@ -101,9 +101,10 @@ class Actualite extends React.Component<any, any> {
         document.getElementsByTagName("ion-tab-bar")[0].style.display = 'inherit';
     }
 
-    getData = (page: any = 0) => {
+    getData = (page: any = 0, search: any = '') => {
         let form = new FormData();
         form.append('limit', page);
+        form.append('search', search);
         form.append('user', this.state.user ? this.state.user.id : this.state.user);
 
         Axios.post(HTTP_BASE_URL + '/api/actualite/list', form).then(res => {
@@ -230,6 +231,8 @@ class Actualite extends React.Component<any, any> {
         return (
             <IonPage>
                 <Header/>
+                <IonSearchbar placeholder={"Hitady ..."}
+                              onIonChange={e => this.getData(this.state.page, e.detail.value)}/>
                 <FabButton/>
                 <IonContent fullscreen>
                     <IonRefresher slot="fixed" onIonRefresh={(e) => this.doRefresh(e)}>
