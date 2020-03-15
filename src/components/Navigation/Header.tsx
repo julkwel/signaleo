@@ -12,7 +12,7 @@ import {
     IonPopover,
     IonLabel,
     IonBadge,
-    IonAvatar, IonFab, IonFabButton, IonFabList, IonPage,
+    IonAvatar, IonFab, IonFabButton, IonFabList,
 } from '@ionic/react';
 import {
     car, medkitOutline, menu,
@@ -70,7 +70,7 @@ const Header: React.FC = () => {
 
     return (
         <IonHeader>
-            <IonToolbar color="tertiary">
+            <IonToolbar color="primary">
                 {
                     user ? (
                         <IonButtons slot="start">

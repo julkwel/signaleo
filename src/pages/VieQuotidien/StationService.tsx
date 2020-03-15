@@ -6,7 +6,7 @@ import {
     IonItem,
     IonLabel,
     IonList,
-    IonPage,
+    IonPage, IonSearchbar,
     IonSelect,
     IonSelectOption
 } from "@ionic/react";
@@ -14,6 +14,10 @@ import Header from "../../components/Navigation/Header";
 import Axios from "axios";
 import HTTP_BASE_URL from "../../Constant/HttpConstant";
 import stationImage from '../../assets/stations.png';
+import logoShell from '../../assets/logo/shell.png';
+import logoGalana from '../../assets/logo/galana.jpg';
+import logoJovenna from '../../assets/logo/jovenna.jpeg';
+import logoTotal from '../../assets/logo/total.png';
 import {FabButton} from "../../components/Navigation/FabButton";
 
 export default class StationService extends React.Component<any, any> {
@@ -22,7 +26,8 @@ export default class StationService extends React.Component<any, any> {
 
         this.state = {
             region: [],
-            stations: []
+            stations: [],
+            search: ''
         }
     }
 
@@ -38,6 +43,14 @@ export default class StationService extends React.Component<any, any> {
                     region: res.data.data
                 })
             }
+        })
+    }
+
+    search(e: any) {
+        Axios.post(HTTP_BASE_URL + '/api/station/search/station', {search: e.detail.value}).then((res) => {
+            this.setState({
+                stations: res.data.data
+            });
         })
     }
 
@@ -69,6 +82,7 @@ export default class StationService extends React.Component<any, any> {
                                 })
                             }
                         </IonSelect>
+                        <IonSearchbar placeholder={"Hitady ..."} onIonChange={e => this.search(e)}/>
                     </IonCard>
                     <IonList>
                         {
@@ -76,9 +90,15 @@ export default class StationService extends React.Component<any, any> {
                                 return (
                                     <IonItem key={key} lines={"full"}>
                                         <IonAvatar>
-                                            <img src={stationImage} alt="stations"/>
+                                            <img src={
+                                                item.distributeur === "Vivo" ? logoShell :
+                                                    item.distributeur === "Jovena" ? logoJovenna :
+                                                        item.distributeur === "Galana" ? logoGalana :
+                                                            logoTotal
+                                            }
+                                                 alt="stations"/>
                                         </IonAvatar>
-                                        <IonLabel>
+                                        <IonLabel className={"station-label"}>
                                             <h2 className={
                                                 item.distributeur === "Vivo" ? "text-warning" :
                                                     item.distributeur === "Jovena" ? "text-primary" :

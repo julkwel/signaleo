@@ -22,6 +22,9 @@ ion-chip > .item.sc-ion-label-md-h, .item .sc-ion-label-md-h{
     position: relative;
     top: -4px;
 }
+.station-label{
+    margin-left: 15px;
+}
 
 /*ion-tab-button.tab-selected > ion-icon{*/
 /*    border: solid 1px #fbfbfb;*/

@@ -1,7 +1,16 @@
 import React from "react";
 import Axios from "axios";
 import HTTP_BASE_URL from "../../Constant/HttpConstant";
-import {IonAvatar, IonContent, IonIcon, IonItem, IonLabel, IonList, IonPage} from "@ionic/react";
+import {
+    IonAvatar,
+    IonContent,
+    IonIcon,
+    IonItem,
+    IonLabel,
+    IonList,
+    IonPage,
+    IonSearchbar,
+} from "@ionic/react";
 import {alertCircleOutline, magnetOutline, medkitOutline, radioOutline, walletOutline} from "ionicons/icons";
 import Header from "../../components/Navigation/Header";
 import {FabButton} from "../../components/Navigation/FabButton";
@@ -19,10 +28,18 @@ export default class PhoneUtils extends React.Component<any, any> {
         this.getPhoneList();
     }
 
+    search(e: any) {
+        Axios.post(HTTP_BASE_URL + '/api/numero/search', {search: e.detail.value}).then(res => {
+            this.setState({
+                phones: res.data.data ? res.data.data : []
+            })
+        })
+    }
+
     getPhoneList() {
         Axios.post(HTTP_BASE_URL + '/api/numero/list').then(res => {
             this.setState({
-                phones: res.data.data
+                phones: res.data.data ? res.data.data : []
             })
         })
     }
@@ -31,6 +48,7 @@ export default class PhoneUtils extends React.Component<any, any> {
         return (
             <IonPage>
                 <Header/>
+                <IonSearchbar placeholder={"Hitady ..."} onIonChange={e => this.search(e)}/>
                 <IonContent>
                     <FabButton/>
                     <IonList lines={"full"}>

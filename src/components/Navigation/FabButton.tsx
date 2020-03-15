@@ -1,6 +1,6 @@
 import React from "react";
 import {IonFab, IonFabButton, IonFabList, IonIcon} from "@ionic/react";
-import {callOutline, pulseOutline, speedometerOutline, sunnyOutline} from "ionicons/icons";
+import {callOutline, speedometerOutline, sunnyOutline} from "ionicons/icons";
 import {useHistory} from "react-router";
 
 export const FabButton: React.FC = () => {

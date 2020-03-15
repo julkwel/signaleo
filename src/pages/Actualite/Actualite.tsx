@@ -250,7 +250,6 @@ class Actualite extends React.Component<any, any> {
                     <IonList>
                         {
                             this.state.actu.map((res: any) => {
-                                console.log(res)
                                 return (
                                     <IonCard mode={"ios"} key={res.id}>
                                         <IonItem mode={"ios"} lines={"none"}>
@@ -306,16 +305,16 @@ class Actualite extends React.Component<any, any> {
                                                 <span role={"img"} aria-label={"marina"}>
                                                     <IonIcon className={"reaction-icon"}
                                                              color={
-                                                                 res.vote.user && res.vote.user[0].type === "marina" ?
+                                                                 res.vote.user && res.vote.user[0] && res.vote.user[0].type === "marina" ?
                                                                      "primary" : "medium"
                                                              }
                                                              icon={
-                                                                 res.vote.user && res.vote.user[0].type === "marina" ?
+                                                                 res.vote.user && res.vote.user[0] && res.vote.user[0].type === "marina" ?
                                                                      thumbsUp : thumbsUpOutline
                                                              }
                                                              mode={"ios"}/>
                                                              <span className={
-                                                                 res.vote.user && res.vote.user[0].type === "marina" ?
+                                                                 res.vote.user && res.vote.user[0] && res.vote.user[0].type === "marina" ?
                                                                      "icon-text text-primary" : "icon-text text-default"
                                                              }>Marina</span>
                                                 </span>
@@ -327,16 +326,16 @@ class Actualite extends React.Component<any, any> {
                                                 <span role={"img"} aria-label={"diso"}>
                                                     <IonIcon className={"reaction-icon"}
                                                              color={
-                                                                 res.vote.user && res.vote.user[0].type === "diso" ?
+                                                                 res.vote.user && res.vote.user[0] && res.vote.user[0].type === "diso" ?
                                                                      "danger" : "medium"
                                                              }
                                                              icon={
-                                                                 res.vote.user && res.vote.user[0].type === "diso" ?
+                                                                 res.vote.user && res.vote.user[0] && res.vote.user[0].type === "diso" ?
                                                                      thumbsDown : thumbsDownOutline
                                                              }
                                                              mode={"ios"}/>
                                                              <span className={
-                                                                 res.vote.user && res.vote.user[0].type === "diso" ?
+                                                                 res.vote.user && res.vote.user[0] && res.vote.user[0].type === "diso" ?
                                                                      "icon-text text-danger" : "icon-text text-default"
                                                              }>Diso</span>
                                                 </span>
@@ -348,17 +347,17 @@ class Actualite extends React.Component<any, any> {
                                                 <span role={"img"} aria-label={"haha"}>
                                                     <IonIcon
                                                         color={
-                                                            res.vote.user && res.vote.user[0].type === "haha" ?
+                                                            res.vote.user && res.vote.user[0] && res.vote.user[0].type === "haha" ?
                                                                 "warning" : "medium"
                                                         }
                                                         className={"reaction-icon"}
                                                         mode={"ios"}
                                                         icon={
-                                                            res.vote.user && res.vote.user[0].type === "haha" ?
+                                                            res.vote.user && res.vote.user[0] && res.vote.user[0].type === "haha" ?
                                                                 happy : happyOutline
                                                         }/>
                                                              <span className={
-                                                                 res.vote.user && res.vote.user[0].type === "haha" ?
+                                                                 res.vote.user && res.vote.user[0] && res.vote.user[0].type === "haha" ?
                                                                      "icon-text text-warning" : "icon-text text-default"
                                                              }>Haha</span>
                                                 </span>
