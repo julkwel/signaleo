@@ -2,6 +2,12 @@
 
 Application pour signaler l'embouteillage à Madagascar.
 
+Android version will available in :
+
+[Drive](https://drive.google.com/open?id=1R3Hb6lY5rZpzPG65OtStWOWXIas8AOGW)
+
+[We Transfer](https://we.tl/t-vNQbExkcrU)
+
 ## Requirements
 
 `ionic/cli`
