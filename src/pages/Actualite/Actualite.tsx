@@ -101,10 +101,7 @@ class Actualite extends React.Component<any, any> {
         document.getElementsByTagName("ion-tab-bar")[0].style.display = 'inherit';
     }
 
-    getData = (page: any = 0) => {
-        // @ts-ignore
-        let valsearch = document && document.getElementById("search-actu-content") ? (document.getElementById("search-actu-content").value ? document.getElementById("search-actu-content").value : '') : '';
-
+    getData = (page: any = 0, valsearch: any = '') => {
         let form = new FormData();
         form.append('limit', page);
         form.append('search', valsearch);
@@ -234,8 +231,9 @@ class Actualite extends React.Component<any, any> {
         return (
             <IonPage>
                 <Header/>
-                <IonSearchbar id={"search-actu-content"} placeholder={"Hitady ..."}
-                              onIonChange={() => this.getData(this.state.page)}/>
+                <IonSearchbar
+                    placeholder={"Hitady ..."}
+                    onIonChange={(e: any) => this.getData(this.state.page, e.detail.value)}/>
                 <FabButton/>
                 <IonContent fullscreen>
                     <IonRefresher slot="fixed" onIonRefresh={(e) => this.doRefresh(e)}>
@@ -377,12 +375,12 @@ class Actualite extends React.Component<any, any> {
                             })
                         }
                     </IonList>
-                    <IonInfiniteScroll threshold="20px"
+                    <IonInfiniteScroll threshold="100px"
                                        ref={this.ionInfiniteScrollRef}
                                        onIonInfinite={(e) => this.loadMoreItems(e)}>
                         <IonInfiniteScrollContent
                             loadingSpinner="bubbles"
-                            loadingText="Loading more data...">
+                            loadingText="Mahandrasa kely azafady...">
                         </IonInfiniteScrollContent>
                     </IonInfiniteScroll>
                     <IonFab onClick={(e) => {
