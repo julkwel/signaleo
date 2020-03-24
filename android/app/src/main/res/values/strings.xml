@@ -1,3 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="app_name">signaleo</string>
+    <string name="title_activity_main">signaleo</string>
+    <string name="package_name">com.signaleo.io</string>
+    <string name="custom_url_scheme">com.signaleo.io</string>
 </resources>
