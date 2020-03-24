@@ -128,11 +128,11 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.signaleo"
+        applicationId "com.signaleo.io"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+         versionCode 3
+        versionName "1.2"
     }
     splits {
         abi {

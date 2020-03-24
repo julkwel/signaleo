@@ -1,0 +1,2 @@
+All about reusable styles (ex: colors definitions, custom paddings for buttons, ...)
+Stylesheet should still be inline with Components, but should take values from here
