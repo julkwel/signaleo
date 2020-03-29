@@ -54,4 +54,8 @@ ion-chip > .item.sc-ion-label-md-h, .item .sc-ion-label-md-h{
     text-align: center;
     font-size: 14px!important;
     font-weight: bold;
+    height: 200px;
+    display: flex!important;
+    justify-content: center;
+    align-items: center;
 }
