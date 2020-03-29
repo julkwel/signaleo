@@ -31,7 +31,7 @@ export const SignaleoRoute : React.FC = () => {
             <Route path="/station" component={StationService}/>
             <Route path="/virus" component={CoronaVirus}/>
             <Route path="/phone" component={PhoneUtils}/>
-            <Route path="/" render={() => <Redirect to="/actualite"/>} exact={true}/>
+            <Route path="/" component={Actualite} exact={true}/>
         </IonRouterOutlet>
     )
 }

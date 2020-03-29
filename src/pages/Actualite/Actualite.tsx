@@ -318,7 +318,8 @@ class Actualite extends React.Component<any, any> {
                                         )
                                     });
 
-                                    comments.push(<IonItem lines={"none"} style={{paddingBottom: "10px"}} key={key}>
+                                    comments.push(
+                                        <IonItem lines={"none"} style={{paddingBottom: "10px"}} key={key}>
                                         <div className="comment-content d-block w-100">
                                             <div className="parent-comment d-flex pb-2">
                                                 <IonAvatar slot="start">
@@ -326,14 +327,14 @@ class Actualite extends React.Component<any, any> {
                                                          style={{width: "30px", height: "30px"}}
                                                          src={item.user.gender === 'Lahy' ? avatarMen : avatarGirl}/>
                                                 </IonAvatar>
-                                                <IonLabel className={"ml-1"}>
+                                                <IonLabel className={"ml-1 comment-content-comment"}>
                                                     <h3>{item.user.name}</h3>
                                                     <h6 style={{fontSize: "10px"}}>{item.date}</h6>
                                                     <p style={{fontSize: "12px"}}
                                                        className={"ion-text-wrap"}>{item.comment}</p>
                                                 </IonLabel>
                                             </div>
-                                            <div className="comment-reply ml-2" style={{padding: "0 10% 0 10%"}}>
+                                            <div className="comment-reply" style={{padding: "0 10% 0 10%"}}>
                                                 {
                                                     responses.length > 2 ? (
                                                             <div className={"col-md-12"}>
@@ -537,7 +538,7 @@ class Actualite extends React.Component<any, any> {
                                                                e.preventDefault();
                                                                this.setState({dropdownState: !this.state.dropdownState})
                                                            }}
-                                                           style={{padding: '1rem'}}>
+                                                           style={{padding: '1rem',textAlign:"center",display:"block"}}>
                                                             {this.state.dropdownState ? 'Hanafina' : 'Hijery'} ny
                                                             hevitrin'ny olona {comments.length} +
                                                         </a>
