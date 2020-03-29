@@ -25,7 +25,7 @@ import './assets/App.css';
 import './theme/variables.css';
 import {Plugins} from "@capacitor/core";
 import {SignaleoRoute} from "./components/Route/Route";
-import {carSportOutline, list, peopleOutline, sunnyOutline} from "ionicons/icons";
+import {bugSharp, carSportOutline, list, peopleOutline, sunnyOutline} from "ionicons/icons";
 
 const {Storage} = Plugins;
 
@@ -64,6 +64,9 @@ class App extends React.Component<any, any> {
                             </IonTabButton>
                             <IonTabButton tab="demande" href="/demande">
                                 <IonIcon icon={carSportOutline}/>
+                            </IonTabButton>
+                            <IonTabButton tab="virus" href="/virus">
+                                <IonIcon icon={bugSharp} color={"danger"}/>
                             </IonTabButton>
                             <IonTabButton tab="offre" href="/offre">
                                 <IonIcon icon={peopleOutline}/>

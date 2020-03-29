@@ -13,6 +13,7 @@ import {About} from "../../pages/Signaleo/About";
 import Profile from "../../pages/Security/User/Profile";
 import StationService from "../../pages/VieQuotidien/StationService";
 import PhoneUtils from "../../pages/VieQuotidien/PhoneUtils";
+import CoronaVirus from "../../pages/Actualite/CoronaVirus";
 
 export const SignaleoRoute : React.FC = () => {
     return (
@@ -28,6 +29,7 @@ export const SignaleoRoute : React.FC = () => {
             <Route path="/login" component={Login}/>
             <Route path="/inscription" component={AddUser}/>
             <Route path="/station" component={StationService}/>
+            <Route path="/virus" component={CoronaVirus}/>
             <Route path="/phone" component={PhoneUtils}/>
             <Route path="/" render={() => <Redirect to="/actualite"/>} exact={true}/>
         </IonRouterOutlet>
