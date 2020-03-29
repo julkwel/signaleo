@@ -30,3 +30,21 @@ ion-chip > .item.sc-ion-label-md-h, .item .sc-ion-label-md-h{
     padding: 0;
     margin: 5px 0 0;
 }
+.comment-input{
+    border: solid 1px grey;
+    border-radius: 25px;
+    height: 35px;
+}
+.comment-button{
+    border: none;
+}
+.react-confirm-alert-body{
+    text-align: center!important;
+}
+.react-confirm-alert-button-group{
+    justify-content: center!important;
+}
+
+.loading-content {
+    font-size: 12px!important;
+}

@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    IonApp, IonIcon, IonLabel, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs, withIonLifeCycle,
+    IonApp, IonIcon, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs, withIonLifeCycle,
 } from '@ionic/react';
 import {IonReactRouter} from '@ionic/react-router';
 /* Core CSS required for Ionic components to work properly */
@@ -25,7 +25,7 @@ import './assets/App.css';
 import './theme/variables.css';
 import {Plugins} from "@capacitor/core";
 import {SignaleoRoute} from "./components/Route/Route";
-import {carSportOutline, list, peopleOutline} from "ionicons/icons";
+import {carSportOutline, list, peopleOutline, sunnyOutline} from "ionicons/icons";
 
 const {Storage} = Plugins;
 
@@ -60,16 +60,16 @@ class App extends React.Component<any, any> {
                         </IonRouterOutlet>
                         <IonTabBar slot="bottom">
                             <IonTabButton tab="actualite" href="/actualite">
-                                <IonLabel>Signaleo</IonLabel>
                                 <IonIcon icon={list}/>
                             </IonTabButton>
                             <IonTabButton tab="demande" href="/demande">
-                                <IonLabel>Mba ho ento</IonLabel>
                                 <IonIcon icon={carSportOutline}/>
                             </IonTabButton>
                             <IonTabButton tab="offre" href="/offre">
-                                <IonLabel>Hitondra olona</IonLabel>
                                 <IonIcon icon={peopleOutline}/>
+                            </IonTabButton>
+                            <IonTabButton tab="phone" href="/phone">
+                                <IonIcon icon={sunnyOutline}/>
                             </IonTabButton>
                         </IonTabBar>
                     </IonTabs>

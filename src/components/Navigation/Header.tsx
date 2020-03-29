@@ -12,12 +12,12 @@ import {
     IonPopover,
     IonLabel,
     IonBadge,
-    IonAvatar, IonFab, IonFabButton, IonFabList,
+    IonAvatar,
 } from '@ionic/react';
 import {
-    car, medkitOutline, menu,
+    car, menu,
     notificationsCircle,
-    notificationsCircleOutline, phonePortraitOutline, pulseOutline, speedometerOutline
+    notificationsCircleOutline,
 } from 'ionicons/icons';
 import './Header.css';
 import {useHistory} from 'react-router';
@@ -130,23 +130,6 @@ const Header: React.FC = () => {
                             <IonButtons slot="end" onClick={() => setAlert(true)}>
                                 <IonIcon icon={menu} size={"large"}/>
                             </IonButtons>
-
-                            <IonFab horizontal="start" vertical="bottom" slot="fixed">
-                                <IonFabButton color={"danger"}>
-                                    <IonIcon icon={pulseOutline}/>
-                                </IonFabButton>
-                                <IonFabList side={"top"}>
-                                    <IonFabButton onClick={() => history.push('/station')} color="dark">
-                                        <IonIcon icon={speedometerOutline}/>
-                                    </IonFabButton>
-                                    <IonFabButton color="dark">
-                                        <IonIcon icon={medkitOutline}/>
-                                    </IonFabButton>
-                                    <IonFabButton color="dark">
-                                        <IonIcon icon={phonePortraitOutline}/>
-                                    </IonFabButton>
-                                </IonFabList>
-                            </IonFab>
                         </>
                     ) : ''
                 }

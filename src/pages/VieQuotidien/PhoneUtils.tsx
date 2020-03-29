@@ -9,11 +9,10 @@ import {
     IonLabel,
     IonList,
     IonPage,
-    IonSearchbar,
+    IonSearchbar, IonSegment, IonSegmentButton,
 } from "@ionic/react";
 import {alertCircleOutline, magnetOutline, medkitOutline, radioOutline, walletOutline} from "ionicons/icons";
 import Header from "../../components/Navigation/Header";
-import {FabButton} from "../../components/Navigation/FabButton";
 
 export default class PhoneUtils extends React.Component<any, any> {
     constructor(props: any) {
@@ -45,12 +44,26 @@ export default class PhoneUtils extends React.Component<any, any> {
     }
 
     render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | React.ReactNodeArray | React.ReactPortal | boolean | null | undefined {
+        const {history} = this.props;
+
         return (
             <IonPage>
                 <Header/>
+                <IonSegment value="all" scrollable={true}
+                            onIonChange={(e) => {
+                                console.log(e);
+                                if (e.detail.value === 'station'){
+                                    console.log('push:phone')
+                                    history.push('/station');
+                                }else {
+                                    e.preventDefault();
+                                }
+                            }}>
+                    <IonSegmentButton value="sos">SOS</IonSegmentButton>
+                    <IonSegmentButton value="station">STATION</IonSegmentButton>
+                </IonSegment>
                 <IonSearchbar placeholder={"Hitady ..."} onIonChange={e => this.search(e)}/>
                 <IonContent>
-                    <FabButton/>
                     <IonList lines={"full"}>
                         {
                             this.state.phones.map((item: any, key: any) => {

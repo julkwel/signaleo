@@ -25,15 +25,16 @@ import {
     IonLoading,
     IonInfiniteScroll,
     IonInfiniteScrollContent,
-    IonAvatar, IonSearchbar
+    IonAvatar, IonSearchbar, IonInput, IonCardContent, IonButton
 } from '@ionic/react';
 import './Actualite.css';
 import {RefresherEventDetail} from '@ionic/core';
-
+import {confirmAlert} from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import Header from '../../components/Navigation/Header';
 import {
     add,
-    car,
+    car, chevronForwardCircleOutline,
     ellipsisVertical, happy, happyOutline,
     location,
     thumbsDown, thumbsDownOutline,
@@ -46,7 +47,7 @@ import avatarGirl from "../../assets/avatar-girl.png";
 import avatarMen from "../../assets/avatar-men.png";
 import avatar from "../../assets/user-default.png";
 import {Plugins, PushNotification, PushNotificationToken, PushNotificationActionPerformed} from '@capacitor/core';
-import {FabButton} from "../../components/Navigation/FabButton";
+import {Button, Collapse} from "reactstrap";
 
 const {Storage, PushNotifications} = Plugins;
 
@@ -69,9 +70,12 @@ class Actualite extends React.Component<any, any> {
         this.state = {
             actu: [],
             hasMore: true,
+            commentText: '',
             page: 0,
             user: null,
             showLoading: true,
+            dropdownState: false,
+            dropdownStateReply: false,
             alert: {
                 isShow: false,
                 message: ''
@@ -219,23 +223,51 @@ class Actualite extends React.Component<any, any> {
         }
     }
 
-    deleteArticle(id: any) {
-        if (window.confirm('Hofafana?')) {
-            Axios.post(HTTP_BASE_URL + '/api/actualite/delete/' + id + '/' + this.state.user.id).then((res) => {
-                this.getData();
-            })
-        }
-    }
+    deleteArticle = (id: any) => {
+        confirmAlert({
+            title: 'Hamafa',
+            message: 'Tena hamafa tokoa ve ianao ?',
+            buttons: [
+                {
+                    label: 'Eny',
+                    onClick: () => {
+                        Axios.post(HTTP_BASE_URL + '/api/actualite/delete/' + id + '/' + this.state.user.id).then((res) => {
+                            this.getData();
+                        })
+                    }
+                },
+                {
+                    label: 'Tsia',
+                    onClick: () => {
+                        return false;
+                    }
+                }
+            ]
+        });
+    };
+
+    addComment = (actuId: any) => {
+        let form = new FormData();
+        form.append('comment', this.state.commentText);
+        form.append('user', this.state.user ? this.state.user.id : this.state.user);
+        Axios.post(HTTP_BASE_URL + '/api/comment/actu/add/' + actuId, form).then((res) => {
+            this.setState({
+                commentText: ''
+            });
+            this.getData();
+        })
+    };
 
     render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | React.ReactNodeArray | React.ReactPortal | boolean | null | undefined {
         return (
             <IonPage>
                 <Header/>
-                <IonSearchbar
-                    placeholder={"Hitady ..."}
-                    onIonChange={(e: any) => this.getData(this.state.page, e.detail.value)}/>
-                <FabButton/>
                 <IonContent fullscreen>
+                    <IonSearchbar
+                        placeholder={"Hitady ..."}
+                        showCancelButton="focus"
+                        cancelButtonText="Hamafa ..."
+                        onIonChange={(e: any) => this.getData(this.state.page, e.detail.value)}/>
                     <IonRefresher slot="fixed" onIonRefresh={(e) => this.doRefresh(e)}>
                         <IonRefresherContent/>
                     </IonRefresher>
@@ -247,13 +279,110 @@ class Actualite extends React.Component<any, any> {
                     <IonAlert
                         mode={"ios"}
                         isOpen={this.state.alert.isShow}
-                        onDidDismiss={() => this.setState({alert: {isShow: false}})}
+                        onWillDismiss={(e: any) => console.log(e)}
+                        onDidDismiss={(e) => {
+                            this.setState({alert: {isShow: false}})
+                        }}
                         header={this.state.alert.message}
                         buttons={['OK']}
                     />
                     <IonList>
                         {
                             this.state.actu.map((res: any) => {
+                                let comments: any = [];
+                                res.comments.map((item: any, key: any) => {
+                                    let responses: any = [];
+                                    item.responses.map((response: any, keyRes: any) => {
+                                        responses.push(
+                                            <IonItem lines={"none"}
+                                                     style={{paddingBottom: "10px"}}
+                                                     key={keyRes}>
+                                                <div
+                                                    className="comment-content d-block w-100">
+                                                    <div
+                                                        className="parent-comment d-flex">
+                                                        <IonAvatar slot="start">
+                                                            <img alt={"user-image"}
+                                                                 style={{width: "30px", height: "30px"}}
+                                                                 src={response.user.gender === 'Lahy' ? avatarMen : avatarGirl}/>
+                                                        </IonAvatar>
+                                                        <IonLabel className={"ml-1"}>
+                                                            <h3>{response.user.name}</h3>
+                                                            <h6 style={{fontSize: "10px"}}>{response.date}</h6>
+                                                            <p style={{fontSize: "12px"}}
+                                                               className={"ion-text-wrap"}>{response.comment}</p>
+                                                        </IonLabel>
+                                                    </div>
+                                                </div>
+                                            </IonItem>
+                                        )
+                                    });
+
+                                    comments.push(<IonItem lines={"none"} style={{paddingBottom: "10px"}} key={key}>
+                                        <div className="comment-content d-block w-100">
+                                            <div className="parent-comment d-flex pb-2">
+                                                <IonAvatar slot="start">
+                                                    <img alt={"user"}
+                                                         style={{width: "30px", height: "30px"}}
+                                                         src={item.user.gender === 'Lahy' ? avatarMen : avatarGirl}/>
+                                                </IonAvatar>
+                                                <IonLabel className={"ml-1"}>
+                                                    <h3>{item.user.name}</h3>
+                                                    <h6 style={{fontSize: "10px"}}>{item.date}</h6>
+                                                    <p style={{fontSize: "12px"}}
+                                                       className={"ion-text-wrap"}>{item.comment}</p>
+                                                </IonLabel>
+                                            </div>
+                                            <div className="comment-reply ml-2" style={{padding: "0 10% 0 10%"}}>
+                                                {
+                                                    responses.length > 2 ? (
+                                                            <div className={"col-md-12"}>
+                                                                <a href={"#"}
+                                                                   onClick={(e) => {
+                                                                       e.preventDefault();
+                                                                       this.setState({dropdownStateReply: !this.state.dropdownStateReply})
+                                                                   }}
+                                                                   style={{marginBottom: '1rem'}}>
+                                                                    {this.state.dropdownStateReply ? 'Hanafina' : 'Hijery'} ny
+                                                                    navalin'ny olona
+                                                                    an'i {item.user.name} {responses.length} +
+                                                                </a>
+                                                                <Collapse style={{marginBottom:"1rem"}} isOpen={this.state.dropdownStateReply}>
+                                                                    {responses}
+                                                                </Collapse>
+                                                            </div>
+                                                        ) :
+                                                        responses
+                                                }
+                                                <div className="d-flex">
+                                                    <IonInput className={"comment-input"}
+                                                              defaultValue={this.state.commentText}
+                                                              onIonChange={(e: any) => {
+                                                                  this.setState({
+                                                                      commentText: e.target.value
+                                                                  });
+                                                              }} mode={"md"}
+                                                              type={"text"}
+                                                              style={{fontSize: "12px"}}
+                                                              placeholder={"hamaly an'i " + item.user.name + "..."}/>
+                                                    <IonButton onClick={() => this.addComment(res.id)}
+                                                               color="light"
+                                                               className={"comment-button"}
+                                                               fill={"clear"}
+                                                               size={"small"}>
+                                                        <IonIcon style={{
+                                                            fontSize: "25px",
+                                                            border: "none",
+                                                            color: "black"
+                                                        }}
+                                                                 icon={chevronForwardCircleOutline}/>
+                                                    </IonButton>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </IonItem>)
+                                });
+
                                 return (
                                     <IonCard className={"actualite-card"} mode={"ios"} key={res.id}>
                                         <IonItem mode={"ios"} lines={"none"}>
@@ -262,7 +391,10 @@ class Actualite extends React.Component<any, any> {
                                                     <IonCol size={"3"}>
                                                         <IonAvatar>
                                                             <IonImg alt={"Signaleo"}
-                                                                    src={(res.user.gender !== 'Vavy' && res.user.gender === 'Lahy') ? (res.user.gender === 'Vavy' ? avatarGirl : avatarMen) : avatar}/>
+                                                                    src={(res.user.gender !== 'Vavy' && res.user.gender === 'Lahy') ?
+                                                                        (res.user.gender === 'Vavy' ? avatarGirl : avatarMen) :
+                                                                        avatar}
+                                                            />
                                                         </IonAvatar>
                                                     </IonCol>
                                                     <IonCol size={"8"}>
@@ -370,6 +502,44 @@ class Actualite extends React.Component<any, any> {
                                                 </IonLabel>
                                             </IonSegmentButton>
                                         </IonSegment>
+                                        <IonCardContent>
+                                            <div className="d-flex">
+                                                <IonInput className={"comment-input"}
+                                                          defaultValue={this.state.commentText}
+                                                          onIonChange={(e: any) => {
+                                                              this.setState({
+                                                                  commentText: e.target.value
+                                                              });
+                                                          }} mode={"md"} type={"text"}
+                                                          placeholder={"Ny hevitrao ..."}/>
+                                                <IonButton onClick={() => this.addComment(res.id)} color="light"
+                                                           className={"comment-button"} fill={"clear"}
+                                                           size={"small"}>
+                                                    <IonIcon style={{fontSize: "25px", border: "none", color: "black"}}
+                                                             icon={chevronForwardCircleOutline}/>
+                                                </IonButton>
+                                            </div>
+                                        </IonCardContent>
+                                        {
+                                            comments.length > 1 ?
+                                                (
+                                                    <div className={"col-md-12"}>
+                                                        <a href={"#"}
+                                                           onClick={(e) => {
+                                                               e.preventDefault();
+                                                               this.setState({dropdownState: !this.state.dropdownState})
+                                                           }}
+                                                           style={{marginBottom: '1rem'}}>
+                                                            {this.state.dropdownState ? 'Hanafina' : 'Hijery'} ny
+                                                            hevitrin'ny olona {comments.length} +
+                                                        </a>
+                                                        <Collapse style={{marginBottom:"1rem"}}  isOpen={this.state.dropdownState}>
+                                                            {comments}
+                                                        </Collapse>
+                                                    </div>
+                                                ) :
+                                                comments
+                                        }
                                     </IonCard>
                                 )
                             })

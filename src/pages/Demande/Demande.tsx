@@ -29,8 +29,6 @@ import HTTP_BASE_URL from '../../Constant/HttpConstant';
 import img from "../../assets/covoiturage.png";
 import {RefresherEventDetail} from "@ionic/core";
 import {Plugins} from "@capacitor/core";
-import {FabButton} from "../../components/Navigation/FabButton";
-
 const {Storage} = Plugins;
 
 /**
@@ -116,7 +114,6 @@ class Demande extends React.Component<any, any> {
         return (
             <IonPage>
                 <Header/>
-                <FabButton/>
                 <IonContent>
                     <IonRefresher slot="fixed" onIonRefresh={(e) => this.doRefresh(e)}>
                         <IonRefresherContent/>

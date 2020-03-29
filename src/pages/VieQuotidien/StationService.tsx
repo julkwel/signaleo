@@ -6,7 +6,7 @@ import {
     IonItem,
     IonLabel,
     IonList,
-    IonPage, IonSearchbar,
+    IonPage, IonSearchbar, IonSegment, IonSegmentButton,
     IonSelect,
     IonSelectOption
 } from "@ionic/react";
@@ -17,9 +17,8 @@ import logoShell from '../../assets/logo/shell.png';
 import logoGalana from '../../assets/logo/galana.jpg';
 import logoJovenna from '../../assets/logo/jovenna.jpeg';
 import logoTotal from '../../assets/logo/total.png';
-import {FabButton} from "../../components/Navigation/FabButton";
 
-export default class StationService extends React.Component<any, any> {
+class StationService extends React.Component<any, any> {
     ionInfiniteScrollRef: React.RefObject<HTMLIonInfiniteScrollElement>;
 
     constructor(props: any) {
@@ -74,12 +73,25 @@ export default class StationService extends React.Component<any, any> {
     }
 
     render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | React.ReactNodeArray | React.ReactPortal | boolean | null | undefined {
+        const {history} = this.props;
+
         return (
             <IonPage>
                 <Header/>
+                <IonSegment value="all" scrollable={true}
+                            onIonChange={(e) => {
+                                if (e.detail.value === 'sos'){
+                                    history.push('/phone');
+                                }else {
+                                    e.preventDefault();
+                                }
+                            }}>
+                    <IonSegmentButton value="sos">SOS</IonSegmentButton>
+                    <IonSegmentButton value="station">STATION</IonSegmentButton>
+                </IonSegment>
                 <IonSearchbar placeholder={"Hitady ..."} onIonChange={e => {
                     this.setState({
-                        search:e.detail.value
+                        search: e.detail.value
                     });
 
                     this.search();
@@ -103,7 +115,6 @@ export default class StationService extends React.Component<any, any> {
                         }
                     </IonSelect>
                 </IonCard>
-                <FabButton/>
                 <IonContent>
                     <IonList>
                         {
@@ -146,3 +157,5 @@ export default class StationService extends React.Component<any, any> {
         )
     }
 }
+
+export default StationService;
