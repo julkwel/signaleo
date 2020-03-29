@@ -48,3 +48,10 @@ ion-chip > .item.sc-ion-label-md-h, .item .sc-ion-label-md-h{
 .loading-content {
     font-size: 12px!important;
 }
+.just-text{
+    background: #3880fe;
+    color: white!important;
+    text-align: center;
+    font-size: 14px!important;
+    font-weight: bold;
+}

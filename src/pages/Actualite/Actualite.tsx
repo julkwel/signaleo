@@ -347,7 +347,8 @@ class Actualite extends React.Component<any, any> {
                                                                     navalin'ny olona
                                                                     an'i {item.user.name} {responses.length} +
                                                                 </a>
-                                                                <Collapse style={{marginBottom:"1rem"}} isOpen={this.state.dropdownStateReply}>
+                                                                <Collapse style={{marginTop: "1rem"}}
+                                                                          isOpen={this.state.dropdownStateReply}>
                                                                     {responses}
                                                                 </Collapse>
                                                             </div>
@@ -411,10 +412,14 @@ class Actualite extends React.Component<any, any> {
                                                     </IonCol>
                                                 </IonRow>
                                                 <IonLabel
-                                                    className={"ion-text-wrap"}>{res.message.charAt(0).toUpperCase() + res.message.slice(1)}</IonLabel>
+                                                    className={res.photo ? "ion-text-wrap" : "ion-text-wrap just-text"}>
+                                                    {res.message.charAt(0).toUpperCase() + res.message.slice(1)}
+                                                </IonLabel>
                                             </IonLabel>
                                         </IonItem>
-                                        <IonImg src={(res.photo && true && res.photo !== '') ? res.photo : img}/>
+                                        {
+                                            res.photo ? <IonImg src={res.photo}/> : ''
+                                        }
                                         <IonGrid>
                                             <IonRow>
                                                 <IonCol size="6">
@@ -510,7 +515,10 @@ class Actualite extends React.Component<any, any> {
                                                               this.setState({
                                                                   commentText: e.target.value
                                                               });
-                                                          }} mode={"md"} type={"text"}
+                                                          }}
+                                                          style={{fontSize: "12px"}}
+                                                          mode={"md"}
+                                                          type={"text"}
                                                           placeholder={"Ny hevitrao ..."}/>
                                                 <IonButton onClick={() => this.addComment(res.id)} color="light"
                                                            className={"comment-button"} fill={"clear"}
@@ -523,17 +531,18 @@ class Actualite extends React.Component<any, any> {
                                         {
                                             comments.length > 1 ?
                                                 (
-                                                    <div className={"col-md-12"}>
+                                                    <div>
                                                         <a href={"#"}
                                                            onClick={(e) => {
                                                                e.preventDefault();
                                                                this.setState({dropdownState: !this.state.dropdownState})
                                                            }}
-                                                           style={{marginBottom: '1rem'}}>
+                                                           style={{padding: '1rem'}}>
                                                             {this.state.dropdownState ? 'Hanafina' : 'Hijery'} ny
                                                             hevitrin'ny olona {comments.length} +
                                                         </a>
-                                                        <Collapse style={{marginBottom:"1rem"}}  isOpen={this.state.dropdownState}>
+                                                        <Collapse style={{marginTop: "1rem"}}
+                                                                  isOpen={this.state.dropdownState}>
                                                             {comments}
                                                         </Collapse>
                                                     </div>
