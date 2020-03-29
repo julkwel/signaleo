@@ -6,7 +6,7 @@ import {
     IonCardHeader,
     IonContent,
     IonItem,
-    IonLabel,
+    IonLabel, IonLoading,
     IonNote,
     IonPage
 } from "@ionic/react";
@@ -17,6 +17,7 @@ import world from '../../assets/world.png';
 const CoronaVirus: React.FC = () => {
     const [status, setStatus] = useState();
     const [load, setLoad] = useState(true);
+    const [showLoading, setShowLoading] = useState(true);
     const [worldStatus, setWorldStatus] = useState<any>([]);
 
     const getStatus = () => {
@@ -30,8 +31,7 @@ const CoronaVirus: React.FC = () => {
             .then(response => {
                 response.json().then(body => {
                     setStatus(body);
-
-                    getWorldStatus()
+                    getWorldStatus();
                 });
             })
             .catch(err => {
@@ -48,15 +48,14 @@ const CoronaVirus: React.FC = () => {
             }
         })
             .then(response => {
-                console.log(response);
                 response.json().then((body: any) => {
                     setWorldStatus([body]);
-
-                    setLoad(false)
+                    setShowLoading(false);
                 });
             })
             .catch(err => {
                 console.log(err);
+                setShowLoading(false);
             });
     };
 
@@ -68,6 +67,11 @@ const CoronaVirus: React.FC = () => {
         <IonPage>
             <Header/>
             <IonContent>
+                <IonLoading
+                    mode={"ios"}
+                    isOpen={showLoading}
+                    message={'Mahandrasa kely azafady ...'}
+                />
                 <div className={"col-md-12"}>
                     {
                         status && status.latest_stat_by_country &&
