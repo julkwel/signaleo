@@ -88,7 +88,6 @@ const AddDemande: React.FC = () => {
         <IonPage>
             <IonContent>
                 <Header/>
-                <FabButton/>
                 <IonLoading
                     mode={"ios"}
                     isOpen={showLoading}

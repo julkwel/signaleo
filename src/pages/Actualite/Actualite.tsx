@@ -121,6 +121,19 @@ class Actualite extends React.Component<any, any> {
                     showLoading: false
                 });
             }
+        }).catch(err => {
+            console.log(err);
+            this.setState({
+                actu: [],
+                alert: {
+                    isShow: true,
+                    message: 'Misy olana ny connexion anao ...! '
+                }
+            });
+
+            this.setState({
+                showLoading: false
+            });
         })
     };
 
@@ -279,7 +292,6 @@ class Actualite extends React.Component<any, any> {
                     <IonAlert
                         mode={"ios"}
                         isOpen={this.state.alert.isShow}
-                        onWillDismiss={(e: any) => console.log(e)}
                         onDidDismiss={(e) => {
                             this.setState({alert: {isShow: false}})
                         }}

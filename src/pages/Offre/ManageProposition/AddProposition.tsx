@@ -82,7 +82,6 @@ const AddProposition: React.FC = () => {
         <IonPage>
             <IonContent fullscreen>
                 <Header/>
-                <FabButton/>
                 <IonLoading
                     mode={"ios"}
                     isOpen={showLoading}
