@@ -1,5 +1,5 @@
 {
-  "appId": "io.ionic.starter",
+  "appId": "com.signaleo.io",
   "appName": "signaleo",
   "bundledWebRuntime": false,
   "npmClient": "npm",

@@ -3,7 +3,6 @@ import {
     IonAvatar,
     IonCard,
     IonCardContent,
-    IonCardHeader,
     IonContent,
     IonItem,
     IonLabel, IonLoading,
@@ -16,7 +15,6 @@ import world from '../../assets/world.png';
 
 const CoronaVirus: React.FC = () => {
     const [status, setStatus] = useState();
-    const [load, setLoad] = useState(true);
     const [showLoading, setShowLoading] = useState(true);
     const [worldStatus, setWorldStatus] = useState<any>([]);
 

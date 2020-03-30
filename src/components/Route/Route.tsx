@@ -1,5 +1,5 @@
 import React from "react";
-import {Redirect, Route} from "react-router-dom";
+import {Route} from "react-router-dom";
 import AddProposition from "../../pages/Offre/ManageProposition/AddProposition";
 import Demande from "../../pages/Demande/Demande";
 import Actualite from "../../pages/Actualite/Actualite";
@@ -15,7 +15,7 @@ import StationService from "../../pages/VieQuotidien/StationService";
 import PhoneUtils from "../../pages/VieQuotidien/PhoneUtils";
 import CoronaVirus from "../../pages/Actualite/CoronaVirus";
 
-export const SignaleoRoute : React.FC = () => {
+export const SignaleoRoute: React.FC = () => {
     return (
         <IonRouterOutlet>
             <Route path="/profile" component={Profile} exact={true}/>
