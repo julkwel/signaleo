@@ -288,7 +288,7 @@ class Actualite extends React.Component<any, any> {
                     />
                     <IonList>
                         {
-                            this.state.actu.map((res: any) => {
+                            this.state.actu && Array.isArray(this.state.actu) && this.state.actu.map((res: any) => {
                                 let comments: any = [];
                                 res.comments.map((item: any, key: any) => {
                                     let responses: any = [];

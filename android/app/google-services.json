@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "842234291753",
+    "firebase_url": "https://signaleo-5fdc7.firebaseio.com",
+    "project_id": "signaleo-5fdc7",
+    "storage_bucket": "signaleo-5fdc7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:842234291753:android:3dcc3d755cf6ec740fde38",
+        "android_client_info": {
+          "package_name": "com.signaleo.io"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "842234291753-3lkjr9r6pc5matpe0jnseu2p52a9m7ut.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCins3MSAigUKRHsdirjxVRb1ncVL2H8Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "842234291753-3lkjr9r6pc5matpe0jnseu2p52a9m7ut.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

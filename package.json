@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@capacitor/android": "^1.5.0",
-    "@capacitor/core": "1.5.0",
+    "@capacitor/core": "^1.5.0",
     "@ionic-native/camera": "^5.21.6",
     "@ionic-native/core": "^5.21.6",
     "@ionic/pwa-elements": "^1.5.1",
@@ -57,7 +57,7 @@
     ]
   },
   "devDependencies": {
-    "@capacitor/cli": "1.5.0"
+    "@capacitor/cli": "^1.5.0"
   },
   "description": "An Ionic project"
 }
