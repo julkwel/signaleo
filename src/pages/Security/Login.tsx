@@ -141,14 +141,19 @@ export default class Login extends React.Component<any, any> {
                             }}>
                                 <div className={"form-group mt-2 p-1"}>
                                     <IonLabel position="stacked">Email</IonLabel>
-                                    <input disabled={this.state.inputDisabled} type={"email"} name="lieu" required
+                                    <input disabled={this.state.inputDisabled} type={"email"} name="email" required
                                            value={this.state.email}
                                            className={"form-control"}
+                                           autoComplete={"username"}
                                            onChange={(e) => this.handleEmail(e)}/>
                                 </div>
                                 <div className={"form-group mt-2 p-1"}>
                                     <IonLabel position="stacked">Teny miafina</IonLabel>
-                                    <input disabled={this.state.inputDisabled} type={"password"} required name="lieu"
+                                    <input disabled={this.state.inputDisabled}
+                                           type={"password"}
+                                           autoComplete="current-password"
+                                           required
+                                           name="password"
                                            value={this.state.password}
                                            className={"form-control"}
                                            onChange={(e) => this.handlePassword(e)}/>

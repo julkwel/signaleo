@@ -11,7 +11,6 @@ import HTTP_BASE_URL from "../../../Constant/HttpConstant";
 import {useHistory} from "react-router";
 import AsyncCreatableSelect from 'react-select/async-creatable';
 import {Plugins} from "@capacitor/core";
-import {FabButton} from "../../../components/Navigation/FabButton";
 
 /**
  * Add proposition covoiturage

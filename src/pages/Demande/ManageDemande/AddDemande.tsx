@@ -15,7 +15,6 @@ import HTTP_BASE_URL from '../../../Constant/HttpConstant';
 import {useHistory} from 'react-router';
 import {Plugins} from "@capacitor/core";
 import AsyncCreatableSelect from "react-select/async-creatable";
-import {FabButton} from "../../../components/Navigation/FabButton";
 
 const AddDemande: React.FC = () => {
     const [depart, setDepart] = useState('');

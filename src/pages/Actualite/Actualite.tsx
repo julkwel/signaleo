@@ -305,7 +305,7 @@ class Actualite extends React.Component<any, any> {
                                 res.comments.map((item: any, key: any) => {
                                     let responses: any = [];
                                     item.responses.map((response: any, keyRes: any) => {
-                                        responses.push(
+                                        return responses.push(
                                             <IonItem lines={"none"}
                                                      style={{paddingBottom: "10px"}}
                                                      key={keyRes}>
@@ -330,7 +330,7 @@ class Actualite extends React.Component<any, any> {
                                         )
                                     });
 
-                                    comments.push(
+                                    return comments.push(
                                         <IonItem lines={"none"} style={{paddingBottom: "10px"}} key={key}>
                                             <div className="comment-content d-block w-100">
                                                 <div className="parent-comment d-flex pb-2">
@@ -350,16 +350,25 @@ class Actualite extends React.Component<any, any> {
                                                     {
                                                         responses.length > 2 ? (
                                                                 <div className={"col-md-12"}>
-                                                                    <a href={"#"}
-                                                                       onClick={(e) => {
-                                                                           e.preventDefault();
-                                                                           this.setState({dropdownStateReply: !this.state.dropdownStateReply})
-                                                                       }}
-                                                                       style={{marginBottom: '1rem'}}>
+                                                                    <button
+                                                                        type={"button"}
+                                                                        onClick={(e) => {
+                                                                            e.preventDefault();
+                                                                            this.setState({dropdownStateReply: !this.state.dropdownStateReply})
+                                                                        }}
+                                                                        style={{
+                                                                            padding: '1rem',
+                                                                            textAlign: "center",
+                                                                            display: "block",
+                                                                            width: "100%",
+                                                                            background: "transparent",
+                                                                            color: "blue"
+                                                                        }}
+                                                                    >
                                                                         {this.state.dropdownStateReply ? 'Hanafina' : 'Hijery'} ny
                                                                         navalin'ny olona
                                                                         an'i {item.user.name} {responses.length} +
-                                                                    </a>
+                                                                    </button>
                                                                     <Collapse style={{marginTop: "1rem"}}
                                                                               isOpen={this.state.dropdownStateReply}>
                                                                         {responses}
@@ -545,19 +554,22 @@ class Actualite extends React.Component<any, any> {
                                             comments.length > 1 ?
                                                 (
                                                     <div>
-                                                        <a href={"#"}
-                                                           onClick={(e) => {
-                                                               e.preventDefault();
-                                                               this.setState({dropdownState: !this.state.dropdownState})
-                                                           }}
-                                                           style={{
-                                                               padding: '1rem',
-                                                               textAlign: "center",
-                                                               display: "block"
-                                                           }}>
+                                                        <button
+                                                            onClick={(e) => {
+                                                                e.preventDefault();
+                                                                this.setState({dropdownState: !this.state.dropdownState})
+                                                            }}
+                                                            style={{
+                                                                padding: '1rem',
+                                                                textAlign: "center",
+                                                                display: "block",
+                                                                width: "100%",
+                                                                background: "transparent",
+                                                                color: "blue"
+                                                            }}>
                                                             {this.state.dropdownState ? 'Hanafina' : 'Hijery'} ny
                                                             hevitrin'ny olona {comments.length} +
-                                                        </a>
+                                                        </button>
                                                         <Collapse style={{marginTop: "1rem"}}
                                                                   isOpen={this.state.dropdownState}>
                                                             {comments}

@@ -57,9 +57,8 @@ const CoronaVirus: React.FC = () => {
             });
     };
 
-    useEffect(() => {
-        getStatus();
-    }, []);
+    // eslint-disable-next-line
+    useEffect(() => getStatus, []);
 
     return (
         <IonPage>
