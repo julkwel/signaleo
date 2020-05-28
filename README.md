@@ -49,4 +49,6 @@ For build run :
 
 `- Build ios version`
 
+WE WILL MIGRATE TO 2.0 BRANCH , the ionic stack is never maintained.
+
 Happy Coding give a star for this repository 🥰
